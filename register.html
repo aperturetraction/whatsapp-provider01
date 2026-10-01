@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WhatsApp Provider - Sign Up</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="brand">
+
+        <div class="brand-logo">
+            W
+        </div>
+
+        <h1>
+            WhatsApp Provider
+        </h1>
+
+        <p>
+            Create your account
+        </p>
+
+    </div>
+
+
+    <div class="login-card">
+
+        <h2>
+            Create Account
+        </h2>
+
+
+        <form id="registerForm">
+
+
+            <label for="fullName">
+                Full Name
+            </label>
+
+            <input
+                type="text"
+                id="fullName"
+                placeholder="Your full name"
+                required
+            >
+
+
+            <label for="email">
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="you@example.com"
+                required
+            >
+
+
+            <label for="phone">
+                Phone / WhatsApp
+            </label>
+
+            <input
+                type="tel"
+                id="phone"
+                placeholder="+60123456789"
+            >
+
+
+            <label for="companyName">
+                Company Name
+            </label>
+
+            <input
+                type="text"
+                id="companyName"
+                placeholder="Your company"
+            >
+
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Minimum 8 characters"
+                minlength="8"
+                required
+            >
+
+
+            <label for="confirmPassword">
+                Confirm Password
+            </label>
+
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Enter password again"
+                minlength="8"
+                required
+            >
+
+
+            <button
+                type="submit"
+                class="btn-primary"
+                id="registerButton"
+            >
+                Create Account
+            </button>
+
+
+        </form>
+
+
+        <div
+            id="message"
+            style="
+                margin-top:15px;
+                text-align:center;
+                font-size:14px;
+            "
+        ></div>
+
+
+        <div class="login-links">
+
+            Already have an account?
+
+            <a href="index.html">
+                Sign In
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <p class="copyright">
+        © 2026 WhatsApp Provider
+    </p>
+
+</div>
+
+
+<script>
+
+const API_URL =
+    "https://whatsapp-provider-api.b79gn827py.workers.dev";
+
+
+const form =
+    document.getElementById(
+        "registerForm"
+    );
+
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+
+const button =
+    document.getElementById(
+        "registerButton"
+    );
+
+
+form.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const fullName =
+            document.getElementById(
+                "fullName"
+            ).value.trim();
+
+
+        const email =
+            document.getElementById(
+                "email"
+            ).value.trim();
+
+
+        const phone =
+            document.getElementById(
+                "phone"
+            ).value.trim();
+
+
+        const companyName =
+            document.getElementById(
+                "companyName"
+            ).value.trim();
+
+
+        const password =
+            document.getElementById(
+                "password"
+            ).value;
+
+
+        const confirmPassword =
+            document.getElementById(
+                "confirmPassword"
+            ).value;
+
+
+        if (
+            password !==
+            confirmPassword
+        ) {
+
+            message.textContent =
+                "Passwords do not match.";
+
+            return;
+
+        }
+
+
+        button.disabled = true;
+
+        button.textContent =
+            "Creating Account...";
+
+
+        message.textContent =
+            "";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    API_URL +
+                    "/api/register",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                email:
+                                    email,
+
+                                password:
+                                    password,
+
+                                fullName:
+                                    fullName,
+
+                                phone:
+                                    phone,
+
+                                companyName:
+                                    companyName
+
+                            })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                data.success
+            ) {
+
+                message.textContent =
+                    "Account created successfully!";
+
+                form.reset();
+
+
+            } else {
+
+                message.textContent =
+                    data.error ||
+                    "Registration failed.";
+
+            }
+
+
+        } catch (error) {
+
+            message.textContent =
+                "Unable to connect to server.";
+
+        }
+
+
+        button.disabled = false;
+
+        button.textContent =
+            "Create Account";
+
+    }
+
+);
+
+</script>
+
+</body>
+</html>
