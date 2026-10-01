@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        WhatsApp - Provider
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                W
+            </div>
+
+            <span>
+                WA Provider
+            </span>
+
+        </div>
+
+
+        <div class="menu-title">
+            Customer
+        </div>
+
+
+        <nav class="menu">
+
+
+            <a href="dashboard.html">
+
+                🏠
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a
+                href="whatsapp.html"
+                class="active"
+            >
+
+                📱
+
+                <span>
+                    WhatsApp
+                </span>
+
+            </a>
+
+
+            <a href="chat.html">
+
+                💬
+
+                <span>
+                    Chat
+                </span>
+
+            </a>
+
+
+            <a href="billing.html">
+
+                💳
+
+                <span>
+                    Billing
+                </span>
+
+            </a>
+
+
+            <a href="account.html">
+
+                ⚙️
+
+                <span>
+                    Account
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <div class="menu-title">
+            System
+        </div>
+
+
+        <nav class="menu">
+
+
+            <a href="admin.html">
+
+                🛠️
+
+                <span>
+                    Admin
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                onclick="logout()"
+            >
+
+                🚪
+
+                <span>
+                    Logout
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="main">
+
+
+        <!-- TOP BAR -->
+
+        <div class="topbar">
+
+
+            <div>
+
+                <h1>
+                    WhatsApp Accounts
+                </h1>
+
+                <p>
+                    Connect and manage your WhatsApp accounts
+                </p>
+
+            </div>
+
+
+            <div
+                class="user"
+                id="userEmail"
+            >
+                demo@example.com
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             ACCOUNT LIST
+        ========================== -->
+
+        <div class="section">
+
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    margin-bottom:15px;
+                "
+            >
+
+                <h2>
+                    Your WhatsApp Accounts
+                </h2>
+
+
+                <button
+                    class="btn btn-green"
+                    onclick="showConnect()"
+                >
+                    + Add WhatsApp
+                </button>
+
+            </div>
+
+
+
+            <div class="table-container">
+
+
+                <table>
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Phone
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Instance
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        <!-- CONNECTED ACCOUNT -->
+
+                        <tr>
+
+                            <td>
+                                Business Main
+                            </td>
+
+                            <td>
+                                +60 XX XXX XXXX
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="status connected"
+                                >
+                                    Connected
+                                </span>
+
+                            </td>
+
+                            <td>
+                                Instance 001
+                            </td>
+
+                            <td>
+
+                                <a
+                                    href="chat.html"
+                                >
+
+                                    <button
+                                        class="btn btn-green"
+                                    >
+                                        Open Chat
+                                    </button>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- DISCONNECTED ACCOUNT -->
+
+                        <tr>
+
+                            <td>
+                                Marketing
+                            </td>
+
+                            <td>
+                                Not Connected
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="status disconnected"
+                                >
+                                    Disconnected
+                                </span>
+
+                            </td>
+
+                            <td>
+                                Instance 002
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="btn btn-dark"
+                                    onclick="showConnect()"
+                                >
+                                    Connect
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             CONNECT SECTION
+        ========================== -->
+
+        <div
+            class="section"
+            id="connectSection"
+            style="display:none;"
+        >
+
+
+            <div class="connect-card">
+
+
+                <h2>
+                    Connect a New WhatsApp
+                </h2>
+
+
+                <p
+                    style="
+                        margin-top:10px;
+                        color:#6b7280;
+                    "
+                >
+
+                    Give this WhatsApp account
+                    a name before connecting.
+
+                </p>
+
+
+
+                <!-- ACCOUNT NAME -->
+
+                <div
+                    style="
+                        text-align:left;
+                        margin-top:25px;
+                    "
+                >
+
+                    <label
+                        style="
+                            display:block;
+                            margin-bottom:7px;
+                            font-weight:bold;
+                            font-size:14px;
+                        "
+                    >
+
+                        Account Name
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="accountName"
+                        placeholder="Example: Sales WhatsApp"
+                        style="
+                            width:100%;
+                            padding:13px;
+                            border:1px solid #d1d5db;
+                            border-radius:9px;
+                            font-size:15px;
+                        "
+                    >
+
+                </div>
+
+
+
+                <button
+                    class="btn btn-green"
+                    style="
+                        margin-top:20px;
+                        width:100%;
+                    "
+                    onclick="createInstance()"
+                >
+
+                    Create WhatsApp Instance
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             QR SECTION
+        ========================== -->
+
+        <div
+            class="section"
+            id="qrSection"
+            style="display:none;"
+        >
+
+
+            <div class="connect-card">
+
+
+                <div
+                    style="
+                        display:inline-block;
+                        padding:6px 12px;
+                        background:#fff7ed;
+                        color:#9a3412;
+                        border-radius:20px;
+                        font-size:12px;
+                        margin-bottom:15px;
+                    "
+                >
+
+                    Waiting for connection
+
+                </div>
+
+
+
+                <h2>
+                    Scan QR Code
+                </h2>
+
+
+                <p
+                    style="
+                        margin-top:10px;
+                        color:#6b7280;
+                    "
+                >
+
+                    Open WhatsApp on your phone
+                    and link this device.
+
+                </p>
+
+
+
+                <!-- DEMO QR -->
+
+                <div class="qr-box"></div>
+
+
+
+                <h3>
+                    How to connect
+                </h3>
+
+
+                <div
+                    style="
+                        text-align:left;
+                        margin-top:20px;
+                        line-height:1.8;
+                        color:#4b5563;
+                    "
+                >
+
+                    <p>
+                        <strong>1.</strong>
+                        Open WhatsApp on your phone.
+                    </p>
+
+                    <p>
+                        <strong>2.</strong>
+                        Open Settings.
+                    </p>
+
+                    <p>
+                        <strong>3.</strong>
+                        Select Linked Devices.
+                    </p>
+
+                    <p>
+                        <strong>4.</strong>
+                        Tap Link a Device.
+                    </p>
+
+                    <p>
+                        <strong>5.</strong>
+                        Scan the QR Code above.
+                    </p>
+
+                </div>
+
+
+
+                <button
+                    class="btn btn-dark"
+                    style="
+                        margin-top:25px;
+                    "
+                    onclick="simulateConnected()"
+                >
+
+                    Demo: Simulate Connected
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             SUCCESS SECTION
+        ========================== -->
+
+        <div
+            class="section"
+            id="successSection"
+            style="display:none;"
+        >
+
+
+            <div class="connect-card">
+
+
+                <div
+                    style="
+                        width:70px;
+                        height:70px;
+                        border-radius:50%;
+                        background:#dcfce7;
+                        color:#166534;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        margin:0 auto 20px;
+                        font-size:32px;
+                    "
+                >
+
+                    ✓
+
+                </div>
+
+
+                <h2>
+                    WhatsApp Connected
+                </h2>
+
+
+                <p
+                    style="
+                        margin-top:10px;
+                        color:#6b7280;
+                    "
+                >
+
+                    Your WhatsApp account is now connected.
+
+                </p>
+
+
+                <div
+                    style="
+                        margin-top:20px;
+                        padding:15px;
+                        background:#f9fafb;
+                        border-radius:10px;
+                    "
+                >
+
+                    <strong id="connectedName">
+                        Business WhatsApp
+                    </strong>
+
+                    <br>
+
+                    <span
+                        style="
+                            color:#6b7280;
+                            font-size:13px;
+                        "
+                    >
+                        GREEN-API Instance
+                    </span>
+
+                </div>
+
+
+                <a
+                    href="chat.html"
+                >
+
+                    <button
+                        class="btn btn-green"
+                        style="
+                            margin-top:20px;
+                        "
+                    >
+
+                        Open WhatsApp Chat
+
+                    </button>
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================== -->
+
+<script>
+
+
+/*
+    SHOW CONNECT FORM
+*/
+
+function showConnect() {
+
+    document.getElementById(
+        "connectSection"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "qrSection"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "successSection"
+    ).style.display = "none";
+
+
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+    });
+
+}
+
+
+
+/*
+    CREATE INSTANCE
+
+    目前只是 Demo。
+
+    真正版本：
+
+    Customer
+       ↓
+    Cloudflare Worker
+       ↓
+    GREEN-API
+       ↓
+    Create Instance
+       ↓
+    Get QR Code
+*/
+
+function createInstance() {
+
+
+    const name =
+        document.getElementById(
+            "accountName"
+        ).value.trim();
+
+
+    if (name === "") {
+
+        alert(
+            "Please enter an account name."
+        );
+
+        return;
+
+    }
+
+
+    /*
+        Save temporary demo name
+    */
+
+    localStorage.setItem(
+        "whatsappName",
+        name
+    );
+
+
+    /*
+        Hide connect form
+    */
+
+    document.getElementById(
+        "connectSection"
+    ).style.display = "none";
+
+
+    /*
+        Show QR section
+    */
+
+    document.getElementById(
+        "qrSection"
+    ).style.display = "block";
+
+
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+    });
+
+}
+
+
+
+/*
+    DEMO CONNECTED
+
+    Later this will be replaced by:
+
+    GREEN-API Webhook
+          ↓
+    Cloudflare Worker
+          ↓
+    D1 Database
+          ↓
+    status = connected
+*/
+
+function simulateConnected() {
+
+
+    const name =
+        localStorage.getItem(
+            "whatsappName"
+        ) || "Business WhatsApp";
+
+
+    document.getElementById(
+        "qrSection"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "successSection"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "connectedName"
+    ).innerText = name;
+
+
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+    });
+
+}
+
+
+
+/*
+    DISPLAY USER EMAIL
+*/
+
+const email =
+    localStorage.getItem(
+        "userEmail"
+    );
+
+
+if (email) {
+
+    document.getElementById(
+        "userEmail"
+    ).innerText = email;
+
+}
+
+
+
+/*
+    LOGOUT
+*/
+
+function logout() {
+
+
+    localStorage.removeItem(
+        "loggedIn"
+    );
+
+
+    localStorage.removeItem(
+        "userEmail"
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
