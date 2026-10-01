@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WhatsApp Provider - Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            background: #07110d;
+            color: #111827;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+            padding: 25px;
+        }
+
+        /* Logo / Brand */
+
+        .brand {
+            text-align: center;
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .brand-logo {
+            width: 60px;
+            height: 60px;
+
+            margin: 0 auto 15px;
+
+            border-radius: 16px;
+
+            background: #19c37d;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+            font-weight: bold;
+
+            box-shadow: 0 10px 30px rgba(25,195,125,0.25);
+        }
+
+        .brand h1 {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .brand p {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        /* Login Card */
+
+        .login-card {
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.30);
+        }
+
+        .login-card h2 {
+            font-size: 22px;
+            margin-bottom: 25px;
+        }
+
+        /* Labels */
+
+        .login-card label {
+            display: block;
+
+            margin-top: 16px;
+            margin-bottom: 7px;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Input */
+
+        .login-card input {
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        .login-card input:focus {
+            border-color: #19c37d;
+
+            box-shadow:
+                0 0 0 3px rgba(25,195,125,0.12);
+        }
+
+        /* Buttons */
+
+        .btn-primary,
+        .btn-secondary {
+            width: 100%;
+
+            padding: 13px;
+
+            border-radius: 9px;
+
+            border: none;
+
+            margin-top: 20px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: #19c37d;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #14a96b;
+        }
+
+        .btn-secondary {
+            background: #eef2f2;
+            color: #111827;
+        }
+
+        .btn-secondary:hover {
+            background: #e1e7e5;
+        }
+
+        /* Links */
+
+        .login-links {
+            text-align: center;
+
+            margin-top: 18px;
+
+            font-size: 13px;
+
+            color: #16a36a;
+        }
+
+        .login-links a {
+            color: #16a36a;
+            text-decoration: none;
+        }
+
+        .login-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Divider */
+
+        .divider {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            margin: 22px 0;
+
+            color: #9ca3af;
+
+            font-size: 12px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+
+            flex: 1;
+
+            height: 1px;
+
+            background: #e5e7eb;
+        }
+
+        /* Copyright */
+
+        .copyright {
+            text-align: center;
+
+            color: #6b7280;
+
+            margin-top: 20px;
+
+            font-size: 12px;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 480px) {
+
+            .login-container {
+                padding: 18px;
+            }
+
+            .login-card {
+                padding: 24px;
+            }
+
+            .brand h1 {
+                font-size: 22px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                W
+            </div>
+
+            <h1>
+                WhatsApp Provider
+            </h1>
+
+            <p>
+                Manage your WhatsApp business accounts
+            </p>
+
+        </div>
+
+
+        <!-- LOGIN CARD -->
+
+        <div class="login-card">
+
+            <h2>
+                Sign in
+            </h2>
+
+
+            <!-- LOGIN FORM -->
+
+            <form onsubmit="login(event)">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="you@example.com"
+                    required
+                >
+
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="••••••••"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="btn-primary"
+                >
+                    Sign In
+                </button>
+
+            </form>
+
+
+            <!-- FORGOT PASSWORD -->
+
+            <div class="login-links">
+
+                <a href="#">
+                    Forgot Password?
+                </a>
+
+            </div>
+
+
+            <!-- DIVIDER -->
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+
+            <!-- DEMO LOGIN -->
+
+            <button
+                class="btn-secondary"
+                onclick="demoLogin()"
+            >
+                Demo Login
+            </button>
+
+        </div>
+
+
+        <!-- COPYRIGHT -->
+
+        <p class="copyright">
+            © 2026 WhatsApp Provider
+        </p>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        /*
+         * DEMO LOGIN
+         *
+         * 目前只是测试网站。
+         *
+         * 以后这里会换成：
+         *
+         * Customer
+         * ↓
+         * Cloudflare Worker
+         * ↓
+         * D1 Database
+         * ↓
+         * Login Authentication
+         */
+
+        function login(event) {
+
+            event.preventDefault();
+
+            const email =
+                document.getElementById("email").value;
+
+            const password =
+                document.getElementById("password").value;
+
+
+            /*
+             * 目前不连接真正数据库。
+             *
+             * 只保存登录状态，
+             * 方便我们测试 Dashboard。
+             */
+
+            localStorage.setItem(
+                "userEmail",
+                email
+            );
+
+            localStorage.setItem(
+                "loggedIn",
+                "true"
+            );
+
+
+            /*
+             * 登录成功后进入 Dashboard
+             */
+
+            window.location.href =
+                "dashboard.html";
+        }
+
+
+        /*
+         * DEMO LOGIN
+         */
+
+        function demoLogin() {
+
+            localStorage.setItem(
+                "userEmail",
+                "demo@example.com"
+            );
+
+            localStorage.setItem(
+                "loggedIn",
+                "true"
+            );
+
+
+            window.location.href =
+                "dashboard.html";
+        }
+
+    </script>
+
+</body>
+</html>
