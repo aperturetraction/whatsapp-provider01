@@ -125,8 +125,7 @@
 
         /* Buttons */
 
-        .btn-primary,
-        .btn-secondary {
+        .btn-primary {
             width: 100%;
 
             padding: 13px;
@@ -143,24 +142,13 @@
             font-weight: bold;
 
             transition: 0.2s;
-        }
 
-        .btn-primary {
             background: #19c37d;
             color: white;
         }
 
         .btn-primary:hover {
             background: #14a96b;
-        }
-
-        .btn-secondary {
-            background: #eef2f2;
-            color: #111827;
-        }
-
-        .btn-secondary:hover {
-            background: #e1e7e5;
         }
 
         /* Links */
@@ -182,32 +170,6 @@
 
         .login-links a:hover {
             text-decoration: underline;
-        }
-
-        /* Divider */
-
-        .divider {
-            display: flex;
-            align-items: center;
-
-            gap: 12px;
-
-            margin: 22px 0;
-
-            color: #9ca3af;
-
-            font-size: 12px;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: "";
-
-            flex: 1;
-
-            height: 1px;
-
-            background: #e5e7eb;
         }
 
         /* Copyright */
@@ -312,7 +274,7 @@
             </form>
 
 
-            <!-- FORGOT PASSWORD -->
+            <!-- ACCOUNT LINKS -->
 
             <div class="login-links">
 
@@ -320,24 +282,15 @@
                     Forgot Password?
                 </a>
 
+                <br><br>
+
+                Don't have an account?
+
+                <a href="register.html">
+                    Create Account
+                </a>
+
             </div>
-
-
-            <!-- DIVIDER -->
-
-            <div class="divider">
-                <span>OR</span>
-            </div>
-
-
-            <!-- DEMO LOGIN -->
-
-            <button
-                class="btn-secondary"
-                onclick="demoLogin()"
-            >
-                Demo Login
-            </button>
 
         </div>
 
@@ -356,11 +309,11 @@
     <script>
 
         /*
-         * DEMO LOGIN
+         * LOGIN
          *
-         * 目前只是测试网站。
+         * 目前只是前端测试登录。
          *
-         * 以后这里会换成：
+         * 下一阶段会改成：
          *
          * Customer
          * ↓
@@ -368,7 +321,11 @@
          * ↓
          * D1 Database
          * ↓
-         * Login Authentication
+         * Password Verification
+         * ↓
+         * Session
+         * ↓
+         * Dashboard
          */
 
         function login(event) {
@@ -383,10 +340,8 @@
 
 
             /*
-             * 目前不连接真正数据库。
-             *
-             * 只保存登录状态，
-             * 方便我们测试 Dashboard。
+             * 暂时保存登录资料，
+             * 下一步会改成真正的 D1 Login。
              */
 
             localStorage.setItem(
@@ -403,28 +358,6 @@
             /*
              * 登录成功后进入 Dashboard
              */
-
-            window.location.href =
-                "dashboard.html";
-        }
-
-
-        /*
-         * DEMO LOGIN
-         */
-
-        function demoLogin() {
-
-            localStorage.setItem(
-                "userEmail",
-                "demo@example.com"
-            );
-
-            localStorage.setItem(
-                "loggedIn",
-                "true"
-            );
-
 
             window.location.href =
                 "dashboard.html";
