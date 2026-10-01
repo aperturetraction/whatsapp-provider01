@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Dashboard - WhatsApp Provider
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                W
+            </div>
+
+            <span>
+                WA Provider
+            </span>
+
+        </div>
+
+
+        <!-- CUSTOMER MENU -->
+
+        <div class="menu-title">
+            Customer
+        </div>
+
+
+        <nav class="menu">
+
+
+            <a
+                href="dashboard.html"
+                class="active"
+            >
+                🏠
+                <span>
+                    Dashboard
+                </span>
+            </a>
+
+
+            <a href="whatsapp.html">
+
+                📱
+
+                <span>
+                    WhatsApp
+                </span>
+
+            </a>
+
+
+            <a href="chat.html">
+
+                💬
+
+                <span>
+                    Chat
+                </span>
+
+            </a>
+
+
+            <a href="billing.html">
+
+                💳
+
+                <span>
+                    Billing
+                </span>
+
+            </a>
+
+
+            <a href="account.html">
+
+                ⚙️
+
+                <span>
+                    Account
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- SYSTEM MENU -->
+
+        <div class="menu-title">
+            System
+        </div>
+
+
+        <nav class="menu">
+
+
+            <a href="admin.html">
+
+                🛠️
+
+                <span>
+                    Admin
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                onclick="logout()"
+            >
+
+                🚪
+
+                <span>
+                    Logout
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main">
+
+
+        <!-- TOP BAR -->
+
+        <div class="topbar">
+
+
+            <div>
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <p>
+                    Manage your WhatsApp services
+                </p>
+
+            </div>
+
+
+            <div
+                class="user"
+                id="userEmail"
+            >
+                demo@example.com
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             STATISTICS
+        ========================== -->
+
+        <div class="grid">
+
+
+            <!-- WhatsApp Accounts -->
+
+            <div class="card">
+
+                <div class="stat-label">
+
+                    WhatsApp Accounts
+
+                </div>
+
+
+                <div class="stat-number">
+
+                    2
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Connected -->
+
+            <div class="card">
+
+                <div class="stat-label">
+
+                    Connected
+
+                </div>
+
+
+                <div class="stat-number">
+
+                    1
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Messages -->
+
+            <div class="card">
+
+                <div class="stat-label">
+
+                    Messages
+
+                </div>
+
+
+                <div class="stat-number">
+
+                    1,248
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Plan -->
+
+            <div class="card">
+
+                <div class="stat-label">
+
+                    Current Plan
+
+                </div>
+
+
+                <div class="stat-number">
+
+                    Pro
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             WHATSAPP ACCOUNTS
+        ========================== -->
+
+        <div class="section">
+
+
+            <h2>
+                WhatsApp Accounts
+            </h2>
+
+
+
+            <div class="table-container">
+
+
+                <table>
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Phone
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Instance
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+                        <!-- ACCOUNT 1 -->
+
+                        <tr>
+
+
+                            <td>
+                                Business Main
+                            </td>
+
+
+                            <td>
+                                +60 XX XXX XXXX
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="status connected"
+                                >
+                                    Connected
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                Instance 001
+                            </td>
+
+
+                            <td>
+
+                                <a
+                                    href="chat.html"
+                                >
+
+                                    <button
+                                        class="btn btn-green"
+                                    >
+                                        Open Chat
+                                    </button>
+
+                                </a>
+
+                            </td>
+
+
+                        </tr>
+
+
+
+                        <!-- ACCOUNT 2 -->
+
+                        <tr>
+
+
+                            <td>
+                                Marketing
+                            </td>
+
+
+                            <td>
+                                Not Connected
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="status disconnected"
+                                >
+                                    Disconnected
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                Instance 002
+                            </td>
+
+
+                            <td>
+
+                                <a
+                                    href="whatsapp.html"
+                                >
+
+                                    <button
+                                        class="btn btn-dark"
+                                    >
+                                        Connect
+                                    </button>
+
+                                </a>
+
+                            </td>
+
+
+                        </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             QUICK ACTIONS
+        ========================== -->
+
+        <div class="section">
+
+
+            <h2>
+                Quick Actions
+            </h2>
+
+
+
+            <div class="grid">
+
+
+                <div class="card">
+
+
+                    <h3>
+                        Connect WhatsApp
+                    </h3>
+
+
+                    <p
+                        style="
+                            margin-top:10px;
+                            color:#6b7280;
+                            font-size:14px;
+                        "
+                    >
+
+                        Connect a new WhatsApp
+                        account using QR Code.
+
+                    </p>
+
+
+                    <a
+                        href="whatsapp.html"
+                    >
+
+                        <button
+                            class="btn btn-green"
+                            style="margin-top:18px;"
+                        >
+
+                            Connect
+
+                        </button>
+
+                    </a>
+
+
+                </div>
+
+
+
+                <div class="card">
+
+
+                    <h3>
+                        Open Chat
+                    </h3>
+
+
+                    <p
+                        style="
+                            margin-top:10px;
+                            color:#6b7280;
+                            font-size:14px;
+                        "
+                    >
+
+                        Manage your WhatsApp
+                        conversations.
+
+                    </p>
+
+
+                    <a
+                        href="chat.html"
+                    >
+
+                        <button
+                            class="btn btn-dark"
+                            style="margin-top:18px;"
+                        >
+
+                            Open Chat
+
+                        </button>
+
+                    </a>
+
+
+                </div>
+
+
+
+                <div class="card">
+
+
+                    <h3>
+                        Manage Billing
+                    </h3>
+
+
+                    <p
+                        style="
+                            margin-top:10px;
+                            color:#6b7280;
+                            font-size:14px;
+                        "
+                    >
+
+                        View your plan and
+                        payment history.
+
+                    </p>
+
+
+                    <a
+                        href="billing.html"
+                    >
+
+                        <button
+                            class="btn btn-dark"
+                            style="margin-top:18px;"
+                        >
+
+                            Billing
+
+                        </button>
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================== -->
+
+<script>
+
+
+/*
+    GET LOGIN EMAIL
+
+    目前使用 localStorage。
+
+    后面我们会改成：
+
+    Browser
+       ↓
+    Cloudflare Worker
+       ↓
+    D1 Database
+       ↓
+    Real Authentication
+*/
+
+
+const email =
+    localStorage.getItem(
+        "userEmail"
+    );
+
+
+
+/*
+    DISPLAY USER EMAIL
+*/
+
+if (email) {
+
+    document.getElementById(
+        "userEmail"
+    ).innerText = email;
+
+}
+
+
+
+/*
+    LOGOUT
+*/
+
+function logout() {
+
+
+    localStorage.removeItem(
+        "loggedIn"
+    );
+
+
+    localStorage.removeItem(
+        "userEmail"
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
