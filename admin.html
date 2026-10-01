@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin - WhatsApp Provider</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            WhatsApp Provider
+        </div>
+
+
+        <nav class="menu">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="whatsapp.html">
+                WhatsApp
+            </a>
+
+            <a href="chat.html">
+                Chat
+            </a>
+
+            <a href="billing.html">
+                Billing
+            </a>
+
+            <a href="account.html">
+                Account
+            </a>
+
+            <a
+                href="admin.html"
+                class="active"
+            >
+                Admin
+            </a>
+
+        </nav>
+
+
+        <button
+            class="btn btn-dark"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </aside>
+
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <div>
+
+                <h2>
+                    Admin Dashboard
+                </h2>
+
+                <p>
+                    Manage your WhatsApp Provider
+                </p>
+
+            </div>
+
+
+            <div class="user">
+
+                <span>
+                    Administrator
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- WARNING -->
+
+        <div class="admin-warning">
+
+            ⚠️
+
+            <strong>
+                Administrator Area
+            </strong>
+
+            <p>
+                This area is restricted to authorized
+                administrators.
+            </p>
+
+        </div>
+
+
+
+        <!-- STATISTICS -->
+
+        <section class="section">
+
+            <h3>
+                System Overview
+            </h3>
+
+
+            <div class="grid">
+
+
+                <div class="card">
+
+                    <p class="stat-label">
+                        Total Customers
+                    </p>
+
+                    <div class="stat-number">
+                        128
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <p class="stat-label">
+                        WhatsApp Instances
+                    </p>
+
+                    <div class="stat-number">
+                        246
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <p class="stat-label">
+                        Connected
+                    </p>
+
+                    <div class="stat-number">
+                        219
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <p class="stat-label">
+                        Monthly Revenue
+                    </p>
+
+                    <div class="stat-number">
+                        RM12,840
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- CUSTOMERS -->
+
+        <section class="section">
+
+            <h3>
+                Customers
+            </h3>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Customer
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Plan
+                            </th>
+
+                            <th>
+                                Instances
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        <tr>
+
+                            <td>
+                                John Trading
+                            </td>
+
+                            <td>
+                                john@example.com
+                            </td>
+
+                            <td>
+                                Pro
+                            </td>
+
+                            <td>
+                                3
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="status connected"
+                                >
+                                    Active
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="btn btn-dark"
+                                    onclick="viewCustomer('John Trading')"
+                                >
+                                    View
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                ABC Marketing
+                            </td>
+
+                            <td>
+                                admin@abc.com
+                            </td>
+
+                            <td>
+                                Business
+                            </td>
+
+                            <td>
+                                8
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="status connected"
+                                >
+                                    Active
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="btn btn-dark"
+                                    onclick="viewCustomer('ABC Marketing')"
+                                >
+                                    View
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Demo Customer
+                            </td>
+
+                            <td>
+                                demo@example.com
+                            </td>
+
+                            <td>
+                                Starter
+                            </td>
+
+                            <td>
+                                1
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="status disconnected"
+                                >
+                                    Suspended
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="btn btn-green"
+                                    onclick="activateCustomer('Demo Customer')"
+                                >
+                                    Activate
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- WHATSAPP INSTANCES -->
+
+        <section class="section">
+
+            <h3>
+                WhatsApp Instances
+            </h3>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Instance
+                            </th>
+
+                            <th>
+                                Customer
+                            </th>
+
+                            <th>
+                                Phone
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        <tr>
+
+                            <td>
+                                Business Main
+                            </td>
+
+                            <td>
+                                John Trading
+                            </td>
+
+                            <td>
+                                +60 12 345 6789
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="status connected"
+                                >
+                                    Connected
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="btn btn-dark"
+                                    onclick="instanceAction('Business Main')"
+                                >
+                                    Manage
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Marketing
+                            </td>
+
+                            <td>
+                                ABC Marketing
+                            </td>
+
+                            <td>
+                                +60 11 2222 3333
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="status disconnected"
+                                >
+                                    Disconnected
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="btn btn-dark"
+                                    onclick="instanceAction('Marketing')"
+                                >
+                                    Manage
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- PAYMENTS -->
+
+        <section class="section">
+
+            <h3>
+                Recent Payments
+            </h3>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Customer
+                            </th>
+
+                            <th>
+                                Plan
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                01 Oct 2026
+                            </td>
+
+                            <td>
+                                John Trading
+                            </td>
+
+                            <td>
+                                Pro
+                            </td>
+
+                            <td>
+                                RM99
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="status connected"
+                                >
+                                    Paid
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                01 Oct 2026
+                            </td>
+
+                            <td>
+                                ABC Marketing
+                            </td>
+
+                            <td>
+                                Business
+                            </td>
+
+                            <td>
+                                RM199
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="status connected"
+                                >
+                                    Paid
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SYSTEM -->
+
+        <section class="section">
+
+            <h3>
+                System
+            </h3>
+
+
+            <div class="grid">
+
+
+                <div class="card">
+
+                    <p class="stat-label">
+                        GREEN-API
+                    </p>
+
+                    <h3>
+                        Demo Mode
+                    </h3>
+
+                    <span
+                        class="status disconnected"
+                    >
+                        Not Connected
+                    </span>
+
+                </div>
+
+
+                <div class="card">
+
+                    <p class="stat-label">
+                        Database
+                    </p>
+
+                    <h3>
+                        Demo Mode
+                    </h3>
+
+                    <span
+                        class="status disconnected"
+                    >
+                        D1 Not Connected
+                    </span>
+
+                </div>
+
+
+                <div class="card">
+
+                    <p class="stat-label">
+                        Payments
+                    </p>
+
+                    <h3>
+                        Demo Mode
+                    </h3>
+
+                    <span
+                        class="status disconnected"
+                    >
+                        Gateway Not Connected
+                    </span>
+
+                </div>
+
+
+                <div class="card">
+
+                    <p class="stat-label">
+                        API
+                    </p>
+
+                    <h3>
+                        Frontend Only
+                    </h3>
+
+                    <span
+                        class="status disconnected"
+                    >
+                        Worker Not Connected
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================
+   VIEW CUSTOMER
+========================= */
+
+function viewCustomer(name) {
+
+    alert(
+        "Customer: " +
+        name +
+        "\n\n" +
+        "Customer management will be connected to D1 later."
+    );
+
+}
+
+
+
+/* =========================
+   ACTIVATE CUSTOMER
+========================= */
+
+function activateCustomer(name) {
+
+    const confirmAction =
+        confirm(
+            "Activate " +
+            name +
+            "?"
+        );
+
+
+    if (!confirmAction) {
+
+        return;
+
+    }
+
+
+    alert(
+        "Demo only.\n\n" +
+        name +
+        " would be activated here."
+    );
+
+}
+
+
+
+/* =========================
+   INSTANCE
+========================= */
+
+function instanceAction(name) {
+
+    alert(
+        "Instance: " +
+        name +
+        "\n\n" +
+        "GREEN-API instance management will be connected later."
+    );
+
+}
+
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout() {
+
+    localStorage.removeItem(
+        "loggedIn"
+    );
+
+    localStorage.removeItem(
+        "userEmail"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+</script>
+
+</body>
+
+</html>
