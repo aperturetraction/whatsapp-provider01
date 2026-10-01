@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Billing - WhatsApp Provider</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+<div class="app">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            WhatsApp Provider
+        </div>
+
+
+        <nav class="menu">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="whatsapp.html">
+                WhatsApp
+            </a>
+
+            <a href="chat.html">
+                Chat
+            </a>
+
+            <a
+                href="billing.html"
+                class="active"
+            >
+                Billing
+            </a>
+
+            <a href="#">
+                Account
+            </a>
+
+            <a href="#">
+                Admin
+            </a>
+
+        </nav>
+
+
+        <button
+            class="btn btn-dark"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </aside>
+
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <div>
+
+                <h2>
+                    Billing
+                </h2>
+
+                <p>
+                    Manage your subscription and payments
+                </p>
+
+            </div>
+
+
+            <div class="user">
+
+                <span id="userEmail">
+                    User
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CURRENT PLAN -->
+
+        <section class="section">
+
+            <h3>
+                Current Plan
+            </h3>
+
+
+            <div class="card">
+
+                <div>
+
+                    <p class="stat-label">
+                        Active Subscription
+                    </p>
+
+                    <h2>
+                        Pro
+                    </h2>
+
+                    <p>
+                        RM99 / month
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <span class="status connected">
+                        ● Active
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- PLANS -->
+
+        <section class="section">
+
+            <h3>
+                Choose a Plan
+            </h3>
+
+
+            <div class="pricing-grid">
+
+
+                <!-- STARTER -->
+
+                <div class="plan">
+
+                    <h3>
+                        Starter
+                    </h3>
+
+                    <div class="price">
+                        RM49
+                        <span>
+                            / month
+                        </span>
+                    </div>
+
+
+                    <ul>
+
+                        <li>
+                            1 WhatsApp Account
+                        </li>
+
+                        <li>
+                            1 User
+                        </li>
+
+                        <li>
+                            Basic Chat
+                        </li>
+
+                        <li>
+                            Basic Dashboard
+                        </li>
+
+                        <li>
+                            Email Support
+                        </li>
+
+                    </ul>
+
+
+                    <button
+                        class="btn btn-dark"
+                        onclick="selectPlan('Starter', 49)"
+                    >
+                        Choose Starter
+                    </button>
+
+                </div>
+
+
+
+                <!-- PRO -->
+
+                <div class="plan">
+
+                    <h3>
+                        Pro
+                    </h3>
+
+                    <div class="price">
+                        RM99
+                        <span>
+                            / month
+                        </span>
+                    </div>
+
+
+                    <ul>
+
+                        <li>
+                            3 WhatsApp Accounts
+                        </li>
+
+                        <li>
+                            3 Users
+                        </li>
+
+                        <li>
+                            WhatsApp Chat
+                        </li>
+
+                        <li>
+                            Message Management
+                        </li>
+
+                        <li>
+                            Priority Support
+                        </li>
+
+                    </ul>
+
+
+                    <button
+                        class="btn btn-green"
+                        onclick="selectPlan('Pro', 99)"
+                    >
+                        Current Plan
+                    </button>
+
+                </div>
+
+
+
+                <!-- BUSINESS -->
+
+                <div class="plan">
+
+                    <h3>
+                        Business
+                    </h3>
+
+                    <div class="price">
+                        RM199
+                        <span>
+                            / month
+                        </span>
+                    </div>
+
+
+                    <ul>
+
+                        <li>
+                            10 WhatsApp Accounts
+                        </li>
+
+                        <li>
+                            10 Users
+                        </li>
+
+                        <li>
+                            Advanced Chat
+                        </li>
+
+                        <li>
+                            Automation
+                        </li>
+
+                        <li>
+                            Priority Support
+                        </li>
+
+                    </ul>
+
+
+                    <button
+                        class="btn btn-dark"
+                        onclick="selectPlan('Business', 199)"
+                    >
+                        Choose Business
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- PAYMENT HISTORY -->
+
+        <section class="section">
+
+            <h3>
+                Payment History
+            </h3>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Plan
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                01 Oct 2026
+                            </td>
+
+                            <td>
+                                Pro
+                            </td>
+
+                            <td>
+                                RM99
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="status connected"
+                                >
+                                    Paid
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                01 Sep 2026
+                            </td>
+
+                            <td>
+                                Pro
+                            </td>
+
+                            <td>
+                                RM99
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="status connected"
+                                >
+                                    Paid
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                01 Aug 2026
+                            </td>
+
+                            <td>
+                                Pro
+                            </td>
+
+                            <td>
+                                RM99
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="status connected"
+                                >
+                                    Paid
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- PAYMENT INFO -->
+
+        <section class="section">
+
+            <h3>
+                Payment Method
+            </h3>
+
+
+            <div class="card">
+
+                <div>
+
+                    <p class="stat-label">
+                        Current Payment Method
+                    </p>
+
+                    <h3>
+                        No payment method connected
+                    </h3>
+
+                    <p>
+                        Add a payment method when online
+                        billing is enabled.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="btn btn-green"
+                    onclick="addPaymentMethod()"
+                >
+                    Add Payment Method
+                </button>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================
+   LOAD USER
+========================= */
+
+const email =
+    localStorage.getItem("userEmail");
+
+if (email) {
+
+    document.getElementById(
+        "userEmail"
+    ).innerText = email;
+
+}
+
+
+
+/* =========================
+   SELECT PLAN
+========================= */
+
+function selectPlan(
+    plan,
+    price
+) {
+
+    const confirmed =
+        confirm(
+            "Choose " +
+            plan +
+            " plan for RM" +
+            price +
+            " / month?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    alert(
+        "Demo only.\n\n" +
+        "Selected Plan: " +
+        plan +
+        "\n" +
+        "Price: RM" +
+        price +
+        " / month"
+    );
+
+
+    /*
+        FUTURE PAYMENT FLOW:
+
+        Customer
+           ↓
+        Billing Page
+           ↓
+        Payment Gateway
+           ↓
+        Payment Success
+           ↓
+        Cloudflare Worker
+           ↓
+        D1 Database
+           ↓
+        Update Subscription
+    */
+
+}
+
+
+
+/* =========================
+   PAYMENT METHOD
+========================= */
+
+function addPaymentMethod() {
+
+    alert(
+        "Payment gateway will be connected here."
+    );
+
+}
+
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout() {
+
+    localStorage.removeItem(
+        "loggedIn"
+    );
+
+    localStorage.removeItem(
+        "userEmail"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+</script>
+
+</body>
+
+</html>
