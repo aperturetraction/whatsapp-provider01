@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>WhatsApp Chat</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            WhatsApp Provider
+        </div>
+
+        <nav class="menu">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="whatsapp.html">
+                WhatsApp
+            </a>
+
+            <a
+                href="chat.html"
+                class="active"
+            >
+                Chat
+            </a>
+
+            <a href="#">
+                Billing
+            </a>
+
+            <a href="#">
+                Account
+            </a>
+
+            <a href="#">
+                Admin
+            </a>
+
+        </nav>
+
+        <button
+            class="btn btn-dark"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <!-- TOP BAR -->
+
+        <div class="topbar">
+
+            <div>
+                <h2>
+                    WhatsApp Chat
+                </h2>
+
+                <p>
+                    Send and manage WhatsApp messages
+                </p>
+            </div>
+
+            <div class="user">
+
+                <span id="userEmail">
+                    User
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHAT -->
+
+        <section class="chat-layout">
+
+
+            <!-- CONTACT LIST -->
+
+            <div class="contacts">
+
+                <div class="chat-header">
+
+                    <strong>
+                        Conversations
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="contact active"
+                    onclick="openChat('John')"
+                >
+
+                    <div>
+                        <strong>
+                            John
+                        </strong>
+
+                        <p>
+                            Hi, how are you?
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="contact"
+                    onclick="openChat('Sarah')"
+                >
+
+                    <div>
+                        <strong>
+                            Sarah
+                        </strong>
+
+                        <p>
+                            Thank you!
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="contact"
+                    onclick="openChat('Michael')"
+                >
+
+                    <div>
+                        <strong>
+                            Michael
+                        </strong>
+
+                        <p>
+                            Can you send me the details?
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="contact"
+                    onclick="openChat('Customer')"
+                >
+
+                    <div>
+                        <strong>
+                            Customer
+                        </strong>
+
+                        <p>
+                            New conversation
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CHAT WINDOW -->
+
+            <div class="chat">
+
+
+                <!-- CHAT HEADER -->
+
+                <div class="chat-header">
+
+                    <div>
+
+                        <strong id="chatName">
+                            John
+                        </strong>
+
+                        <p>
+                            <span class="status connected">
+                                ● Online
+                            </span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MESSAGES -->
+
+                <div
+                    class="messages"
+                    id="messages"
+                >
+
+                    <div class="message received">
+
+                        Hi! How are you?
+
+                    </div>
+
+
+                    <div class="message sent">
+
+                        I'm good. How can I help you?
+
+                    </div>
+
+
+                    <div class="message received">
+
+                        I want to know more about your service.
+
+                    </div>
+
+                </div>
+
+
+                <!-- MESSAGE INPUT -->
+
+                <div class="chat-input">
+
+                    <input
+                        type="text"
+                        id="messageInput"
+                        placeholder="Type a message..."
+                        onkeypress="handleKey(event)"
+                    >
+
+                    <button
+                        class="btn btn-green"
+                        onclick="sendMessage()"
+                    >
+                        Send
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+
+/* =========================
+   LOAD USER
+========================= */
+
+const email =
+    localStorage.getItem("userEmail");
+
+if (email) {
+
+    document.getElementById(
+        "userEmail"
+    ).innerText = email;
+
+}
+
+
+/* =========================
+   OPEN CHAT
+========================= */
+
+function openChat(name) {
+
+    document.getElementById(
+        "chatName"
+    ).innerText = name;
+
+
+    const contacts =
+        document.querySelectorAll(
+            ".contact"
+        );
+
+
+    contacts.forEach(function(contact) {
+
+        contact.classList.remove(
+            "active"
+        );
+
+    });
+
+
+    event.currentTarget.classList.add(
+        "active"
+    );
+
+
+    document.getElementById(
+        "messages"
+    ).innerHTML = `
+
+        <div class="message received">
+
+            Hi! This is ${name}.
+
+        </div>
+
+        <div class="message received">
+
+            How can I help you?
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   SEND MESSAGE
+========================= */
+
+function sendMessage() {
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+    const message =
+        input.value.trim();
+
+
+    if (!message) {
+
+        return;
+
+    }
+
+
+    const messages =
+        document.getElementById(
+            "messages"
+        );
+
+
+    const newMessage =
+        document.createElement(
+            "div"
+        );
+
+
+    newMessage.className =
+        "message sent";
+
+
+    newMessage.innerText =
+        message;
+
+
+    messages.appendChild(
+        newMessage
+    );
+
+
+    input.value = "";
+
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+
+    /*
+       DEMO AUTO REPLY
+
+       Later this will be replaced by:
+
+       Cloudflare Worker
+              ↓
+       GREEN-API
+              ↓
+       WhatsApp
+    */
+
+    setTimeout(function() {
+
+        const reply =
+            document.createElement(
+                "div"
+            );
+
+
+        reply.className =
+            "message received";
+
+
+        reply.innerText =
+            "Demo reply: Message received.";
+
+
+        messages.appendChild(
+            reply
+        );
+
+
+        messages.scrollTop =
+            messages.scrollHeight;
+
+    }, 1000);
+
+}
+
+
+/* =========================
+   ENTER TO SEND
+========================= */
+
+function handleKey(event) {
+
+    if (
+        event.key === "Enter"
+    ) {
+
+        sendMessage();
+
+    }
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout() {
+
+    localStorage.removeItem(
+        "loggedIn"
+    );
+
+    localStorage.removeItem(
+        "userEmail"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+</script>
+
+</body>
+
+</html>
