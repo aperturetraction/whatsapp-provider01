@@ -361,13 +361,13 @@ input.invalid{
       <div class="brand-name">ChatNova</div>
     </div>
 
-    <!-- LANGUAGE SWITCH -->
     <div class="language">
 
       <button
         type="button"
         class="lang"
         id="enBtn"
+        onclick="changeLanguage('en')"
       >
         EN
       </button>
@@ -376,6 +376,7 @@ input.invalid{
         type="button"
         class="lang"
         id="zhBtn"
+        onclick="changeLanguage('zh')"
       >
         中文
       </button>
@@ -383,7 +384,6 @@ input.invalid{
     </div>
 
   </div>
-
 
   <div class="card">
 
@@ -404,14 +404,12 @@ input.invalid{
 
     </div>
 
-
     <form id="registerForm">
 
       <div
         id="message"
         class="message"
       ></div>
-
 
       <!-- FULL NAME -->
 
@@ -432,7 +430,6 @@ input.invalid{
         >
 
       </div>
-
 
       <!-- COMPANY -->
 
@@ -461,7 +458,6 @@ input.invalid{
 
       </div>
 
-
       <!-- EMAIL -->
 
       <div class="field">
@@ -481,7 +477,6 @@ input.invalid{
         >
 
       </div>
-
 
       <!-- PHONE -->
 
@@ -510,7 +505,6 @@ input.invalid{
 
       </div>
 
-
       <!-- PASSWORD -->
 
       <div class="field">
@@ -536,6 +530,7 @@ input.invalid{
             type="button"
             class="show-btn"
             id="passwordBtn"
+            onclick="togglePassword('password','passwordBtn')"
           >
             Show
           </button>
@@ -550,7 +545,6 @@ input.invalid{
         </div>
 
       </div>
-
 
       <!-- CONFIRM PASSWORD -->
 
@@ -577,6 +571,7 @@ input.invalid{
             type="button"
             class="show-btn"
             id="confirmPasswordBtn"
+            onclick="togglePassword('confirmPassword','confirmPasswordBtn')"
           >
             Show
           </button>
@@ -584,7 +579,6 @@ input.invalid{
         </div>
 
       </div>
-
 
       <!-- TERMS -->
 
@@ -605,7 +599,6 @@ input.invalid{
 
       </div>
 
-
       <!-- CREATE ACCOUNT -->
 
       <button
@@ -617,7 +610,6 @@ input.invalid{
       </button>
 
     </form>
-
 
     <div class="footer">
 
@@ -636,7 +628,6 @@ input.invalid{
 
     </div>
 
-
     <div class="security">
 
       <span class="dot"></span>
@@ -650,7 +641,6 @@ input.invalid{
   </div>
 
 </div>
-
 
 <script>
 
@@ -882,6 +872,10 @@ function getText(){
 
 function changeLanguage(newLanguage){
 
+  if(newLanguage !== "en" && newLanguage !== "zh"){
+    return;
+  }
+
   language = newLanguage;
 
   localStorage.setItem(
@@ -902,25 +896,21 @@ function renderLanguage(){
 
   const t = getText();
 
-
   document.documentElement.lang =
     language === "zh"
       ? "zh-CN"
       : "en";
-
 
   document.title =
     language === "zh"
       ? "ChatNova — 创建账户"
       : "ChatNova — Create Account";
 
-
   document.getElementById("title")
     .textContent = t.title;
 
   document.getElementById("subtitle")
     .textContent = t.subtitle;
-
 
   document.getElementById("fullNameLabel")
     .textContent = t.fullName;
@@ -946,7 +936,6 @@ function renderLanguage(){
   document.getElementById("confirmPasswordLabel")
     .textContent = t.confirmPassword;
 
-
   document.getElementById("fullName")
     .placeholder =
     t.fullNamePlaceholder;
@@ -971,7 +960,6 @@ function renderLanguage(){
     .placeholder =
     t.confirmPasswordPlaceholder;
 
-
   document.getElementById("passwordHint")
     .textContent =
     t.passwordHint;
@@ -979,13 +967,6 @@ function renderLanguage(){
   document.getElementById("termsLabel")
     .textContent =
     t.terms;
-
-
-  /*
-    Only change Create button text
-    if registration is not currently
-    in progress.
-  */
 
   const button =
     document.getElementById("createBtn");
@@ -996,7 +977,6 @@ function renderLanguage(){
       t.create;
 
   }
-
 
   document.getElementById("alreadyText")
     .textContent =
@@ -1010,7 +990,6 @@ function renderLanguage(){
     .textContent =
     t.secure;
 
-
   updatePasswordButton(
     "password",
     "passwordBtn"
@@ -1020,7 +999,6 @@ function renderLanguage(){
     "confirmPassword",
     "confirmPasswordBtn"
   );
-
 
   document.getElementById("enBtn")
     .classList.toggle(
@@ -1038,34 +1016,6 @@ function renderLanguage(){
 
 
 /* =====================================================
-   LANGUAGE BUTTON EVENTS
-===================================================== */
-
-document
-  .getElementById("enBtn")
-  .addEventListener(
-    "click",
-    function(){
-
-      changeLanguage("en");
-
-    }
-  );
-
-
-document
-  .getElementById("zhBtn")
-  .addEventListener(
-    "click",
-    function(){
-
-      changeLanguage("zh");
-
-    }
-  );
-
-
-/* =====================================================
    PASSWORD SHOW / HIDE
 ===================================================== */
 
@@ -1079,7 +1029,6 @@ function togglePassword(
 
   const button =
     document.getElementById(buttonId);
-
 
   if(
     input.type === "password"
@@ -1113,13 +1062,9 @@ function updatePasswordButton(
   const button =
     document.getElementById(buttonId);
 
-
   if(!input || !button){
-
     return;
-
   }
-
 
   button.textContent =
     input.type === "password"
@@ -1127,36 +1072,6 @@ function updatePasswordButton(
       : getText().hide;
 
 }
-
-
-document
-  .getElementById("passwordBtn")
-  .addEventListener(
-    "click",
-    function(){
-
-      togglePassword(
-        "password",
-        "passwordBtn"
-      );
-
-    }
-  );
-
-
-document
-  .getElementById("confirmPasswordBtn")
-  .addEventListener(
-    "click",
-    function(){
-
-      togglePassword(
-        "confirmPassword",
-        "confirmPasswordBtn"
-      );
-
-    }
-  );
 
 
 /* =====================================================
@@ -1230,10 +1145,8 @@ async function registerUser(event){
 
   clearMessage();
 
-
   const t =
     getText();
-
 
   const fullName =
     document.getElementById("fullName")
@@ -1437,7 +1350,6 @@ async function registerUser(event){
         t.success
       );
 
-
       setTimeout(
         function(){
 
@@ -1447,7 +1359,6 @@ async function registerUser(event){
         },
         1000
       );
-
 
       return;
 
@@ -1466,7 +1377,6 @@ async function registerUser(event){
         data.message ||
         data.error ||
         "";
-
 
       const lower =
         serverMessage.toLowerCase();
@@ -1519,7 +1429,6 @@ async function registerUser(event){
       "ChatNova registration error:",
       error
     );
-
 
     showMessage(
       "error",
