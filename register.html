@@ -1,89 +1,572 @@
-<div class="brand">
-  <div class="logo">WP</div>
-  <h1>Customer Portal</h1>
-  <p>Create your customer account</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatNova — Create Account</title>
 
-<div class="card">
+  <style>
+    :root {
+      --bg: #080a09;
+      --panel: #101311;
+      --panel-2: #0d100e;
+      --border: #202522;
+      --border-hover: #303832;
+      --text: #f4f7f5;
+      --muted: #8b938e;
+      --green: #19c37d;
+      --green-dark: #0e9f63;
+      --danger: #ff5f5f;
+      --success: #19c37d;
+      --input: #0b0e0c;
+    }
 
-  <h2>Create Account</h2>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  <p class="description">
-    Create an account to access your customer portal
-    and manage your messaging service.
-  </p>
+    body {
+      min-height: 100vh;
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      background:
+        radial-gradient(
+          circle at top center,
+          rgba(25, 195, 125, 0.08),
+          transparent 35%
+        ),
+        var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 16px;
+    }
 
-  <div class="notice">
-    <strong>Important</strong>
-    This portal is operated independently and is not an official
-    WhatsApp or Meta login service. Do not enter third-party
-    account credentials here.
-  </div>
+    .page {
+      width: 100%;
+      max-width: 500px;
+    }
 
-  <form onsubmit="register(event)">
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
 
-    <div class="form-group">
-      <label for="name">Full Name</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        placeholder="Enter your full name"
-        autocomplete="name"
-        required
-      >
+    .brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mini-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(
+        135deg,
+        var(--green),
+        var(--green-dark)
+      );
+      color: #06120d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .brand-mini-name {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    .language {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 4px;
+      background: #0d110f;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .lang-btn {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .lang-btn:hover {
+      color: var(--text);
+    }
+
+    .lang-btn.active {
+      background: rgba(25, 195, 125, 0.13);
+      color: var(--green);
+    }
+
+    .card {
+      background: rgba(16, 19, 17, 0.96);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 34px;
+      box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(255, 255, 255, 0.01);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 18px;
+      border-radius: 17px;
+      background: linear-gradient(
+        135deg,
+        var(--green),
+        var(--green-dark)
+      );
+      color: #06120d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      font-weight: 900;
+      box-shadow: 0 10px 35px rgba(25, 195, 125, 0.15);
+    }
+
+    h1 {
+      font-size: 27px;
+      line-height: 1.2;
+      letter-spacing: -0.7px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 17px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #d8dedb;
+    }
+
+    .optional {
+      color: #69716c;
+      font-weight: 500;
+      margin-left: 4px;
+    }
+
+    input {
+      width: 100%;
+      height: 48px;
+      padding: 0 14px;
+      border-radius: 11px;
+      border: 1px solid var(--border);
+      outline: none;
+      background: var(--input);
+      color: var(--text);
+      font-size: 14px;
+      transition: 0.2s ease;
+    }
+
+    input::placeholder {
+      color: #59615c;
+    }
+
+    input:hover {
+      border-color: var(--border-hover);
+    }
+
+    input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(25, 195, 125, 0.09);
+    }
+
+    .password-wrap {
+      position: relative;
+    }
+
+    .password-wrap input {
+      padding-right: 70px;
+    }
+
+    .show-password {
+      position: absolute;
+      right: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .show-password:hover {
+      color: var(--green);
+    }
+
+    .password-hint {
+      color: #69716c;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .terms {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      margin-top: 2px;
+    }
+
+    .terms input {
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      margin-top: 2px;
+      accent-color: var(--green);
+      cursor: pointer;
+    }
+
+    .terms label {
+      color: #858e88;
+      font-size: 11px;
+      line-height: 1.5;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .submit-btn {
+      width: 100%;
+      height: 50px;
+      border: 0;
+      border-radius: 11px;
+      background: var(--green);
+      color: #06120d;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 4px;
+      transition: 0.2s ease;
+    }
+
+    .submit-btn:hover {
+      background: #22d889;
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .message {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      line-height: 1.5;
+      margin-bottom: 3px;
+    }
+
+    .message.error {
+      display: block;
+      background: rgba(255, 95, 95, 0.08);
+      border: 1px solid rgba(255, 95, 95, 0.2);
+      color: #ff8d8d;
+    }
+
+    .message.success {
+      display: block;
+      background: rgba(25, 195, 125, 0.08);
+      border: 1px solid rgba(25, 195, 125, 0.2);
+      color: #62e7ac;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 25px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer a {
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .security-note {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+      color: #626a65;
+      font-size: 10px;
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    .security-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(25, 195, 125, 0.6);
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 18px 12px;
+        align-items: flex-start;
+      }
+
+      .page {
+        margin-top: 5px;
+      }
+
+      .card {
+        padding: 25px 20px;
+        border-radius: 17px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .topbar {
+        margin-bottom: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <div class="topbar">
+
+      <div class="brand-mini">
+        <div class="brand-mini-logo">CN</div>
+        <div class="brand-mini-name">ChatNova</div>
+      </div>
+
+      <div class="language">
+        <button
+          type="button"
+          class="lang-btn"
+          id="langEN"
+          onclick="setLanguage('en')"
+        >
+          EN
+        </button>
+
+        <button
+          type="button"
+          class="lang-btn"
+          id="langZH"
+          onclick="setLanguage('zh')"
+        >
+          中文
+        </button>
+      </div>
+
     </div>
 
-    <div class="form-group">
-      <label for="email">Email Address</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="you@example.com"
-        autocomplete="email"
-        required
+    <div class="card">
+
+      <div class="header">
+
+        <div class="logo">CN</div>
+
+        <h1 data-i18n="title">
+          Create your account
+        </h1>
+
+        <p class="subtitle" data-i18n="subtitle">
+          Start managing your WhatsApp business communications with ChatNova.
+        </p>
+
+      </div>
+
+      <form
+        class="form"
+        id="registerForm"
+        onsubmit="register(event)"
       >
-    </div>
 
-    <div class="form-group">
-      <label for="phone">Phone / WhatsApp</label>
-      <input
-        type="tel"
-        id="phone"
-        name="phone"
-        placeholder="+60 12 345 6789"
-        autocomplete="tel"
-        required
-      >
-    </div>
+        <div
+          id="message"
+          class="message"
+        ></div>
 
-    <div class="form-group">
-      <label for="accessCode">Create Access Code</label>
-      <input
-        type="text"
-        id="accessCode"
-        name="accessCode"
-        placeholder="Create your portal access code"
-        autocomplete="off"
-        required
-      >
-    </div>
+        <!-- Full Name -->
+        <div class="field">
 
-    <button type="submit">
-      Create Account
-    </button>
+          <label for="fullName" data-i18n="fullName">
+            Full Name
+          </label>
 
-  </form>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            autocomplete="name"
+            placeholder="Enter your full name"
+            data-placeholder="fullNamePlaceholder"
+            required
+          >
 
-  <div class="back">
-    Already have an account?
-    <a href="index.html">Sign In</a>
-  </div>
+        </div>
 
-  <div class="security">
-    Do not use passwords, verification codes, or credentials
-    belonging to third-party services.
-  </div>
+        <!-- Company -->
+        <div class="field">
 
-</div>
+          <label for="companyName">
+
+            <span data-i18n="companyName">
+              Company Name
+            </span>
+
+            <span
+              class="optional"
+              data-i18n="optional"
+            >
+              Optional
+            </span>
+
+          </label>
+
+          <input
+            type="text"
+            id="companyName"
+            name="companyName"
+            autocomplete="organization"
+            placeholder="Enter your company name"
+            data-placeholder="companyPlaceholder"
+          >
+
+        </div>
+
+        <!-- Email -->
+        <div class="field">
+
+          <label for="email" data-i18n="email">
+            Email Address
+          </label>
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            autocomplete="email"
+            placeholder="you@example.com"
+            data-placeholder="emailPlaceholder"
+            required
+          >
+
+        </div>
+
+        <!-- Phone -->
+        <div class="field">
+
+          <label for="phone">
+
+            <span data-i18n="phone">
+              Phone / WhatsApp
+            </span>
+
+            <span
+              class="optional"
+              data-i18n="optional"
+            >
+              Optional
+            </span>
+
+          </label>
+
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            autocomplete="tel"
+            placeholder="+60 12 345 6789"
+            data-placeholder="phonePlaceholder"
+          >
+
+        </div>
+
+        <!-- Password -->
+        <div class="field">
+
+          <label for="password" data-i18n="password">
+            Password
+          </label>
+
+          <div class="password-wrap">
+
+            <input
+              type="password"
+              id="password"
+              name="password"
+              autocomplete="new-password"
+              placeholder="Create a password"
+              data-placeholder="passwordPlaceholder"
+              minlength="8"
+              required
+            >
+
+            <button
+              type="button"
+              class="show-password"
+              onclick
