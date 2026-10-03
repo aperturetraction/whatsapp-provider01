@@ -52,8 +52,6 @@ body{
   max-width:500px;
 }
 
-/* TOP BAR */
-
 .topbar{
   display:flex;
   justify-content:space-between;
@@ -71,11 +69,7 @@ body{
   width:36px;
   height:36px;
   border-radius:10px;
-  background:linear-gradient(
-    135deg,
-    #19c37d,
-    #0e9f63
-  );
+  background:linear-gradient(135deg,#19c37d,#0e9f63);
   color:#06120d;
   display:flex;
   align-items:center;
@@ -88,8 +82,6 @@ body{
   font-size:16px;
   font-weight:800;
 }
-
-/* LANGUAGE */
 
 .language{
   display:flex;
@@ -104,15 +96,11 @@ body{
   border:0;
   background:transparent;
   color:var(--muted);
-  padding:6px 10px;
+  padding:7px 11px;
   border-radius:7px;
   font-size:12px;
   font-weight:700;
   cursor:pointer;
-}
-
-.lang:hover{
-  color:var(--text);
 }
 
 .lang.active{
@@ -120,18 +108,13 @@ body{
   color:var(--green);
 }
 
-/* CARD */
-
 .card{
   background:rgba(16,19,17,.97);
   border:1px solid var(--border);
   border-radius:20px;
   padding:34px;
-  box-shadow:
-    0 25px 80px rgba(0,0,0,.45);
+  box-shadow:0 25px 80px rgba(0,0,0,.45);
 }
-
-/* HEADER */
 
 .header{
   text-align:center;
@@ -143,19 +126,14 @@ body{
   height:60px;
   margin:0 auto 17px;
   border-radius:17px;
-  background:linear-gradient(
-    135deg,
-    #19c37d,
-    #0e9f63
-  );
+  background:linear-gradient(135deg,#19c37d,#0e9f63);
   color:#06120d;
   display:flex;
   align-items:center;
   justify-content:center;
   font-size:20px;
   font-weight:900;
-  box-shadow:
-    0 12px 35px rgba(25,195,125,.15);
+  box-shadow:0 12px 35px rgba(25,195,125,.15);
 }
 
 h1{
@@ -170,8 +148,6 @@ h1{
   font-size:14px;
   line-height:1.6;
 }
-
-/* FORM */
 
 form{
   display:flex;
@@ -218,15 +194,12 @@ input::placeholder{
 
 input:focus{
   border-color:var(--green);
-  box-shadow:
-    0 0 0 3px rgba(25,195,125,.09);
+  box-shadow:0 0 0 3px rgba(25,195,125,.09);
 }
 
 input.invalid{
   border-color:var(--danger);
 }
-
-/* PASSWORD */
 
 .password-box{
   position:relative;
@@ -258,8 +231,6 @@ input.invalid{
   font-size:11px;
 }
 
-/* MESSAGE */
-
 .message{
   display:none;
   padding:12px 14px;
@@ -282,13 +253,10 @@ input.invalid{
   color:#62e7ac;
 }
 
-/* TERMS */
-
 .terms{
   display:flex;
   align-items:flex-start;
   gap:9px;
-  margin-top:1px;
 }
 
 .terms input{
@@ -305,8 +273,6 @@ input.invalid{
   line-height:1.5;
   font-weight:500;
 }
-
-/* BUTTON */
 
 .create-btn{
   width:100%;
@@ -330,8 +296,6 @@ input.invalid{
   cursor:not-allowed;
 }
 
-/* FOOTER */
-
 .footer{
   text-align:center;
   margin-top:24px;
@@ -345,10 +309,6 @@ input.invalid{
   color:var(--green);
   text-decoration:none;
   font-weight:700;
-}
-
-.footer a:hover{
-  text-decoration:underline;
 }
 
 .security{
@@ -368,10 +328,7 @@ input.invalid{
   background:var(--green);
 }
 
-/* MOBILE */
-
 @media(max-width:520px){
-
   body{
     align-items:flex-start;
     padding:18px 12px;
@@ -389,40 +346,28 @@ input.invalid{
   h1{
     font-size:24px;
   }
-
 }
 </style>
 </head>
-
 
 <body>
 
 <div class="container">
 
-  <!-- TOP BAR -->
-
   <div class="topbar">
 
     <div class="brand">
-
-      <div class="brand-logo">
-        CN
-      </div>
-
-      <div class="brand-name">
-        ChatNova
-      </div>
-
+      <div class="brand-logo">CN</div>
+      <div class="brand-name">ChatNova</div>
     </div>
 
-
+    <!-- LANGUAGE SWITCH -->
     <div class="language">
 
       <button
         type="button"
         class="lang"
         id="enBtn"
-        onclick="setLanguage('en')"
       >
         EN
       </button>
@@ -431,7 +376,6 @@ input.invalid{
         type="button"
         class="lang"
         id="zhBtn"
-        onclick="setLanguage('zh')"
       >
         中文
       </button>
@@ -441,17 +385,11 @@ input.invalid{
   </div>
 
 
-  <!-- CARD -->
-
   <div class="card">
-
-    <!-- HEADER -->
 
     <div class="header">
 
-      <div class="logo">
-        CN
-      </div>
+      <div class="logo">CN</div>
 
       <h1 id="title">
         Create your account
@@ -467,14 +405,7 @@ input.invalid{
     </div>
 
 
-    <!-- REGISTER FORM -->
-
-    <form
-      id="registerForm"
-      onsubmit="registerUser(event)"
-    >
-
-      <!-- MESSAGE -->
+    <form id="registerForm">
 
       <div
         id="message"
@@ -486,14 +417,16 @@ input.invalid{
 
       <div class="field">
 
-        <label for="fullName" id="fullNameLabel">
+        <label
+          for="fullName"
+          id="fullNameLabel"
+        >
           Full Name
         </label>
 
         <input
           type="text"
           id="fullName"
-          autocomplete="name"
           placeholder="Enter your full name"
           required
         >
@@ -523,7 +456,6 @@ input.invalid{
         <input
           type="text"
           id="companyName"
-          autocomplete="organization"
           placeholder="Enter your company name"
         >
 
@@ -544,7 +476,6 @@ input.invalid{
         <input
           type="email"
           id="email"
-          autocomplete="email"
           placeholder="you@example.com"
           required
         >
@@ -574,7 +505,6 @@ input.invalid{
         <input
           type="tel"
           id="phone"
-          autocomplete="tel"
           placeholder="+60 12 345 6789"
         >
 
@@ -597,7 +527,6 @@ input.invalid{
           <input
             type="password"
             id="password"
-            autocomplete="new-password"
             placeholder="Create a password"
             minlength="8"
             required
@@ -607,7 +536,6 @@ input.invalid{
             type="button"
             class="show-btn"
             id="passwordBtn"
-            onclick="togglePassword('password','passwordBtn')"
           >
             Show
           </button>
@@ -640,7 +568,6 @@ input.invalid{
           <input
             type="password"
             id="confirmPassword"
-            autocomplete="new-password"
             placeholder="Confirm your password"
             minlength="8"
             required
@@ -650,7 +577,6 @@ input.invalid{
             type="button"
             class="show-btn"
             id="confirmPasswordBtn"
-            onclick="togglePassword('confirmPassword','confirmPasswordBtn')"
           >
             Show
           </button>
@@ -693,8 +619,6 @@ input.invalid{
     </form>
 
 
-    <!-- FOOTER -->
-
     <div class="footer">
 
       <span id="alreadyText">
@@ -713,8 +637,6 @@ input.invalid{
     </div>
 
 
-    <!-- SECURITY -->
-
     <div class="security">
 
       <span class="dot"></span>
@@ -732,282 +654,266 @@ input.invalid{
 
 <script>
 
-/* =========================================================
-   CHATNOVA WORKER
-========================================================= */
+/* =====================================================
+   CHATNOVA API
+===================================================== */
 
 const API_BASE =
   "https://whatsapp-provider-api.b79gn827py.workers.dev";
 
 
-/* =========================================================
+/* =====================================================
    TRANSLATIONS
-========================================================= */
+===================================================== */
 
-const text = {
+const EN = {
 
-  en: {
+  title:"Create your account",
 
-    title:
-      "Create your account",
+  subtitle:
+    "Start managing your WhatsApp business communications with ChatNova.",
 
-    subtitle:
-      "Start managing your WhatsApp business communications with ChatNova.",
+  fullName:"Full Name",
 
-    fullName:
-      "Full Name",
+  fullNamePlaceholder:
+    "Enter your full name",
 
-    fullNamePlaceholder:
-      "Enter your full name",
+  company:"Company Name",
 
-    company:
-      "Company Name",
+  companyPlaceholder:
+    "Enter your company name",
 
-    companyPlaceholder:
-      "Enter your company name",
+  optional:"Optional",
 
-    optional:
-      "Optional",
+  email:"Email Address",
 
-    email:
-      "Email Address",
+  emailPlaceholder:
+    "you@example.com",
 
-    emailPlaceholder:
-      "you@example.com",
+  phone:"Phone / WhatsApp",
 
-    phone:
-      "Phone / WhatsApp",
+  phonePlaceholder:
+    "+60 12 345 6789",
 
-    phonePlaceholder:
-      "+60 12 345 6789",
+  password:"Password",
 
-    password:
-      "Password",
+  passwordPlaceholder:
+    "Create a password",
 
-    passwordPlaceholder:
-      "Create a password",
+  passwordHint:
+    "Minimum 8 characters.",
 
-    passwordHint:
-      "Minimum 8 characters.",
+  confirmPassword:
+    "Confirm Password",
 
-    confirmPassword:
-      "Confirm Password",
+  confirmPasswordPlaceholder:
+    "Confirm your password",
 
-    confirmPasswordPlaceholder:
-      "Confirm your password",
+  show:"Show",
 
-    show:
-      "Show",
+  hide:"Hide",
 
-    hide:
-      "Hide",
+  terms:
+    "I agree to use ChatNova in accordance with applicable laws and platform rules.",
 
-    terms:
-      "I agree to use ChatNova in accordance with applicable laws and platform rules.",
+  create:"Create Account",
 
-    create:
-      "Create Account",
+  creating:"Creating Account...",
 
-    creating:
-      "Creating Account...",
+  already:
+    "Already have an account?",
 
-    already:
-      "Already have an account?",
+  login:"Login",
 
-    login:
-      "Login",
+  secure:
+    "Secure account registration",
 
-    secure:
-      "Secure account registration",
+  required:
+    "Please complete all required fields.",
 
-    required:
-      "Please complete all required fields.",
+  invalidEmail:
+    "Please enter a valid email address.",
 
-    invalidEmail:
-      "Please enter a valid email address.",
+  shortPassword:
+    "Password must be at least 8 characters.",
 
-    shortPassword:
-      "Password must be at least 8 characters.",
+  mismatch:
+    "Passwords do not match.",
 
-    mismatch:
-      "Passwords do not match.",
+  acceptTerms:
+    "Please accept the terms before creating your account.",
 
-    acceptTerms:
-      "Please accept the terms before creating your account.",
+  success:
+    "Account created successfully. Redirecting...",
 
-    success:
-      "Account created successfully. Redirecting...",
+  exists:
+    "An account with this email already exists.",
 
-    exists:
-      "An account with this email already exists.",
+  disabled:
+    "This account is disabled.",
 
-    disabled:
-      "This account is disabled.",
+  failed:
+    "Registration failed. Please try again.",
 
-    failed:
-      "Registration failed. Please try again.",
+  network:
+    "Unable to connect to ChatNova. Please check your internet connection and try again.",
 
-    network:
-      "Unable to connect to ChatNova. Please check your internet connection and try again.",
-
-    server:
-      "Server error. Please try again later."
-
-  },
-
-
-  zh: {
-
-    title:
-      "创建您的账户",
-
-    subtitle:
-      "使用 ChatNova 开始管理您的 WhatsApp 商业通讯。",
-
-    fullName:
-      "姓名",
-
-    fullNamePlaceholder:
-      "请输入您的姓名",
-
-    company:
-      "公司名称",
-
-    companyPlaceholder:
-      "请输入公司名称",
-
-    optional:
-      "可选",
-
-    email:
-      "电子邮箱",
-
-    emailPlaceholder:
-      "you@example.com",
-
-    phone:
-      "电话 / WhatsApp",
-
-    phonePlaceholder:
-      "+60 12 345 6789",
-
-    password:
-      "密码",
-
-    passwordPlaceholder:
-      "创建密码",
-
-    passwordHint:
-      "密码至少需要 8 个字符。",
-
-    confirmPassword:
-      "确认密码",
-
-    confirmPasswordPlaceholder:
-      "再次输入密码",
-
-    show:
-      "显示",
-
-    hide:
-      "隐藏",
-
-    terms:
-      "我同意按照适用法律及平台规则使用 ChatNova。",
-
-    create:
-      "创建账户",
-
-    creating:
-      "正在创建账户...",
-
-    already:
-      "已经有账户？",
-
-    login:
-      "登录",
-
-    secure:
-      "安全账户注册",
-
-    required:
-      "请填写所有必填资料。",
-
-    invalidEmail:
-      "请输入有效的电子邮箱地址。",
-
-    shortPassword:
-      "密码必须至少包含 8 个字符。",
-
-    mismatch:
-      "两次输入的密码不一致。",
-
-    acceptTerms:
-      "请先同意相关条款，然后创建账户。",
-
-    success:
-      "账户创建成功，正在进入系统...",
-
-    exists:
-      "这个电子邮箱已经注册过账户。",
-
-    disabled:
-      "此账户已被停用。",
-
-    failed:
-      "注册失败，请再试一次。",
-
-    network:
-      "无法连接 ChatNova，请检查网络连接后再试。",
-
-    server:
-      "服务器错误，请稍后再试。"
-
-  }
+  server:
+    "Server error. Please try again later."
 
 };
 
 
-/* =========================================================
-   LANGUAGE
-========================================================= */
+const ZH = {
 
-let currentLanguage =
+  title:"创建您的账户",
+
+  subtitle:
+    "使用 ChatNova 开始管理您的 WhatsApp 商业通讯。",
+
+  fullName:"姓名",
+
+  fullNamePlaceholder:
+    "请输入您的姓名",
+
+  company:"公司名称",
+
+  companyPlaceholder:
+    "请输入公司名称",
+
+  optional:"可选",
+
+  email:"电子邮箱",
+
+  emailPlaceholder:
+    "you@example.com",
+
+  phone:"电话 / WhatsApp",
+
+  phonePlaceholder:
+    "+60 12 345 6789",
+
+  password:"密码",
+
+  passwordPlaceholder:
+    "创建密码",
+
+  passwordHint:
+    "密码至少需要 8 个字符。",
+
+  confirmPassword:"确认密码",
+
+  confirmPasswordPlaceholder:
+    "再次输入密码",
+
+  show:"显示",
+
+  hide:"隐藏",
+
+  terms:
+    "我同意按照适用法律及平台规则使用 ChatNova。",
+
+  create:"创建账户",
+
+  creating:"正在创建账户...",
+
+  already:"已经有账户？",
+
+  login:"登录",
+
+  secure:"安全账户注册",
+
+  required:
+    "请填写所有必填资料。",
+
+  invalidEmail:
+    "请输入有效的电子邮箱地址。",
+
+  shortPassword:
+    "密码必须至少包含 8 个字符。",
+
+  mismatch:
+    "两次输入的密码不一致。",
+
+  acceptTerms:
+    "请先同意相关条款，然后创建账户。",
+
+  success:
+    "账户创建成功，正在进入系统...",
+
+  exists:
+    "这个电子邮箱已经注册过账户。",
+
+  disabled:
+    "此账户已被停用。",
+
+  failed:
+    "注册失败，请再试一次。",
+
+  network:
+    "无法连接 ChatNova，请检查网络连接后再试。",
+
+  server:
+    "服务器错误，请稍后再试。"
+
+};
+
+
+/* =====================================================
+   CURRENT LANGUAGE
+===================================================== */
+
+let language =
   localStorage.getItem("chatnova_language") || "en";
 
 
-function setLanguage(language){
+function getText(){
 
-  currentLanguage = language;
+  return language === "zh"
+    ? ZH
+    : EN;
+
+}
+
+
+/* =====================================================
+   LANGUAGE SWITCH
+===================================================== */
+
+function changeLanguage(newLanguage){
+
+  language = newLanguage;
 
   localStorage.setItem(
     "chatnova_language",
     language
   );
 
-  applyLanguage();
+  renderLanguage();
+
 }
 
 
-function applyLanguage(){
+/* =====================================================
+   RENDER LANGUAGE
+===================================================== */
 
-  const t =
-    text[currentLanguage];
+function renderLanguage(){
+
+  const t = getText();
 
 
   document.documentElement.lang =
-    currentLanguage === "zh"
+    language === "zh"
       ? "zh-CN"
       : "en";
 
 
   document.title =
-    currentLanguage === "zh"
+    language === "zh"
       ? "ChatNova — 创建账户"
       : "ChatNova — Create Account";
 
-
-  /* Header */
 
   document.getElementById("title")
     .textContent = t.title;
@@ -1015,8 +921,6 @@ function applyLanguage(){
   document.getElementById("subtitle")
     .textContent = t.subtitle;
 
-
-  /* Labels */
 
   document.getElementById("fullNameLabel")
     .textContent = t.fullName;
@@ -1043,49 +947,69 @@ function applyLanguage(){
     .textContent = t.confirmPassword;
 
 
-  /* Placeholders */
-
   document.getElementById("fullName")
-    .placeholder = t.fullNamePlaceholder;
+    .placeholder =
+    t.fullNamePlaceholder;
 
   document.getElementById("companyName")
-    .placeholder = t.companyPlaceholder;
+    .placeholder =
+    t.companyPlaceholder;
 
   document.getElementById("email")
-    .placeholder = t.emailPlaceholder;
+    .placeholder =
+    t.emailPlaceholder;
 
   document.getElementById("phone")
-    .placeholder = t.phonePlaceholder;
+    .placeholder =
+    t.phonePlaceholder;
 
   document.getElementById("password")
-    .placeholder = t.passwordPlaceholder;
+    .placeholder =
+    t.passwordPlaceholder;
 
   document.getElementById("confirmPassword")
-    .placeholder = t.confirmPasswordPlaceholder;
+    .placeholder =
+    t.confirmPasswordPlaceholder;
 
-
-  /* Other text */
 
   document.getElementById("passwordHint")
-    .textContent = t.passwordHint;
+    .textContent =
+    t.passwordHint;
 
   document.getElementById("termsLabel")
-    .textContent = t.terms;
+    .textContent =
+    t.terms;
 
-  document.getElementById("createBtn")
-    .textContent = t.create;
+
+  /*
+    Only change Create button text
+    if registration is not currently
+    in progress.
+  */
+
+  const button =
+    document.getElementById("createBtn");
+
+  if(!button.disabled){
+
+    button.textContent =
+      t.create;
+
+  }
+
 
   document.getElementById("alreadyText")
-    .textContent = t.already;
+    .textContent =
+    t.already;
 
   document.getElementById("loginLink")
-    .textContent = t.login;
+    .textContent =
+    t.login;
 
   document.getElementById("secureText")
-    .textContent = t.secure;
+    .textContent =
+    t.secure;
 
-
-  /* Password buttons */
 
   updatePasswordButton(
     "password",
@@ -1098,26 +1022,52 @@ function applyLanguage(){
   );
 
 
-  /* Language buttons */
-
   document.getElementById("enBtn")
     .classList.toggle(
       "active",
-      currentLanguage === "en"
+      language === "en"
     );
 
   document.getElementById("zhBtn")
     .classList.toggle(
       "active",
-      currentLanguage === "zh"
+      language === "zh"
     );
 
 }
 
 
-/* =========================================================
+/* =====================================================
+   LANGUAGE BUTTON EVENTS
+===================================================== */
+
+document
+  .getElementById("enBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      changeLanguage("en");
+
+    }
+  );
+
+
+document
+  .getElementById("zhBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      changeLanguage("zh");
+
+    }
+  );
+
+
+/* =====================================================
    PASSWORD SHOW / HIDE
-========================================================= */
+===================================================== */
 
 function togglePassword(
   inputId,
@@ -1131,19 +1081,21 @@ function togglePassword(
     document.getElementById(buttonId);
 
 
-  if(input.type === "password"){
+  if(
+    input.type === "password"
+  ){
 
     input.type = "text";
 
     button.textContent =
-      text[currentLanguage].hide;
+      getText().hide;
 
   }else{
 
     input.type = "password";
 
     button.textContent =
-      text[currentLanguage].show;
+      getText().show;
 
   }
 
@@ -1162,24 +1114,54 @@ function updatePasswordButton(
     document.getElementById(buttonId);
 
 
-  if(
-    input &&
-    button
-  ){
+  if(!input || !button){
 
-    button.textContent =
-      input.type === "password"
-        ? text[currentLanguage].show
-        : text[currentLanguage].hide;
+    return;
 
   }
+
+
+  button.textContent =
+    input.type === "password"
+      ? getText().show
+      : getText().hide;
 
 }
 
 
-/* =========================================================
+document
+  .getElementById("passwordBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      togglePassword(
+        "password",
+        "passwordBtn"
+      );
+
+    }
+  );
+
+
+document
+  .getElementById("confirmPasswordBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      togglePassword(
+        "confirmPassword",
+        "confirmPasswordBtn"
+      );
+
+    }
+  );
+
+
+/* =====================================================
    MESSAGE
-========================================================= */
+===================================================== */
 
 function showMessage(
   type,
@@ -1189,14 +1171,11 @@ function showMessage(
   const box =
     document.getElementById("message");
 
-
   box.className =
     "message " + type;
 
-
   box.textContent =
     message;
-
 
   box.style.display =
     "block";
@@ -1209,14 +1188,11 @@ function clearMessage(){
   const box =
     document.getElementById("message");
 
-
   box.className =
     "message";
 
-
   box.textContent =
     "";
-
 
   box.style.display =
     "none";
@@ -1224,9 +1200,9 @@ function clearMessage(){
 }
 
 
-/* =========================================================
-   EMAIL VALIDATION
-========================================================= */
+/* =====================================================
+   EMAIL
+===================================================== */
 
 function validEmail(email){
 
@@ -1236,9 +1212,17 @@ function validEmail(email){
 }
 
 
-/* =========================================================
+/* =====================================================
    REGISTER
-========================================================= */
+===================================================== */
+
+document
+  .getElementById("registerForm")
+  .addEventListener(
+    "submit",
+    registerUser
+  );
+
 
 async function registerUser(event){
 
@@ -1247,7 +1231,9 @@ async function registerUser(event){
   clearMessage();
 
 
-  /* Get fields */
+  const t =
+    getText();
+
 
   const fullName =
     document.getElementById("fullName")
@@ -1286,7 +1272,7 @@ async function registerUser(event){
     document.getElementById("createBtn");
 
 
-  /* Required */
+  /* REQUIRED */
 
   if(
     !fullName ||
@@ -1297,14 +1283,15 @@ async function registerUser(event){
 
     showMessage(
       "error",
-      text[currentLanguage].required
+      t.required
     );
 
     return;
+
   }
 
 
-  /* Email */
+  /* EMAIL */
 
   if(!validEmail(email)){
 
@@ -1314,14 +1301,15 @@ async function registerUser(event){
 
     showMessage(
       "error",
-      text[currentLanguage].invalidEmail
+      t.invalidEmail
     );
 
     return;
+
   }
 
 
-  /* Password */
+  /* PASSWORD */
 
   if(password.length < 8){
 
@@ -1331,14 +1319,15 @@ async function registerUser(event){
 
     showMessage(
       "error",
-      text[currentLanguage].shortPassword
+      t.shortPassword
     );
 
     return;
+
   }
 
 
-  /* Confirm */
+  /* MATCH */
 
   if(password !== confirmPassword){
 
@@ -1352,37 +1341,37 @@ async function registerUser(event){
 
     showMessage(
       "error",
-      text[currentLanguage].mismatch
+      t.mismatch
     );
 
     return;
+
   }
 
 
-  /* Terms */
+  /* TERMS */
 
   if(!terms){
 
     showMessage(
       "error",
-      text[currentLanguage].acceptTerms
+      t.acceptTerms
     );
 
     return;
+
   }
 
 
-  /* Disable */
+  /* DISABLE */
 
   button.disabled = true;
 
   button.textContent =
-    text[currentLanguage].creating;
+    t.creating;
 
 
   try{
-
-    /* REAL API */
 
     const response =
       await fetch(
@@ -1420,9 +1409,8 @@ async function registerUser(event){
       );
 
 
-    /* Read response */
-
     let data = null;
+
 
     try{
 
@@ -1446,16 +1434,9 @@ async function registerUser(event){
 
       showMessage(
         "success",
-        text[currentLanguage].success
+        t.success
       );
 
-
-      /*
-        Worker creates the session
-        cookie.
-
-        Then redirect to dashboard.
-      */
 
       setTimeout(
         function(){
@@ -1469,13 +1450,14 @@ async function registerUser(event){
 
 
       return;
+
     }
 
 
     /* ERROR */
 
-    let errorText =
-      text[currentLanguage].failed;
+    let errorMessage =
+      t.failed;
 
 
     if(data){
@@ -1495,21 +1477,21 @@ async function registerUser(event){
         lower.includes("already registered")
       ){
 
-        errorText =
-          text[currentLanguage].exists;
+        errorMessage =
+          t.exists;
 
       }else if(
         lower.includes("disabled")
       ){
 
-        errorText =
-          text[currentLanguage].disabled;
+        errorMessage =
+          t.disabled;
 
       }else if(
         serverMessage
       ){
 
-        errorText =
+        errorMessage =
           serverMessage;
 
       }
@@ -1517,19 +1499,17 @@ async function registerUser(event){
     }
 
 
-    if(
-      response.status >= 500
-    ){
+    if(response.status >= 500){
 
-      errorText =
-        text[currentLanguage].server;
+      errorMessage =
+        t.server;
 
     }
 
 
     showMessage(
       "error",
-      errorText
+      errorMessage
     );
 
 
@@ -1543,7 +1523,7 @@ async function registerUser(event){
 
     showMessage(
       "error",
-      text[currentLanguage].network
+      t.network
     );
 
 
@@ -1552,64 +1532,45 @@ async function registerUser(event){
     button.disabled = false;
 
     button.textContent =
-      text[currentLanguage].create;
+      getText().create;
 
   }
 
 }
 
 
-/* =========================================================
-   LIVE CLEANUP
-========================================================= */
+/* =====================================================
+   REMOVE ERROR BORDER WHILE TYPING
+===================================================== */
 
-document
-  .getElementById("email")
-  .addEventListener(
-    "input",
-    function(){
+[
+  "fullName",
+  "email",
+  "password",
+  "confirmPassword"
+].forEach(function(id){
 
-      this.classList.remove(
-        "invalid"
-      );
+  document
+    .getElementById(id)
+    .addEventListener(
+      "input",
+      function(){
 
-    }
-  );
+        this.classList.remove(
+          "invalid"
+        );
 
+      }
+    );
 
-document
-  .getElementById("password")
-  .addEventListener(
-    "input",
-    function(){
-
-      this.classList.remove(
-        "invalid"
-      );
-
-    }
-  );
+});
 
 
-document
-  .getElementById("confirmPassword")
-  .addEventListener(
-    "input",
-    function(){
+/* =====================================================
+   INITIALIZE
+===================================================== */
 
-      this.classList.remove(
-        "invalid"
-      );
-
-    }
-  );
-
-
-/* =========================================================
-   START
-========================================================= */
-
-applyLanguage();
+renderLanguage();
 
 </script>
 
