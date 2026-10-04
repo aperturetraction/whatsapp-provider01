@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +31,11 @@
       min-height: 100vh;
       font-family: Inter, Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at 50% 0%, rgba(25,214,107,0.09), transparent 35%),
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(25,214,107,0.09),
+          transparent 35%
+        ),
         var(--bg);
       color: var(--text);
       display: flex;
@@ -68,10 +73,15 @@
       border-radius: 10px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, var(--green), #0a9f4a);
+      background: linear-gradient(
+        135deg,
+        var(--green),
+        #0a9f4a
+      );
       color: #031108;
       font-weight: 900;
-      box-shadow: 0 0 24px rgba(25,214,107,0.18);
+      box-shadow:
+        0 0 24px rgba(25,214,107,0.18);
     }
 
     .back-home {
@@ -156,7 +166,8 @@
 
     input:focus {
       border-color: rgba(25,214,107,0.65);
-      box-shadow: 0 0 0 3px rgba(25,214,107,0.08);
+      box-shadow:
+        0 0 0 3px rgba(25,214,107,0.08);
     }
 
     .password-row {
@@ -205,17 +216,25 @@
       height: 52px;
       border: 0;
       border-radius: 12px;
-      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      background: linear-gradient(
+        135deg,
+        var(--green),
+        var(--green-dark)
+      );
       color: #031108;
       font-size: 15px;
       font-weight: 800;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
     }
 
     .login-btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 12px 30px rgba(25,214,107,0.18);
+      box-shadow:
+        0 12px 30px rgba(25,214,107,0.18);
     }
 
     .login-btn:disabled {
@@ -324,6 +343,7 @@
     }
 
     @media (max-width: 600px) {
+
       header {
         height: 68px;
         padding: 0 20px;
@@ -346,6 +366,10 @@
         font-size: 29px;
       }
 
+      .heading p {
+        font-size: 14px;
+      }
+
       .card {
         padding: 25px 20px;
         border-radius: 18px;
@@ -356,45 +380,110 @@
         right: 12px;
       }
     }
+
+    @media (max-width: 380px) {
+
+      header {
+        padding: 0 15px;
+      }
+
+      .brand {
+        font-size: 18px;
+      }
+
+      .brand-mark {
+        width: 31px;
+        height: 31px;
+      }
+
+      .back-home {
+        font-size: 12px;
+      }
+
+      main {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .card {
+        padding: 22px 16px;
+      }
+    }
   </style>
 </head>
 
 <body>
 
 <header>
+
   <a href="index.html" class="brand">
     <span class="brand-mark">C</span>
     <span>ChatNova</span>
   </a>
 
-  <a href="index.html" class="back-home" id="backHome">
+  <a
+    href="index.html"
+    class="back-home"
+    id="backHome"
+  >
     ← Back to Home
   </a>
+
 </header>
 
 <div class="language">
-  <button id="enBtn" class="active" onclick="setLanguage('en')">EN</button>
-  <button id="zhBtn" onclick="setLanguage('zh')">中文</button>
+
+  <button
+    id="enBtn"
+    class="active"
+    onclick="setLanguage('en')"
+  >
+    EN
+  </button>
+
+  <button
+    id="zhBtn"
+    onclick="setLanguage('zh')"
+  >
+    中文
+  </button>
+
 </div>
 
 <main>
+
   <div class="login-wrap">
 
     <div class="heading">
-      <h1 id="title">Welcome back</h1>
+
+      <h1 id="title">
+        Welcome back
+      </h1>
+
       <p id="subtitle">
         Sign in to your ChatNova account and manage your customer conversations.
       </p>
+
     </div>
 
     <div class="card">
 
-      <div id="message" class="message"></div>
+      <div
+        id="message"
+        class="message"
+      ></div>
 
       <form id="loginForm">
 
         <div class="field">
-          <label for="email" id="emailLabel">Email Address</label>
+
+          <label
+            for="email"
+            id="emailLabel"
+          >
+            Email Address
+          </label>
+
           <input
             type="email"
             id="email"
@@ -402,12 +491,20 @@
             placeholder="you@example.com"
             required
           >
+
         </div>
 
         <div class="field">
-          <label for="password" id="passwordLabel">Password</label>
+
+          <label
+            for="password"
+            id="passwordLabel"
+          >
+            Password
+          </label>
 
           <div class="password-row">
+
             <input
               type="password"
               id="password"
@@ -424,38 +521,68 @@
             >
               Show
             </button>
+
           </div>
+
         </div>
 
         <div class="form-options">
-          <a href="#" class="forgot" id="forgotPassword" onclick="forgotPassword(event)">
+
+          <a
+            href="#"
+            class="forgot"
+            id="forgotPassword"
+            onclick="forgotPassword(event)"
+          >
             Forgot password?
           </a>
+
         </div>
 
-        <button type="submit" class="login-btn" id="loginBtn">
+        <button
+          type="submit"
+          class="login-btn"
+          id="loginBtn"
+        >
           Sign In
         </button>
 
       </form>
 
       <div class="divider">
-        <span id="orText">OR</span>
+
+        <span id="orText">
+          OR
+        </span>
+
       </div>
 
       <div class="register-text">
-        <span id="noAccount">Don't have an account?</span>
-        <a href="register.html" id="createAccount">
+
+        <span id="noAccount">
+          Don't have an account?
+        </span>
+
+        <a
+          href="register.html"
+          id="createAccount"
+        >
           Create Account
         </a>
+
       </div>
 
-      <div class="security-note" id="securityNote">
+      <div
+        class="security-note"
+        id="securityNote"
+      >
         Your login is securely handled by ChatNova.
       </div>
 
     </div>
+
   </div>
+
 </main>
 
 <footer>
@@ -463,71 +590,211 @@
 </footer>
 
 <script>
+
   const API_BASE =
     "https://whatsapp-provider-api.b79gn827py.workers.dev";
 
+  /*
+   * Maximum time allowed for an API request.
+   * This prevents mobile Safari / mobile browsers
+   * from staying on "Signing In..." forever.
+   */
+  const API_TIMEOUT = 12000;
+
+
   const translations = {
+
     en: {
+
       title: "Welcome back",
+
       subtitle:
         "Sign in to your ChatNova account and manage your customer conversations.",
-      emailLabel: "Email Address",
-      passwordLabel: "Password",
-      passwordPlaceholder: "Enter your password",
-      forgot: "Forgot password?",
-      signIn: "Sign In",
-      signingIn: "Signing In...",
-      or: "OR",
-      noAccount: "Don't have an account?",
-      createAccount: "Create Account",
+
+      emailLabel:
+        "Email Address",
+
+      passwordLabel:
+        "Password",
+
+      passwordPlaceholder:
+        "Enter your password",
+
+      forgot:
+        "Forgot password?",
+
+      signIn:
+        "Sign In",
+
+      signingIn:
+        "Signing In...",
+
+      verifying:
+        "Verifying session...",
+
+      or:
+        "OR",
+
+      noAccount:
+        "Don't have an account?",
+
+      createAccount:
+        "Create Account",
+
       security:
         "Your login is securely handled by ChatNova.",
-      backHome: "← Back to Home",
-      show: "Show",
-      hide: "Hide",
+
+      backHome:
+        "← Back to Home",
+
+      show:
+        "Show",
+
+      hide:
+        "Hide",
+
       invalid:
         "Please enter your email address and password.",
+
       loginFailed:
         "Invalid email or password.",
+
       serverError:
         "Unable to connect to ChatNova. Please try again.",
+
+      sessionFailed:
+        "Login succeeded, but the session could not be verified. Please try again.",
+
+      timeout:
+        "The connection is taking too long. Please check your connection and try again.",
+
       success:
         "Login successful. Redirecting..."
+
     },
 
     zh: {
-      title: "欢迎回来",
+
+      title:
+        "欢迎回来",
+
       subtitle:
         "登录您的 ChatNova 账户，管理您的客户对话。",
-      emailLabel: "电子邮箱",
-      passwordLabel: "密码",
-      passwordPlaceholder: "请输入密码",
-      forgot: "忘记密码？",
-      signIn: "登录",
-      signingIn: "登录中...",
-      or: "或",
-      noAccount: "还没有账户？",
-      createAccount: "创建账户",
+
+      emailLabel:
+        "电子邮箱",
+
+      passwordLabel:
+        "密码",
+
+      passwordPlaceholder:
+        "请输入密码",
+
+      forgot:
+        "忘记密码？",
+
+      signIn:
+        "登录",
+
+      signingIn:
+        "登录中...",
+
+      verifying:
+        "正在验证登录状态...",
+
+      or:
+        "或",
+
+      noAccount:
+        "还没有账户？",
+
+      createAccount:
+        "创建账户",
+
       security:
         "您的登录信息由 ChatNova 安全处理。",
-      backHome: "← 返回首页",
-      show: "显示",
-      hide: "隐藏",
+
+      backHome:
+        "← 返回首页",
+
+      show:
+        "显示",
+
+      hide:
+        "隐藏",
+
       invalid:
         "请输入电子邮箱和密码。",
+
       loginFailed:
         "电子邮箱或密码错误。",
+
       serverError:
         "无法连接到 ChatNova，请稍后再试。",
+
+      sessionFailed:
+        "登录成功，但无法验证登录状态。请重新尝试。",
+
+      timeout:
+        "连接时间过长，请检查网络后再试。",
+
       success:
         "登录成功，正在进入控制面板..."
+
     }
+
   };
+
 
   let language =
     localStorage.getItem("chatnova_language") || "en";
 
+
+  /*
+   * Fetch helper with:
+   * - credentials included
+   * - timeout protection
+   * - AbortController
+   */
+  async function fetchWithTimeout(
+    url,
+    options = {},
+    timeout = API_TIMEOUT
+  ) {
+
+    const controller =
+      new AbortController();
+
+    const timer =
+      setTimeout(
+        function() {
+          controller.abort();
+        },
+        timeout
+      );
+
+    try {
+
+      return await fetch(
+        url,
+        {
+          ...options,
+          credentials: "include",
+          signal: controller.signal
+        }
+      );
+
+    } finally {
+
+      clearTimeout(timer);
+
+    }
+
+  }
+
+
   function setLanguage(lang) {
+
     language = lang;
 
     localStorage.setItem(
@@ -536,91 +803,181 @@
     );
 
     document.documentElement.lang =
-      lang === "zh" ? "zh-CN" : "en";
+      lang === "zh"
+        ? "zh-CN"
+        : "en";
 
-    const t = translations[lang];
+    const t =
+      translations[lang];
+
 
     document.getElementById("title").textContent =
       t.title;
 
+
     document.getElementById("subtitle").textContent =
       t.subtitle;
+
 
     document.getElementById("emailLabel").textContent =
       t.emailLabel;
 
+
     document.getElementById("passwordLabel").textContent =
       t.passwordLabel;
+
 
     document.getElementById("password").placeholder =
       t.passwordPlaceholder;
 
+
     document.getElementById("forgotPassword").textContent =
       t.forgot;
 
-    document.getElementById("loginBtn").textContent =
-      t.signIn;
+
+    /*
+     * Do not overwrite "Signing In..."
+     * when language is changed during normal use.
+     */
+    const button =
+      document.getElementById("loginBtn");
+
+    if (!button.disabled) {
+
+      button.textContent =
+        t.signIn;
+
+    }
+
 
     document.getElementById("orText").textContent =
       t.or;
 
+
     document.getElementById("noAccount").textContent =
       t.noAccount + " ";
+
 
     document.getElementById("createAccount").textContent =
       t.createAccount;
 
+
     document.getElementById("securityNote").textContent =
       t.security;
+
 
     document.getElementById("backHome").textContent =
       t.backHome;
 
-    document.getElementById("enBtn").classList.toggle(
-      "active",
-      lang === "en"
-    );
 
-    document.getElementById("zhBtn").classList.toggle(
-      "active",
-      lang === "zh"
-    );
+    document.getElementById("enBtn")
+      .classList
+      .toggle(
+        "active",
+        lang === "en"
+      );
+
+
+    document.getElementById("zhBtn")
+      .classList
+      .toggle(
+        "active",
+        lang === "zh"
+      );
+
+
+    /*
+     * Keep password Show / Hide text
+     * synchronized with current language.
+     */
+    const password =
+      document.getElementById("password");
+
+    const showButton =
+      document.getElementById("showPassword");
+
+    showButton.textContent =
+      password.type === "password"
+        ? t.show
+        : t.hide;
+
 
     document.title =
       lang === "zh"
         ? "登录 — ChatNova"
         : "Login — ChatNova";
+
   }
 
+
   function togglePassword() {
+
     const input =
       document.getElementById("password");
 
     const button =
       document.getElementById("showPassword");
 
-    const t = translations[language];
+    const t =
+      translations[language];
 
-    if (input.type === "password") {
+
+    if (
+      input.type === "password"
+    ) {
+
       input.type = "text";
-      button.textContent = t.hide;
+
+      button.textContent =
+        t.hide;
+
     } else {
+
       input.type = "password";
-      button.textContent = t.show;
+
+      button.textContent =
+        t.show;
+
     }
+
   }
 
-  function showMessage(type, message) {
+
+  function showMessage(
+    type,
+    message
+  ) {
+
     const box =
       document.getElementById("message");
+
 
     box.className =
       "message " + type;
 
-    box.textContent = message;
+
+    box.textContent =
+      message;
+
   }
 
+
+  function clearMessage() {
+
+    const box =
+      document.getElementById("message");
+
+    box.className =
+      "message";
+
+    box.textContent =
+      "";
+
+  }
+
+
   function forgotPassword(event) {
+
     event.preventDefault();
 
     const message =
@@ -628,132 +985,347 @@
         ? "忘记密码功能暂未启用。"
         : "Password recovery is not enabled yet.";
 
-    showMessage("error", message);
+    showMessage(
+      "error",
+      message
+    );
+
   }
 
-  document
-    .getElementById("loginForm")
-    .addEventListener("submit", async function(event) {
 
-      event.preventDefault();
+  /*
+   * IMPORTANT:
+   *
+   * After /api/login succeeds,
+   * do NOT immediately redirect.
+   *
+   * First call /api/me.
+   *
+   * This confirms that the browser actually
+   * stored and can send the ChatNova session.
+   */
+  async function verifySession() {
 
-      const email =
-        document.getElementById("email")
-          .value
-          .trim();
+    try {
 
-      const password =
-        document.getElementById("password")
-          .value;
-
-      const button =
-        document.getElementById("loginBtn");
-
-      const t = translations[language];
-
-      if (!email || !password) {
-        showMessage("error", t.invalid);
-        return;
-      }
-
-      button.disabled = true;
-      button.textContent = t.signingIn;
-
-      showMessage(
-        "success",
-        "..."
-      );
-
-      try {
-
-        const response = await fetch(
-          API_BASE + "/api/login",
+      const response =
+        await fetchWithTimeout(
+          API_BASE + "/api/me",
           {
-            method: "POST",
-
-            credentials: "include",
+            method: "GET",
 
             headers: {
-              "Content-Type":
-                "application/json",
               "Accept":
                 "application/json"
-            },
-
-            body: JSON.stringify({
-              email: email,
-              password: password
-            })
+            }
           }
         );
 
-        let data = null;
 
-        try {
-          data = await response.json();
-        } catch (e) {
-          data = null;
-        }
+      let data = null;
 
+
+      try {
+
+        data =
+          await response.json();
+
+      } catch (e) {
+
+        data = null;
+
+      }
+
+
+      if (
+        response.ok &&
+        data &&
+        (
+          data.authenticated === true ||
+          data.success === true
+        )
+      ) {
+
+        return true;
+
+      }
+
+
+      return false;
+
+    } catch (error) {
+
+      console.error(
+        "ChatNova session verification error:",
+        error
+      );
+
+      return false;
+
+    }
+
+  }
+
+
+  document
+    .getElementById("loginForm")
+    .addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
+
+
+        const password =
+          document
+            .getElementById("password")
+            .value;
+
+
+        const button =
+          document
+            .getElementById("loginBtn");
+
+
+        const t =
+          translations[language];
+
+
+        /*
+         * Basic validation.
+         */
         if (
-          response.ok &&
-          data &&
-          data.success
+          !email ||
+          !password
         ) {
 
           showMessage(
-            "success",
-            t.success
+            "error",
+            t.invalid
           );
 
-          setTimeout(function() {
-            window.location.href =
-              "dashboard.html";
-          }, 700);
-
           return;
+
         }
 
-        showMessage(
-          "error",
-          (
-            data &&
-            data.message
-          )
-            ? data.message
-            : t.loginFailed
-        );
 
-      } catch (error) {
+        /*
+         * Lock button while authenticating.
+         */
+        button.disabled = true;
 
-        console.error(
-          "ChatNova login error:",
-          error
-        );
+        button.textContent =
+          t.signingIn;
 
-        showMessage(
-          "error",
-          t.serverError
-        );
 
-      } finally {
+        clearMessage();
 
-        button.disabled = false;
 
-        if (
-          !document
-            .getElementById("message")
-            .classList
-            .contains("success")
-        ) {
+        try {
+
+          /*
+           * STEP 1
+           * Authenticate against Worker.
+           */
+          const response =
+            await fetchWithTimeout(
+              API_BASE + "/api/login",
+              {
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json",
+
+                  "Accept":
+                    "application/json"
+                },
+
+                body:
+                  JSON.stringify({
+                    email: email,
+                    password: password
+                  })
+              }
+            );
+
+
+          let data = null;
+
+
+          try {
+
+            data =
+              await response.json();
+
+          } catch (e) {
+
+            data = null;
+
+          }
+
+
+          /*
+           * Login failed.
+           */
+          if (
+            !response.ok ||
+            !data ||
+            !data.success
+          ) {
+
+            showMessage(
+              "error",
+
+              (
+                data &&
+                data.message
+              )
+                ? data.message
+                : t.loginFailed
+            );
+
+            return;
+
+          }
+
+
+          /*
+           * STEP 2
+           *
+           * Login API says success.
+           * Now verify the actual session.
+           */
           button.textContent =
-            t.signIn;
-        }
-      }
-    });
+            t.verifying;
 
+
+          const sessionValid =
+            await verifySession();
+
+
+          /*
+           * STEP 3
+           *
+           * Only redirect if /api/me
+           * confirms the session.
+           */
+          if (sessionValid) {
+
+            showMessage(
+              "success",
+              t.success
+            );
+
+
+            /*
+             * Small delay so the user can
+             * see the successful login message.
+             */
+            setTimeout(
+              function() {
+
+                window.location.href =
+                  "dashboard.html";
+
+              },
+              400
+            );
+
+
+            return;
+
+          }
+
+
+          /*
+           * Login itself succeeded,
+           * but browser could not use
+           * the session cookie.
+           */
+          showMessage(
+            "error",
+            t.sessionFailed
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            "ChatNova login error:",
+            error
+          );
+
+
+          /*
+           * AbortController timeout.
+           */
+          if (
+            error &&
+            error.name === "AbortError"
+          ) {
+
+            showMessage(
+              "error",
+              t.timeout
+            );
+
+          } else {
+
+            showMessage(
+              "error",
+              t.serverError
+            );
+
+          }
+
+        } finally {
+
+          /*
+           * Do not re-enable the button
+           * if successful redirect is pending.
+           */
+          const message =
+            document.getElementById(
+              "message"
+            );
+
+
+          const redirecting =
+            message.classList.contains(
+              "success"
+            );
+
+
+          if (!redirecting) {
+
+            button.disabled = false;
+
+            button.textContent =
+              t.signIn;
+
+          }
+
+        }
+
+      }
+    );
+
+
+  /*
+   * Initialize language.
+   */
   setLanguage(language);
+
 </script>
 
 </body>
 </html>
+```
