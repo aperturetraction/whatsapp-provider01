@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login — ChatNova</title>
+
+  <style>
+    :root {
+      --bg: #070a09;
+      --bg-soft: #0c100e;
+      --card: rgba(17, 22, 19, 0.92);
+      --border: rgba(255,255,255,0.08);
+      --text: #f5f7f6;
+      --muted: #9ca7a1;
+      --green: #19d66b;
+      --green-dark: #0d9f4b;
+      --danger: #ff6b6b;
+      --success: #35e98a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(25,214,107,0.09), transparent 35%),
+        var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      height: 76px;
+      padding: 0 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(7,10,9,0.82);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--green), #0a9f4a);
+      color: #031108;
+      font-weight: 900;
+      box-shadow: 0 0 24px rgba(25,214,107,0.18);
+    }
+
+    .back-home {
+      color: var(--muted);
+      font-size: 14px;
+      transition: 0.2s ease;
+    }
+
+    .back-home:hover {
+      color: var(--green);
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+    }
+
+    .login-wrap {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .heading {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .heading h1 {
+      font-size: 34px;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .heading p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 34px;
+      box-shadow:
+        0 25px 80px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.025);
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #dce3df;
+    }
+
+    input {
+      width: 100%;
+      height: 52px;
+      padding: 0 15px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: #0a0e0c;
+      color: var(--text);
+      outline: none;
+      font-size: 15px;
+      transition: 0.2s ease;
+    }
+
+    input::placeholder {
+      color: #65706a;
+    }
+
+    input:focus {
+      border-color: rgba(25,214,107,0.65);
+      box-shadow: 0 0 0 3px rgba(25,214,107,0.08);
+    }
+
+    .password-row {
+      position: relative;
+    }
+
+    .password-row input {
+      padding-right: 70px;
+    }
+
+    .show-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 0;
+      background: transparent;
+      color: #8d9891;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .show-password:hover {
+      color: var(--green);
+    }
+
+    .form-options {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: -7px;
+      margin-bottom: 22px;
+    }
+
+    .forgot {
+      font-size: 13px;
+      color: var(--green);
+    }
+
+    .forgot:hover {
+      text-decoration: underline;
+    }
+
+    .login-btn {
+      width: 100%;
+      height: 52px;
+      border: 0;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: #031108;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(25,214,107,0.18);
+    }
+
+    .login-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .message {
+      display: none;
+      margin-bottom: 18px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .message.error {
+      display: block;
+      background: rgba(255,107,107,0.08);
+      border: 1px solid rgba(255,107,107,0.18);
+      color: #ff9a9a;
+    }
+
+    .message.success {
+      display: block;
+      background: rgba(53,233,138,0.08);
+      border: 1px solid rgba(53,233,138,0.18);
+      color: var(--success);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 0;
+      color: #66716b;
+      font-size: 12px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: var(--border);
+    }
+
+    .register-text {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .register-text a {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .register-text a:hover {
+      text-decoration: underline;
+    }
+
+    .security-note {
+      margin-top: 20px;
+      text-align: center;
+      color: #68736d;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    footer {
+      padding: 22px 20px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      color: #59635e;
+      font-size: 11px;
+    }
+
+    .language {
+      position: fixed;
+      top: 88px;
+      right: 22px;
+      z-index: 5;
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      overflow: hidden;
+      background: rgba(12,16,14,0.9);
+    }
+
+    .language button {
+      border: 0;
+      background: transparent;
+      color: #7d8881;
+      padding: 7px 10px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .language button.active {
+      color: var(--green);
+      background: rgba(25,214,107,0.08);
+    }
+
+    @media (max-width: 600px) {
+      header {
+        height: 68px;
+        padding: 0 20px;
+      }
+
+      .brand {
+        font-size: 19px;
+      }
+
+      .back-home {
+        font-size: 13px;
+      }
+
+      main {
+        padding: 45px 16px;
+        align-items: flex-start;
+      }
+
+      .heading h1 {
+        font-size: 29px;
+      }
+
+      .card {
+        padding: 25px 20px;
+        border-radius: 18px;
+      }
+
+      .language {
+        top: 78px;
+        right: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html" class="brand">
+    <span class="brand-mark">C</span>
+    <span>ChatNova</span>
+  </a>
+
+  <a href="index.html" class="back-home" id="backHome">
+    ← Back to Home
+  </a>
+</header>
+
+<div class="language">
+  <button id="enBtn" class="active" onclick="setLanguage('en')">EN</button>
+  <button id="zhBtn" onclick="setLanguage('zh')">中文</button>
+</div>
+
+<main>
+  <div class="login-wrap">
+
+    <div class="heading">
+      <h1 id="title">Welcome back</h1>
+      <p id="subtitle">
+        Sign in to your ChatNova account and manage your customer conversations.
+      </p>
+    </div>
+
+    <div class="card">
+
+      <div id="message" class="message"></div>
+
+      <form id="loginForm">
+
+        <div class="field">
+          <label for="email" id="emailLabel">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            autocomplete="email"
+            placeholder="you@example.com"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="password" id="passwordLabel">Password</label>
+
+          <div class="password-row">
+            <input
+              type="password"
+              id="password"
+              autocomplete="current-password"
+              placeholder="Enter your password"
+              required
+            >
+
+            <button
+              type="button"
+              class="show-password"
+              id="showPassword"
+              onclick="togglePassword()"
+            >
+              Show
+            </button>
+          </div>
+        </div>
+
+        <div class="form-options">
+          <a href="#" class="forgot" id="forgotPassword" onclick="forgotPassword(event)">
+            Forgot password?
+          </a>
+        </div>
+
+        <button type="submit" class="login-btn" id="loginBtn">
+          Sign In
+        </button>
+
+      </form>
+
+      <div class="divider">
+        <span id="orText">OR</span>
+      </div>
+
+      <div class="register-text">
+        <span id="noAccount">Don't have an account?</span>
+        <a href="register.html" id="createAccount">
+          Create Account
+        </a>
+      </div>
+
+      <div class="security-note" id="securityNote">
+        Your login is securely handled by ChatNova.
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2026 ChatNova. All rights reserved.
+</footer>
+
+<script>
+  const API_BASE =
+    "https://whatsapp-provider-api.b79gn827py.workers.dev";
+
+  const translations = {
+    en: {
+      title: "Welcome back",
+      subtitle:
+        "Sign in to your ChatNova account and manage your customer conversations.",
+      emailLabel: "Email Address",
+      passwordLabel: "Password",
+      passwordPlaceholder: "Enter your password",
+      forgot: "Forgot password?",
+      signIn: "Sign In",
+      signingIn: "Signing In...",
+      or: "OR",
+      noAccount: "Don't have an account?",
+      createAccount: "Create Account",
+      security:
+        "Your login is securely handled by ChatNova.",
+      backHome: "← Back to Home",
+      show: "Show",
+      hide: "Hide",
+      invalid:
+        "Please enter your email address and password.",
+      loginFailed:
+        "Invalid email or password.",
+      serverError:
+        "Unable to connect to ChatNova. Please try again.",
+      success:
+        "Login successful. Redirecting..."
+    },
+
+    zh: {
+      title: "欢迎回来",
+      subtitle:
+        "登录您的 ChatNova 账户，管理您的客户对话。",
+      emailLabel: "电子邮箱",
+      passwordLabel: "密码",
+      passwordPlaceholder: "请输入密码",
+      forgot: "忘记密码？",
+      signIn: "登录",
+      signingIn: "登录中...",
+      or: "或",
+      noAccount: "还没有账户？",
+      createAccount: "创建账户",
+      security:
+        "您的登录信息由 ChatNova 安全处理。",
+      backHome: "← 返回首页",
+      show: "显示",
+      hide: "隐藏",
+      invalid:
+        "请输入电子邮箱和密码。",
+      loginFailed:
+        "电子邮箱或密码错误。",
+      serverError:
+        "无法连接到 ChatNova，请稍后再试。",
+      success:
+        "登录成功，正在进入控制面板..."
+    }
+  };
+
+  let language =
+    localStorage.getItem("chatnova_language") || "en";
+
+  function setLanguage(lang) {
+    language = lang;
+
+    localStorage.setItem(
+      "chatnova_language",
+      lang
+    );
+
+    document.documentElement.lang =
+      lang === "zh" ? "zh-CN" : "en";
+
+    const t = translations[lang];
+
+    document.getElementById("title").textContent =
+      t.title;
+
+    document.getElementById("subtitle").textContent =
+      t.subtitle;
+
+    document.getElementById("emailLabel").textContent =
+      t.emailLabel;
+
+    document.getElementById("passwordLabel").textContent =
+      t.passwordLabel;
+
+    document.getElementById("password").placeholder =
+      t.passwordPlaceholder;
+
+    document.getElementById("forgotPassword").textContent =
+      t.forgot;
+
+    document.getElementById("loginBtn").textContent =
+      t.signIn;
+
+    document.getElementById("orText").textContent =
+      t.or;
+
+    document.getElementById("noAccount").textContent =
+      t.noAccount + " ";
+
+    document.getElementById("createAccount").textContent =
+      t.createAccount;
+
+    document.getElementById("securityNote").textContent =
+      t.security;
+
+    document.getElementById("backHome").textContent =
+      t.backHome;
+
+    document.getElementById("enBtn").classList.toggle(
+      "active",
+      lang === "en"
+    );
+
+    document.getElementById("zhBtn").classList.toggle(
+      "active",
+      lang === "zh"
+    );
+
+    document.title =
+      lang === "zh"
+        ? "登录 — ChatNova"
+        : "Login — ChatNova";
+  }
+
+  function togglePassword() {
+    const input =
+      document.getElementById("password");
+
+    const button =
+      document.getElementById("showPassword");
+
+    const t = translations[language];
+
+    if (input.type === "password") {
+      input.type = "text";
+      button.textContent = t.hide;
+    } else {
+      input.type = "password";
+      button.textContent = t.show;
+    }
+  }
+
+  function showMessage(type, message) {
+    const box =
+      document.getElementById("message");
+
+    box.className =
+      "message " + type;
+
+    box.textContent = message;
+  }
+
+  function forgotPassword(event) {
+    event.preventDefault();
+
+    const message =
+      language === "zh"
+        ? "忘记密码功能暂未启用。"
+        : "Password recovery is not enabled yet.";
+
+    showMessage("error", message);
+  }
+
+  document
+    .getElementById("loginForm")
+    .addEventListener("submit", async function(event) {
+
+      event.preventDefault();
+
+      const email =
+        document.getElementById("email")
+          .value
+          .trim();
+
+      const password =
+        document.getElementById("password")
+          .value;
+
+      const button =
+        document.getElementById("loginBtn");
+
+      const t = translations[language];
+
+      if (!email || !password) {
+        showMessage("error", t.invalid);
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = t.signingIn;
+
+      showMessage(
+        "success",
+        "..."
+      );
+
+      try {
+
+        const response = await fetch(
+          API_BASE + "/api/login",
+          {
+            method: "POST",
+
+            credentials: "include",
+
+            headers: {
+              "Content-Type":
+                "application/json",
+              "Accept":
+                "application/json"
+            },
+
+            body: JSON.stringify({
+              email: email,
+              password: password
+            })
+          }
+        );
+
+        let data = null;
+
+        try {
+          data = await response.json();
+        } catch (e) {
+          data = null;
+        }
+
+        if (
+          response.ok &&
+          data &&
+          data.success
+        ) {
+
+          showMessage(
+            "success",
+            t.success
+          );
+
+          setTimeout(function() {
+            window.location.href =
+              "dashboard.html";
+          }, 700);
+
+          return;
+        }
+
+        showMessage(
+          "error",
+          (
+            data &&
+            data.message
+          )
+            ? data.message
+            : t.loginFailed
+        );
+
+      } catch (error) {
+
+        console.error(
+          "ChatNova login error:",
+          error
+        );
+
+        showMessage(
+          "error",
+          t.serverError
+        );
+
+      } finally {
+
+        button.disabled = false;
+
+        if (
+          !document
+            .getElementById("message")
+            .classList
+            .contains("success")
+        ) {
+          button.textContent =
+            t.signIn;
+        }
+      }
+    });
+
+  setLanguage(language);
+</script>
+
+</body>
+</html>
