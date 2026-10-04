@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2046,6 +2047,10 @@
                             TOKEN_KEY
                         );
 
+                        removeStorage(
+                            USER_KEY
+                        );
+
                         throw new Error(
                             "SESSION_FAILED"
                         );
@@ -2071,6 +2076,7 @@
                             JSON.stringify(
                                 customer
                             )
+
                         );
 
                     }
@@ -2091,11 +2097,18 @@
                     );
 
 
+                    /*
+                     * IMPORTANT:
+                     * Dashboard redirect happens ONLY after
+                     * successful login + successful /api/me.
+                     */
+
                     setTimeout(
                         function(){
 
-                            window.location.href =
-                                "dashboard.html";
+                            window.location.replace(
+                                "./dashboard.html"
+                            );
 
                         },
                         500
@@ -2112,6 +2125,10 @@
 
                     removeStorage(
                         TOKEN_KEY
+                    );
+
+                    removeStorage(
+                        USER_KEY
                     );
 
 
@@ -2242,133 +2259,14 @@
 
 
     /* =====================================================
-       CHECK EXISTING SESSION
-    ===================================================== */
-
-    async function checkExistingSession(){
-
-        const token =
-            getStorage(
-                TOKEN_KEY
-            );
-
-
-        if(!token){
-
-            return;
-
-        }
-
-
-        try{
-
-            const response =
-                await fetchWithTimeout(
-
-                    API_BASE +
-                    "/api/me",
-
-                    {
-
-                        method:
-                            "GET",
-
-                        headers: {
-
-                            "Accept":
-                                "application/json",
-
-                            "Authorization":
-                                "Bearer " +
-                                token
-
-                        }
-
-                    },
-
-                    8000
-
-                );
-
-
-            if(!response.ok){
-
-                removeStorage(
-                    TOKEN_KEY
-                );
-
-                removeStorage(
-                    USER_KEY
-                );
-
-                return;
-
-            }
-
-
-            let data =
-                null;
-
-
-            try{
-
-                data =
-                    await response.json();
-
-            }catch{
-
-                data =
-                    null;
-
-            }
-
-
-            if(
-                data &&
-                data.success
-            ){
-
-                const customer =
-                    data.customer ||
-                    data.user ||
-                    null;
-
-
-                if(customer){
-
-                    setStorage(
-
-                        USER_KEY,
-
-                        JSON.stringify(
-                            customer
-                        )
-
-                    );
-
-                }
-
-
-                window.location.href =
-                    "dashboard.html";
-
-            }
-
-
-        }catch(error){
-
-            console.warn(
-                "Existing session check skipped:",
-                error
-            );
-
-        }
-
-    }
-
-
-    /* =====================================================
        INITIALIZE
+       
+       IMPORTANT:
+       There is NO automatic session check here.
+       
+       Opening login.html will ALWAYS remain on
+       the Login page until the user submits the
+       login form successfully.
     ===================================================== */
 
     document.addEventListener(
@@ -2388,22 +2286,12 @@
 
             }
 
-
-            /*
-             * Do not block the login page
-             * waiting for old sessions.
-             *
-             * Session check runs in background.
-             */
-
-            checkExistingSession();
-
         }
     );
 
 
     /* =====================================================
-       MOBILE SAFETY
+       MOBILE / PAGE RESTORE SAFETY
     ===================================================== */
 
     window.addEventListener(
@@ -2434,3 +2322,4 @@
 
 </body>
 </html>
+```
