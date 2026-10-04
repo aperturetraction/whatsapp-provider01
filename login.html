@@ -1,1331 +1,1425 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Login — ChatNova</title>
+    <title>Login — ChatNova</title>
+    <meta name="description" content="Login to your ChatNova WhatsApp Business dashboard.">
 
-  <style>
-    :root {
-      --bg: #070a09;
-      --bg-soft: #0c100e;
-      --card: rgba(17, 22, 19, 0.92);
-      --border: rgba(255,255,255,0.08);
-      --text: #f5f7f6;
-      --muted: #9ca7a1;
-      --green: #19d66b;
-      --green-dark: #0d9f4b;
-      --danger: #ff6b6b;
-      --success: #35e98a;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        :root {
+            --bg: #070909;
+            --bg-soft: #0b0f0e;
+            --card: #101513;
+            --card-2: #131a17;
+            --border: rgba(255,255,255,0.09);
+            --text: #f5f7f6;
+            --muted: #8e9994;
+            --green: #19d47b;
+            --green-dark: #0fae62;
+            --danger: #ff5f6d;
+            --warning: #f5c451;
+        }
 
-    body {
-      min-height: 100vh;
-      font-family: Inter, Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(
-          circle at 50% 0%,
-          rgba(25,214,107,0.09),
-          transparent 35%
-        ),
-        var(--bg);
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-    }
+        body {
+            min-height: 100vh;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(25,212,123,0.10),
+                    transparent 35%
+                ),
+                var(--bg);
+            color: var(--text);
+        }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
 
-    header {
-      height: 76px;
-      padding: 0 7%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      background: rgba(7,10,9,0.82);
-      backdrop-filter: blur(16px);
-    }
+        button,
+        input {
+            font: inherit;
+        }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      font-size: 21px;
-      font-weight: 800;
-      letter-spacing: -0.4px;
-    }
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .brand-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(
-        135deg,
-        var(--green),
-        #0a9f4a
-      );
-      color: #031108;
-      font-weight: 900;
-      box-shadow:
-        0 0 24px rgba(25,214,107,0.18);
-    }
+        /* =========================
+           HEADER
+        ========================= */
 
-    .back-home {
-      color: var(--muted);
-      font-size: 14px;
-      transition: 0.2s ease;
-    }
+        header {
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 42px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(7,9,9,0.82);
+            backdrop-filter: blur(16px);
+        }
 
-    .back-home:hover {
-      color: var(--green);
-    }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: -0.4px;
+        }
 
-    main {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 60px 20px;
-    }
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(25,212,123,0.12);
+            border: 1px solid rgba(25,212,123,0.28);
+            color: var(--green);
+            font-size: 17px;
+            font-weight: 900;
+        }
 
-    .login-wrap {
-      width: 100%;
-      max-width: 440px;
-    }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
 
-    .heading {
-      text-align: center;
-      margin-bottom: 28px;
-    }
+        .home-link {
+            color: var(--muted);
+            font-size: 14px;
+            transition: 0.2s;
+        }
 
-    .heading h1 {
-      font-size: 34px;
-      line-height: 1.15;
-      letter-spacing: -1px;
-      margin-bottom: 10px;
-    }
+        .home-link:hover {
+            color: var(--text);
+        }
 
-    .heading p {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.6;
-    }
+        .language {
+            display: flex;
+            gap: 5px;
+            padding: 4px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.025);
+        }
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 34px;
-      box-shadow:
-        0 25px 80px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.025);
-    }
+        .lang-btn {
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            padding: 6px 9px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
 
-    .field {
-      margin-bottom: 20px;
-    }
+        .lang-btn.active {
+            color: #06110b;
+            background: var(--green);
+            font-weight: 700;
+        }
 
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #dce3df;
-    }
+        /* =========================
+           MAIN
+        ========================= */
 
-    input {
-      width: 100%;
-      height: 52px;
-      padding: 0 15px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: #0a0e0c;
-      color: var(--text);
-      outline: none;
-      font-size: 15px;
-      transition: 0.2s ease;
-    }
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
 
-    input::placeholder {
-      color: #65706a;
-    }
+        .login-wrapper {
+            width: 100%;
+            max-width: 430px;
+        }
 
-    input:focus {
-      border-color: rgba(25,214,107,0.65);
-      box-shadow:
-        0 0 0 3px rgba(25,214,107,0.08);
-    }
+        .login-heading {
+            text-align: center;
+            margin-bottom: 28px;
+        }
 
-    .password-row {
-      position: relative;
-    }
+        .login-heading h1 {
+            font-size: 34px;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
 
-    .password-row input {
-      padding-right: 70px;
-    }
+        .login-heading p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
 
-    .show-password {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      border: 0;
-      background: transparent;
-      color: #8d9891;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 600;
-    }
+        .login-card {
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255,255,255,0.025),
+                    rgba(255,255,255,0.01)
+                ),
+                var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.45),
+                inset 0 1px 0 rgba(255,255,255,0.025);
+        }
 
-    .show-password:hover {
-      color: var(--green);
-    }
+        /* =========================
+           FORM
+        ========================= */
 
-    .form-options {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: -7px;
-      margin-bottom: 22px;
-    }
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-    .forgot {
-      font-size: 13px;
-      color: var(--green);
-    }
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #dfe6e2;
+            font-size: 13px;
+            font-weight: 600;
+        }
 
-    .forgot:hover {
-      text-decoration: underline;
-    }
+        .input {
+            width: 100%;
+            height: 50px;
+            padding: 0 15px;
+            border-radius: 11px;
+            border: 1px solid rgba(255,255,255,0.10);
+            background: #090d0c;
+            color: var(--text);
+            outline: none;
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s;
+        }
 
-    .login-btn {
-      width: 100%;
-      height: 52px;
-      border: 0;
-      border-radius: 12px;
-      background: linear-gradient(
-        135deg,
-        var(--green),
-        var(--green-dark)
-      );
-      color: #031108;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        opacity 0.2s ease;
-    }
+        .input::placeholder {
+            color: #5f6a65;
+        }
 
-    .login-btn:hover {
-      transform: translateY(-1px);
-      box-shadow:
-        0 12px 30px rgba(25,214,107,0.18);
-    }
+        .input:focus {
+            border-color: rgba(25,212,123,0.60);
+            box-shadow: 0 0 0 3px rgba(25,212,123,0.08);
+        }
 
-    .login-btn:disabled {
-      cursor: not-allowed;
-      opacity: 0.55;
-      transform: none;
-      box-shadow: none;
-    }
+        .password-row {
+            position: relative;
+        }
 
-    .message {
-      display: none;
-      margin-bottom: 18px;
-      padding: 12px 14px;
-      border-radius: 10px;
-      font-size: 13px;
-      line-height: 1.5;
-    }
+        .password-row .input {
+            padding-right: 70px;
+        }
 
-    .message.error {
-      display: block;
-      background: rgba(255,107,107,0.08);
-      border: 1px solid rgba(255,107,107,0.18);
-      color: #ff9a9a;
-    }
+        .show-password {
+            position: absolute;
+            right: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 12px;
+            padding: 7px;
+        }
 
-    .message.success {
-      display: block;
-      background: rgba(53,233,138,0.08);
-      border: 1px solid rgba(53,233,138,0.18);
-      color: var(--success);
-    }
+        .show-password:hover {
+            color: var(--green);
+        }
 
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 26px 0;
-      color: #66716b;
-      font-size: 12px;
-    }
+        .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin: -3px 0 22px;
+        }
 
-    .divider::before,
-    .divider::after {
-      content: "";
-      height: 1px;
-      flex: 1;
-      background: var(--border);
-    }
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 12px;
+        }
 
-    .register-text {
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
+        .remember input {
+            accent-color: var(--green);
+        }
 
-    .register-text a {
-      color: var(--green);
-      font-weight: 700;
-    }
+        .forgot {
+            color: var(--green);
+            font-size: 12px;
+        }
 
-    .register-text a:hover {
-      text-decoration: underline;
-    }
+        .forgot:hover {
+            text-decoration: underline;
+        }
 
-    .security-note {
-      margin-top: 20px;
-      text-align: center;
-      color: #68736d;
-      font-size: 11px;
-      line-height: 1.5;
-    }
+        /* =========================
+           BUTTON
+        ========================= */
 
-    footer {
-      padding: 22px 20px;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      color: #59635e;
-      font-size: 11px;
-    }
+        .btn {
+            width: 100%;
+            height: 51px;
+            border: 0;
+            border-radius: 11px;
+            cursor: pointer;
+            font-weight: 750;
+            font-size: 14px;
+            transition:
+                transform 0.15s,
+                opacity 0.2s,
+                background 0.2s;
+        }
 
-    .language {
-      position: fixed;
-      top: 88px;
-      right: 22px;
-      z-index: 5;
-      display: flex;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      overflow: hidden;
-      background: rgba(12,16,14,0.9);
-    }
+        .btn-primary {
+            background: var(--green);
+            color: #041009;
+        }
 
-    .language button {
-      border: 0;
-      background: transparent;
-      color: #7d8881;
-      padding: 7px 10px;
-      font-size: 11px;
-      cursor: pointer;
-    }
+        .btn-primary:hover {
+            background: #24e284;
+            transform: translateY(-1px);
+        }
 
-    .language button.active {
-      color: var(--green);
-      background: rgba(25,214,107,0.08);
-    }
+        .btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.55;
+            transform: none;
+        }
 
-    @media (max-width: 600px) {
+        /* =========================
+           MESSAGE
+        ========================= */
 
-      header {
-        height: 68px;
-        padding: 0 20px;
-      }
+        .message {
+            display: none;
+            margin-bottom: 18px;
+            padding: 12px 13px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
 
-      .brand {
-        font-size: 19px;
-      }
+        .message.show {
+            display: block;
+        }
 
-      .back-home {
-        font-size: 13px;
-      }
+        .message.error {
+            background: rgba(255,95,109,0.08);
+            border: 1px solid rgba(255,95,109,0.22);
+            color: #ff9da6;
+        }
 
-      main {
-        padding: 45px 16px;
-        align-items: flex-start;
-      }
+        .message.success {
+            background: rgba(25,212,123,0.08);
+            border: 1px solid rgba(25,212,123,0.22);
+            color: #70e8ad;
+        }
 
-      .heading h1 {
-        font-size: 29px;
-      }
+        .message.warning {
+            background: rgba(245,196,81,0.08);
+            border: 1px solid rgba(245,196,81,0.22);
+            color: #f5d47c;
+        }
 
-      .heading p {
-        font-size: 14px;
-      }
+        /* =========================
+           DIVIDER
+        ========================= */
 
-      .card {
-        padding: 25px 20px;
-        border-radius: 18px;
-      }
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 25px 0;
+            color: #5e6964;
+            font-size: 11px;
+        }
 
-      .language {
-        top: 78px;
-        right: 12px;
-      }
-    }
+        .divider::before,
+        .divider::after {
+            content: "";
+            height: 1px;
+            flex: 1;
+            background: var(--border);
+        }
 
-    @media (max-width: 380px) {
+        /* =========================
+           REGISTER
+        ========================= */
 
-      header {
-        padding: 0 15px;
-      }
+        .register-text {
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+        }
 
-      .brand {
-        font-size: 18px;
-      }
+        .register-link {
+            color: var(--green);
+            font-weight: 700;
+        }
 
-      .brand-mark {
-        width: 31px;
-        height: 31px;
-      }
+        .register-link:hover {
+            text-decoration: underline;
+        }
 
-      .back-home {
-        font-size: 12px;
-      }
+        /* =========================
+           SECURITY
+        ========================= */
 
-      main {
-        padding-left: 12px;
-        padding-right: 12px;
-      }
+        .security {
+            display: flex;
+            justify-content: center;
+            gap: 7px;
+            margin-top: 22px;
+            color: #69736f;
+            font-size: 11px;
+            text-align: center;
+        }
 
-      .card {
-        padding: 22px 16px;
-      }
-    }
-  </style>
+        .security-icon {
+            color: var(--green);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            padding: 20px;
+            text-align: center;
+            color: #535d59;
+            font-size: 11px;
+        }
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        .spinner {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-right: 7px;
+            vertical-align: -3px;
+            border: 2px solid rgba(0,0,0,0.25);
+            border-top-color: #06110b;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            header {
+                height: 68px;
+                padding: 0 18px;
+            }
+
+            .brand {
+                font-size: 18px;
+            }
+
+            .brand-mark {
+                width: 31px;
+                height: 31px;
+                border-radius: 9px;
+            }
+
+            .home-link {
+                display: none;
+            }
+
+            main {
+                padding: 38px 16px;
+                align-items: flex-start;
+            }
+
+            .login-heading {
+                margin-top: 12px;
+                margin-bottom: 23px;
+            }
+
+            .login-heading h1 {
+                font-size: 29px;
+            }
+
+            .login-card {
+                padding: 23px 19px;
+                border-radius: 17px;
+            }
+
+            .form-options {
+                align-items: flex-start;
+            }
+
+            .forgot {
+                white-space: nowrap;
+            }
+
+            footer {
+                padding-bottom: 25px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<header>
+<div class="page">
 
-  <a href="index.html" class="brand">
-    <span class="brand-mark">C</span>
-    <span>ChatNova</span>
-  </a>
+    <!-- HEADER -->
+    <header>
 
-  <a
-    href="index.html"
-    class="back-home"
-    id="backHome"
-  >
-    ← Back to Home
-  </a>
+        <a href="index.html" class="brand">
+            <div class="brand-mark">C</div>
+            <span>ChatNova</span>
+        </a>
 
-</header>
+        <div class="header-right">
 
-<div class="language">
+            <a href="index.html" class="home-link" data-i18n="backHome">
+                ← Back to home
+            </a>
 
-  <button
-    id="enBtn"
-    class="active"
-    onclick="setLanguage('en')"
-  >
-    EN
-  </button>
+            <div class="language">
+                <button
+                    type="button"
+                    class="lang-btn active"
+                    id="langEN"
+                    onclick="setLanguage('en')">
+                    EN
+                </button>
 
-  <button
-    id="zhBtn"
-    onclick="setLanguage('zh')"
-  >
-    中文
-  </button>
+                <button
+                    type="button"
+                    class="lang-btn"
+                    id="langZH"
+                    onclick="setLanguage('zh')">
+                    中文
+                </button>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+    <main>
+
+        <div class="login-wrapper">
+
+            <div class="login-heading">
+
+                <h1 data-i18n="title">
+                    Welcome back
+                </h1>
+
+                <p data-i18n="subtitle">
+                    Sign in to manage your WhatsApp Business accounts.
+                </p>
+
+            </div>
+
+
+            <div class="login-card">
+
+                <!-- MESSAGE -->
+                <div
+                    id="message"
+                    class="message">
+                </div>
+
+
+                <!-- LOGIN FORM -->
+                <form id="loginForm">
+
+                    <div class="form-group">
+
+                        <label
+                            class="form-label"
+                            for="email"
+                            data-i18n="emailLabel">
+                            Email address
+                        </label>
+
+                        <input
+                            id="email"
+                            class="input"
+                            type="email"
+                            autocomplete="email"
+                            placeholder="you@example.com"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label
+                            class="form-label"
+                            for="password"
+                            data-i18n="passwordLabel">
+                            Password
+                        </label>
+
+                        <div class="password-row">
+
+                            <input
+                                id="password"
+                                class="input"
+                                type="password"
+                                autocomplete="current-password"
+                                placeholder="Enter your password"
+                                required>
+
+                            <button
+                                type="button"
+                                class="show-password"
+                                id="showPassword"
+                                onclick="togglePassword()"
+                                data-i18n="show">
+                                Show
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-options">
+
+                        <label class="remember">
+
+                            <input
+                                type="checkbox"
+                                id="remember">
+
+                            <span data-i18n="remember">
+                                Remember me
+                            </span>
+
+                        </label>
+
+                        <a
+                            href="#"
+                            class="forgot"
+                            onclick="forgotPassword(event)"
+                            data-i18n="forgot">
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="loginButton"
+                        data-i18n="signIn">
+                        Sign in
+                    </button>
+
+                </form>
+
+
+                <div class="divider" data-i18n="or">
+                    OR
+                </div>
+
+
+                <div class="register-text">
+
+                    <span data-i18n="noAccount">
+                        Don't have an account?
+                    </span>
+
+                    &nbsp;
+
+                    <a
+                        href="register.html"
+                        class="register-link"
+                        data-i18n="createAccount">
+                        Create account
+                    </a>
+
+                </div>
+
+
+                <div class="security">
+
+                    <span class="security-icon">✓</span>
+
+                    <span data-i18n="security">
+                        Secure account authentication
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+        © 2026 ChatNova. All rights reserved.
+    </footer>
 
 </div>
 
-<main>
-
-  <div class="login-wrap">
-
-    <div class="heading">
-
-      <h1 id="title">
-        Welcome back
-      </h1>
-
-      <p id="subtitle">
-        Sign in to your ChatNova account and manage your customer conversations.
-      </p>
-
-    </div>
-
-    <div class="card">
-
-      <div
-        id="message"
-        class="message"
-      ></div>
-
-      <form id="loginForm">
-
-        <div class="field">
-
-          <label
-            for="email"
-            id="emailLabel"
-          >
-            Email Address
-          </label>
-
-          <input
-            type="email"
-            id="email"
-            autocomplete="email"
-            placeholder="you@example.com"
-            required
-          >
-
-        </div>
-
-        <div class="field">
-
-          <label
-            for="password"
-            id="passwordLabel"
-          >
-            Password
-          </label>
-
-          <div class="password-row">
-
-            <input
-              type="password"
-              id="password"
-              autocomplete="current-password"
-              placeholder="Enter your password"
-              required
-            >
-
-            <button
-              type="button"
-              class="show-password"
-              id="showPassword"
-              onclick="togglePassword()"
-            >
-              Show
-            </button>
-
-          </div>
-
-        </div>
-
-        <div class="form-options">
-
-          <a
-            href="#"
-            class="forgot"
-            id="forgotPassword"
-            onclick="forgotPassword(event)"
-          >
-            Forgot password?
-          </a>
-
-        </div>
-
-        <button
-          type="submit"
-          class="login-btn"
-          id="loginBtn"
-        >
-          Sign In
-        </button>
-
-      </form>
-
-      <div class="divider">
-
-        <span id="orText">
-          OR
-        </span>
-
-      </div>
-
-      <div class="register-text">
-
-        <span id="noAccount">
-          Don't have an account?
-        </span>
-
-        <a
-          href="register.html"
-          id="createAccount"
-        >
-          Create Account
-        </a>
-
-      </div>
-
-      <div
-        class="security-note"
-        id="securityNote"
-      >
-        Your login is securely handled by ChatNova.
-      </div>
-
-    </div>
-
-  </div>
-
-</main>
-
-<footer>
-  © 2026 ChatNova. All rights reserved.
-</footer>
 
 <script>
 
-  const API_BASE =
-    "https://whatsapp-provider-api.b79gn827py.workers.dev";
+    /* =====================================================
+       CHATNOVA CONFIG
+    ===================================================== */
 
-  /*
-   * Maximum time allowed for an API request.
-   * This prevents mobile Safari / mobile browsers
-   * from staying on "Signing In..." forever.
-   */
-  const API_TIMEOUT = 12000;
+    const API_BASE =
+        "https://whatsapp-provider-api.b79gn827py.workers.dev";
 
-
-  const translations = {
-
-    en: {
-
-      title: "Welcome back",
-
-      subtitle:
-        "Sign in to your ChatNova account and manage your customer conversations.",
-
-      emailLabel:
-        "Email Address",
-
-      passwordLabel:
-        "Password",
-
-      passwordPlaceholder:
-        "Enter your password",
-
-      forgot:
-        "Forgot password?",
-
-      signIn:
-        "Sign In",
-
-      signingIn:
-        "Signing In...",
-
-      verifying:
-        "Verifying session...",
-
-      or:
-        "OR",
-
-      noAccount:
-        "Don't have an account?",
-
-      createAccount:
-        "Create Account",
-
-      security:
-        "Your login is securely handled by ChatNova.",
-
-      backHome:
-        "← Back to Home",
-
-      show:
-        "Show",
-
-      hide:
-        "Hide",
-
-      invalid:
-        "Please enter your email address and password.",
-
-      loginFailed:
-        "Invalid email or password.",
-
-      serverError:
-        "Unable to connect to ChatNova. Please try again.",
-
-      sessionFailed:
-        "Login succeeded, but the session could not be verified. Please try again.",
-
-      timeout:
-        "The connection is taking too long. Please check your connection and try again.",
-
-      success:
-        "Login successful. Redirecting..."
-
-    },
-
-    zh: {
-
-      title:
-        "欢迎回来",
-
-      subtitle:
-        "登录您的 ChatNova 账户，管理您的客户对话。",
-
-      emailLabel:
-        "电子邮箱",
-
-      passwordLabel:
-        "密码",
-
-      passwordPlaceholder:
-        "请输入密码",
-
-      forgot:
-        "忘记密码？",
-
-      signIn:
-        "登录",
-
-      signingIn:
-        "登录中...",
-
-      verifying:
-        "正在验证登录状态...",
-
-      or:
-        "或",
-
-      noAccount:
-        "还没有账户？",
-
-      createAccount:
-        "创建账户",
-
-      security:
-        "您的登录信息由 ChatNova 安全处理。",
-
-      backHome:
-        "← 返回首页",
-
-      show:
-        "显示",
-
-      hide:
-        "隐藏",
-
-      invalid:
-        "请输入电子邮箱和密码。",
-
-      loginFailed:
-        "电子邮箱或密码错误。",
-
-      serverError:
-        "无法连接到 ChatNova，请稍后再试。",
-
-      sessionFailed:
-        "登录成功，但无法验证登录状态。请重新尝试。",
-
-      timeout:
-        "连接时间过长，请检查网络后再试。",
-
-      success:
-        "登录成功，正在进入控制面板..."
-
-    }
-
-  };
+    const TOKEN_KEY = "chatnova_token";
+    const USER_KEY = "chatnova_user";
+    const LANGUAGE_KEY = "chatnova_language";
 
 
-  let language =
-    localStorage.getItem("chatnova_language") || "en";
+    /* =====================================================
+       TRANSLATIONS
+    ===================================================== */
 
+    const translations = {
 
-  /*
-   * Fetch helper with:
-   * - credentials included
-   * - timeout protection
-   * - AbortController
-   */
-  async function fetchWithTimeout(
-    url,
-    options = {},
-    timeout = API_TIMEOUT
-  ) {
+        en: {
+            backHome: "← Back to home",
+            title: "Welcome back",
+            subtitle: "Sign in to manage your WhatsApp Business accounts.",
+            emailLabel: "Email address",
+            passwordLabel: "Password",
+            show: "Show",
+            hide: "Hide",
+            remember: "Remember me",
+            forgot: "Forgot password?",
+            signIn: "Sign in",
+            signingIn: "Signing in...",
+            or: "OR",
+            noAccount: "Don't have an account?",
+            createAccount: "Create account",
+            security: "Secure account authentication",
 
-    const controller =
-      new AbortController();
+            invalidLogin:
+                "Invalid email or password.",
 
-    const timer =
-      setTimeout(
-        function() {
-          controller.abort();
+            connectionError:
+                "Unable to connect to ChatNova. Please try again.",
+
+            sessionError:
+                "Login succeeded, but the session could not be verified.",
+
+            success:
+                "Login successful. Redirecting...",
+
+            forgotMessage:
+                "Password recovery will be available soon."
         },
-        timeout
-      );
 
-    try {
+        zh: {
+            backHome: "← 返回首页",
+            title: "欢迎回来",
+            subtitle: "登录以管理您的 WhatsApp Business 账号。",
+            emailLabel: "电子邮件地址",
+            passwordLabel: "密码",
+            show: "显示",
+            hide: "隐藏",
+            remember: "记住我",
+            forgot: "忘记密码？",
+            signIn: "登录",
+            signingIn: "登录中...",
+            or: "或",
+            noAccount: "还没有账号？",
+            createAccount: "创建账号",
+            security: "安全账号认证",
 
-      return await fetch(
-        url,
-        {
-          ...options,
-          credentials: "include",
-          signal: controller.signal
+            invalidLogin:
+                "电子邮件或密码错误。",
+
+            connectionError:
+                "无法连接 ChatNova，请稍后再试。",
+
+            sessionError:
+                "登录成功，但无法验证登录会话。",
+
+            success:
+                "登录成功，正在进入 Dashboard...",
+
+            forgotMessage:
+                "密码恢复功能即将开放。"
         }
-      );
 
-    } finally {
-
-      clearTimeout(timer);
-
-    }
-
-  }
+    };
 
 
-  function setLanguage(lang) {
+    /* =====================================================
+       LANGUAGE
+    ===================================================== */
 
-    language = lang;
-
-    localStorage.setItem(
-      "chatnova_language",
-      lang
-    );
-
-    document.documentElement.lang =
-      lang === "zh"
-        ? "zh-CN"
-        : "en";
-
-    const t =
-      translations[lang];
+    let currentLanguage =
+        localStorage.getItem(LANGUAGE_KEY) || "en";
 
 
-    document.getElementById("title").textContent =
-      t.title;
+    function setLanguage(language) {
 
+        currentLanguage = language;
 
-    document.getElementById("subtitle").textContent =
-      t.subtitle;
+        localStorage.setItem(
+            LANGUAGE_KEY,
+            language
+        );
 
-
-    document.getElementById("emailLabel").textContent =
-      t.emailLabel;
-
-
-    document.getElementById("passwordLabel").textContent =
-      t.passwordLabel;
-
-
-    document.getElementById("password").placeholder =
-      t.passwordPlaceholder;
-
-
-    document.getElementById("forgotPassword").textContent =
-      t.forgot;
-
-
-    /*
-     * Do not overwrite "Signing In..."
-     * when language is changed during normal use.
-     */
-    const button =
-      document.getElementById("loginBtn");
-
-    if (!button.disabled) {
-
-      button.textContent =
-        t.signIn;
-
+        applyLanguage();
     }
 
 
-    document.getElementById("orText").textContent =
-      t.or;
+    function applyLanguage() {
+
+        const t =
+            translations[currentLanguage];
+
+        document
+            .querySelectorAll("[data-i18n]")
+            .forEach(element => {
+
+                const key =
+                    element.getAttribute("data-i18n");
+
+                if (t[key]) {
+                    element.textContent = t[key];
+                }
+
+            });
 
 
-    document.getElementById("noAccount").textContent =
-      t.noAccount + " ";
+        document
+            .getElementById("langEN")
+            .classList.toggle(
+                "active",
+                currentLanguage === "en"
+            );
 
 
-    document.getElementById("createAccount").textContent =
-      t.createAccount;
+        document
+            .getElementById("langZH")
+            .classList.toggle(
+                "active",
+                currentLanguage === "zh"
+            );
 
 
-    document.getElementById("securityNote").textContent =
-      t.security;
+        document.documentElement.lang =
+            currentLanguage === "zh"
+                ? "zh"
+                : "en";
+    }
 
 
-    document.getElementById("backHome").textContent =
-      t.backHome;
+    /* =====================================================
+       MESSAGE
+    ===================================================== */
 
-
-    document.getElementById("enBtn")
-      .classList
-      .toggle(
-        "active",
-        lang === "en"
-      );
-
-
-    document.getElementById("zhBtn")
-      .classList
-      .toggle(
-        "active",
-        lang === "zh"
-      );
-
-
-    /*
-     * Keep password Show / Hide text
-     * synchronized with current language.
-     */
-    const password =
-      document.getElementById("password");
-
-    const showButton =
-      document.getElementById("showPassword");
-
-    showButton.textContent =
-      password.type === "password"
-        ? t.show
-        : t.hide;
-
-
-    document.title =
-      lang === "zh"
-        ? "登录 — ChatNova"
-        : "Login — ChatNova";
-
-  }
-
-
-  function togglePassword() {
-
-    const input =
-      document.getElementById("password");
-
-    const button =
-      document.getElementById("showPassword");
-
-    const t =
-      translations[language];
-
-
-    if (
-      input.type === "password"
+    function showMessage(
+        message,
+        type = "error"
     ) {
 
-      input.type = "text";
+        const box =
+            document.getElementById("message");
 
-      button.textContent =
-        t.hide;
+        box.textContent = message;
 
-    } else {
-
-      input.type = "password";
-
-      button.textContent =
-        t.show;
-
+        box.className =
+            "message show " + type;
     }
 
-  }
+
+    function hideMessage() {
+
+        const box =
+            document.getElementById("message");
+
+        box.className = "message";
+
+        box.textContent = "";
+    }
 
 
-  function showMessage(
-    type,
-    message
-  ) {
+    /* =====================================================
+       PASSWORD VISIBILITY
+    ===================================================== */
 
-    const box =
-      document.getElementById("message");
+    function togglePassword() {
 
+        const input =
+            document.getElementById("password");
 
-    box.className =
-      "message " + type;
+        const button =
+            document.getElementById("showPassword");
 
-
-    box.textContent =
-      message;
-
-  }
+        const t =
+            translations[currentLanguage];
 
 
-  function clearMessage() {
+        if (input.type === "password") {
 
-    const box =
-      document.getElementById("message");
+            input.type = "text";
 
-    box.className =
-      "message";
+            button.textContent =
+                t.hide;
 
-    box.textContent =
-      "";
+        } else {
 
-  }
+            input.type = "password";
 
-
-  function forgotPassword(event) {
-
-    event.preventDefault();
-
-    const message =
-      language === "zh"
-        ? "忘记密码功能暂未启用。"
-        : "Password recovery is not enabled yet.";
-
-    showMessage(
-      "error",
-      message
-    );
-
-  }
+            button.textContent =
+                t.show;
+        }
+    }
 
 
-  /*
-   * IMPORTANT:
-   *
-   * After /api/login succeeds,
-   * do NOT immediately redirect.
-   *
-   * First call /api/me.
-   *
-   * This confirms that the browser actually
-   * stored and can send the ChatNova session.
-   */
-  async function verifySession() {
+    /* =====================================================
+       TIMEOUT FETCH
+    ===================================================== */
 
-    try {
+    async function fetchWithTimeout(
+        url,
+        options = {},
+        timeout = 15000
+    ) {
 
-      const response =
-        await fetchWithTimeout(
-          API_BASE + "/api/me",
-          {
-            method: "GET",
+        const controller =
+            new AbortController();
 
-            headers: {
-              "Accept":
-                "application/json"
+        const timer =
+            setTimeout(
+                () => controller.abort(),
+                timeout
+            );
+
+        try {
+
+            const response =
+                await fetch(
+                    url,
+                    {
+                        ...options,
+                        signal:
+                            controller.signal
+                    }
+                );
+
+            return response;
+
+        } finally {
+
+            clearTimeout(timer);
+        }
+    }
+
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
+
+    document
+        .getElementById("loginForm")
+        .addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+                hideMessage();
+
+
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim()
+                        .toLowerCase();
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                const remember =
+                    document
+                        .getElementById("remember")
+                        .checked;
+
+
+                const button =
+                    document
+                        .getElementById("loginButton");
+
+
+                if (!email || !password) {
+                    return;
+                }
+
+
+                button.disabled = true;
+
+                button.innerHTML =
+                    '<span class="spinner"></span>' +
+                    translations[currentLanguage].signingIn;
+
+
+                try {
+
+                    /* -----------------------------------------
+                       STEP 1
+                       LOGIN
+                    ----------------------------------------- */
+
+                    const loginResponse =
+                        await fetchWithTimeout(
+
+                            API_BASE + "/api/login",
+
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Accept":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+
+                                    email: email,
+
+                                    password: password
+
+                                })
+                            },
+
+                            15000
+                        );
+
+
+                    let loginData = null;
+
+                    try {
+                        loginData =
+                            await loginResponse.json();
+                    } catch {
+                        loginData = null;
+                    }
+
+
+                    if (
+                        !loginResponse.ok ||
+                        !loginData ||
+                        !loginData.success
+                    ) {
+
+                        throw new Error(
+                            "LOGIN_FAILED"
+                        );
+                    }
+
+
+                    /* -----------------------------------------
+                       STEP 2
+                       GET TOKEN
+                    ----------------------------------------- */
+
+                    const token =
+                        loginData.token;
+
+
+                    if (
+                        !token ||
+                        typeof token !== "string"
+                    ) {
+
+                        throw new Error(
+                            "NO_TOKEN"
+                        );
+                    }
+
+
+                    /* -----------------------------------------
+                       STEP 3
+                       SAVE TOKEN
+                    ----------------------------------------- */
+
+                    /*
+                     * The token is required for all authenticated
+                     * ChatNova API requests.
+                     */
+
+                    localStorage.setItem(
+                        TOKEN_KEY,
+                        token
+                    );
+
+
+                    /* -----------------------------------------
+                       STEP 4
+                       VERIFY /api/me
+                    ----------------------------------------- */
+
+                    const meResponse =
+                        await fetchWithTimeout(
+
+                            API_BASE + "/api/me",
+
+                            {
+                                method: "GET",
+
+                                headers: {
+
+                                    "Accept":
+                                        "application/json",
+
+                                    "Authorization":
+                                        "Bearer " + token
+                                }
+                            },
+
+                            10000
+                        );
+
+
+                    let meData = null;
+
+                    try {
+                        meData =
+                            await meResponse.json();
+                    } catch {
+                        meData = null;
+                    }
+
+
+                    if (
+                        !meResponse.ok ||
+                        !meData ||
+                        !meData.success
+                    ) {
+
+                        /*
+                         * Token is invalid or could not
+                         * be verified.
+                         */
+
+                        localStorage.removeItem(
+                            TOKEN_KEY
+                        );
+
+                        throw new Error(
+                            "SESSION_FAILED"
+                        );
+                    }
+
+
+                    /* -----------------------------------------
+                       STEP 5
+                       SAVE USER DATA
+                    ----------------------------------------- */
+
+                    if (meData.customer) {
+
+                        localStorage.setItem(
+                            USER_KEY,
+                            JSON.stringify(
+                                meData.customer
+                            )
+                        );
+
+                    } else if (meData.user) {
+
+                        localStorage.setItem(
+                            USER_KEY,
+                            JSON.stringify(
+                                meData.user
+                            )
+                        );
+                    }
+
+
+                    /* -----------------------------------------
+                       STEP 6
+                       REMEMBER ME
+                    ----------------------------------------- */
+
+                    if (!remember) {
+
+                        /*
+                         * The authentication token is still kept
+                         * for the current browser session because
+                         * ChatNova currently uses localStorage.
+                         *
+                         * This checkbox is prepared for the
+                         * future session-expiry enhancement.
+                         */
+
+                    }
+
+
+                    /* -----------------------------------------
+                       SUCCESS
+                    ----------------------------------------- */
+
+                    showMessage(
+                        translations[currentLanguage].success,
+                        "success"
+                    );
+
+
+                    setTimeout(
+                        () => {
+
+                            window.location.href =
+                                "dashboard.html";
+
+                        },
+                        500
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "ChatNova login error:",
+                        error
+                    );
+
+
+                    localStorage.removeItem(
+                        TOKEN_KEY
+                    );
+
+
+                    if (
+                        error.message ===
+                        "LOGIN_FAILED"
+                    ) {
+
+                        showMessage(
+                            translations[currentLanguage]
+                                .invalidLogin,
+                            "error"
+                        );
+
+                    } else if (
+                        error.message ===
+                        "SESSION_FAILED"
+                    ) {
+
+                        showMessage(
+                            translations[currentLanguage]
+                                .sessionError,
+                            "error"
+                        );
+
+                    } else if (
+                        error.message ===
+                        "NO_TOKEN"
+                    ) {
+
+                        showMessage(
+                            translations[currentLanguage]
+                                .sessionError,
+                            "error"
+                        );
+
+                    } else {
+
+                        showMessage(
+                            translations[currentLanguage]
+                                .connectionError,
+                            "error"
+                        );
+                    }
+
+
+                    button.disabled = false;
+
+                    button.textContent =
+                        translations[currentLanguage]
+                            .signIn;
+                }
+
             }
-          }
         );
 
 
-      let data = null;
+    /* =====================================================
+       FORGOT PASSWORD
+    ===================================================== */
 
-
-      try {
-
-        data =
-          await response.json();
-
-      } catch (e) {
-
-        data = null;
-
-      }
-
-
-      if (
-        response.ok &&
-        data &&
-        (
-          data.authenticated === true ||
-          data.success === true
-        )
-      ) {
-
-        return true;
-
-      }
-
-
-      return false;
-
-    } catch (error) {
-
-      console.error(
-        "ChatNova session verification error:",
-        error
-      );
-
-      return false;
-
-    }
-
-  }
-
-
-  document
-    .getElementById("loginForm")
-    .addEventListener(
-      "submit",
-      async function(event) {
+    function forgotPassword(event) {
 
         event.preventDefault();
 
-
-        const email =
-          document
-            .getElementById("email")
-            .value
-            .trim();
-
-
-        const password =
-          document
-            .getElementById("password")
-            .value;
+        showMessage(
+            translations[currentLanguage]
+                .forgotMessage,
+            "warning"
+        );
+    }
 
 
-        const button =
-          document
-            .getElementById("loginBtn");
+    /* =====================================================
+       AUTO REDIRECT IF ALREADY LOGGED IN
+    ===================================================== */
+
+    async function checkExistingSession() {
+
+        const token =
+            localStorage.getItem(TOKEN_KEY);
 
 
-        const t =
-          translations[language];
-
-
-        /*
-         * Basic validation.
-         */
-        if (
-          !email ||
-          !password
-        ) {
-
-          showMessage(
-            "error",
-            t.invalid
-          );
-
-          return;
-
+        if (!token) {
+            return;
         }
-
-
-        /*
-         * Lock button while authenticating.
-         */
-        button.disabled = true;
-
-        button.textContent =
-          t.signingIn;
-
-
-        clearMessage();
 
 
         try {
 
-          /*
-           * STEP 1
-           * Authenticate against Worker.
-           */
-          const response =
-            await fetchWithTimeout(
-              API_BASE + "/api/login",
-              {
-                method: "POST",
+            const response =
+                await fetchWithTimeout(
 
-                headers: {
-                  "Content-Type":
-                    "application/json",
+                    API_BASE + "/api/me",
 
-                  "Accept":
-                    "application/json"
-                },
+                    {
+                        method: "GET",
 
-                body:
-                  JSON.stringify({
-                    email: email,
-                    password: password
-                  })
-              }
-            );
+                        headers: {
+
+                            "Accept":
+                                "application/json",
+
+                            "Authorization":
+                                "Bearer " + token
+                        }
+                    },
+
+                    8000
+                );
 
 
-          let data = null;
+            if (!response.ok) {
+
+                localStorage.removeItem(
+                    TOKEN_KEY
+                );
+
+                localStorage.removeItem(
+                    USER_KEY
+                );
+
+                return;
+            }
 
 
-          try {
-
-            data =
-              await response.json();
-
-          } catch (e) {
-
-            data = null;
-
-          }
+            const data =
+                await response.json();
 
 
-          /*
-           * Login failed.
-           */
-          if (
-            !response.ok ||
-            !data ||
-            !data.success
-          ) {
-
-            showMessage(
-              "error",
-
-              (
+            if (
                 data &&
-                data.message
-              )
-                ? data.message
-                : t.loginFailed
-            );
+                data.success
+            ) {
 
-            return;
+                if (data.customer) {
 
-          }
+                    localStorage.setItem(
+                        USER_KEY,
+                        JSON.stringify(
+                            data.customer
+                        )
+                    );
 
-
-          /*
-           * STEP 2
-           *
-           * Login API says success.
-           * Now verify the actual session.
-           */
-          button.textContent =
-            t.verifying;
-
-
-          const sessionValid =
-            await verifySession();
-
-
-          /*
-           * STEP 3
-           *
-           * Only redirect if /api/me
-           * confirms the session.
-           */
-          if (sessionValid) {
-
-            showMessage(
-              "success",
-              t.success
-            );
-
-
-            /*
-             * Small delay so the user can
-             * see the successful login message.
-             */
-            setTimeout(
-              function() {
+                }
 
                 window.location.href =
-                  "dashboard.html";
-
-              },
-              400
-            );
-
-
-            return;
-
-          }
-
-
-          /*
-           * Login itself succeeded,
-           * but browser could not use
-           * the session cookie.
-           */
-          showMessage(
-            "error",
-            t.sessionFailed
-          );
-
+                    "dashboard.html";
+            }
 
         } catch (error) {
 
-          console.error(
-            "ChatNova login error:",
-            error
-          );
+            /*
+             * Do not block the login page if the API
+             * is temporarily unavailable.
+             */
 
-
-          /*
-           * AbortController timeout.
-           */
-          if (
-            error &&
-            error.name === "AbortError"
-          ) {
-
-            showMessage(
-              "error",
-              t.timeout
+            console.warn(
+                "Existing session check skipped:",
+                error
             );
-
-          } else {
-
-            showMessage(
-              "error",
-              t.serverError
-            );
-
-          }
-
-        } finally {
-
-          /*
-           * Do not re-enable the button
-           * if successful redirect is pending.
-           */
-          const message =
-            document.getElementById(
-              "message"
-            );
-
-
-          const redirecting =
-            message.classList.contains(
-              "success"
-            );
-
-
-          if (!redirecting) {
-
-            button.disabled = false;
-
-            button.textContent =
-              t.signIn;
-
-          }
-
         }
-
-      }
-    );
+    }
 
 
-  /*
-   * Initialize language.
-   */
-  setLanguage(language);
+    /* =====================================================
+       INITIALIZE
+    ===================================================== */
+
+    applyLanguage();
+
+    checkExistingSession();
 
 </script>
 
 </body>
 </html>
-```
