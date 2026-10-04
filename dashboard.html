@@ -1057,6 +1057,92 @@ button{
         min-height:42px;
     }
 }
+
+/* =========================
+   MOBILE SAFETY FIX
+   ONLY APPLIES TO MOBILE
+========================= */
+
+@media(max-width:850px){
+
+    html,
+    body{
+        width:100%;
+        min-width:0;
+        overflow-x:hidden;
+    }
+
+    body{
+        -webkit-text-size-adjust:100%;
+        overscroll-behavior-x:none;
+    }
+
+    .main{
+        width:100%;
+        max-width:100%;
+        margin-left:0;
+        min-width:0;
+    }
+
+    .content{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+    }
+
+    .topbar{
+        width:100%;
+        max-width:100%;
+        min-width:0;
+    }
+
+    .grid,
+    .card,
+    .welcome,
+    .connection{
+        max-width:100%;
+        min-width:0;
+    }
+
+    .card,
+    .welcome,
+    .connection,
+    .stat-card{
+        overflow-wrap:anywhere;
+        word-break:break-word;
+    }
+
+    #loadingScreen{
+        width:100%;
+        height:100%;
+        height:100dvh;
+        min-height:100vh;
+        padding:
+            env(safe-area-inset-top)
+            20px
+            env(safe-area-inset-bottom)
+            20px;
+        z-index:9999;
+    }
+
+    #loadingScreen .loading-text{
+        text-align:center;
+        max-width:280px;
+        line-height:1.5;
+    }
+
+    button,
+    .btn,
+    a{
+        -webkit-tap-highlight-color:transparent;
+    }
+
+    .btn{
+        min-height:44px;
+    }
+
+}
+
 </style>
 </head>
 
@@ -1064,6 +1150,7 @@ button{
 
 <div id="loadingScreen" class="loading">
     <div class="spinner"></div>
+
     <div id="loadingText" class="loading-text">
         Loading your dashboard...
     </div>
@@ -1071,7 +1158,8 @@ button{
 
 <div id="mobileOverlay"
      class="mobile-overlay"
-     onclick="closeSidebar()"></div>
+     onclick="closeSidebar()">
+</div>
 
 <div class="app">
 
@@ -1079,6 +1167,7 @@ button{
     <aside id="sidebar" class="sidebar">
 
         <div class="brand">
+
             <div class="brand-name">
                 Chat<span>Nova</span>
             </div>
@@ -1086,49 +1175,71 @@ button{
             <div class="brand-sub">
                 WhatsApp Business, Simplified
             </div>
+
         </div>
 
         <nav class="nav">
 
             <a href="dashboard.html" class="active">
                 <span class="nav-icon">⌂</span>
-                <span data-i18n="dashboard">Dashboard</span>
+                <span data-i18n="dashboard">
+                    Dashboard
+                </span>
             </a>
 
             <a href="#">
                 <span class="nav-icon">◉</span>
-                <span data-i18n="whatsapp">WhatsApp</span>
+                <span data-i18n="whatsapp">
+                    WhatsApp
+                </span>
             </a>
 
             <a href="#">
                 <span class="nav-icon">◌</span>
-                <span data-i18n="messages">Messages</span>
+                <span data-i18n="messages">
+                    Messages
+                </span>
             </a>
 
             <a href="#">
                 <span class="nav-icon">◎</span>
-                <span data-i18n="contacts">Contacts</span>
+                <span data-i18n="contacts">
+                    Contacts
+                </span>
             </a>
 
             <a href="#">
                 <span class="nav-icon">◇</span>
-                <span data-i18n="billing">Billing</span>
+                <span data-i18n="billing">
+                    Billing
+                </span>
             </a>
 
             <a href="#">
                 <span class="nav-icon">⚙</span>
-                <span data-i18n="settings">Settings</span>
+                <span data-i18n="settings">
+                    Settings
+                </span>
             </a>
 
         </nav>
 
         <div class="sidebar-bottom">
-            <button class="logout-btn" onclick="logout()">
-                <span data-i18n="logout">Log out</span>
+
+            <button
+                class="logout-btn"
+                onclick="logout()">
+
+                <span data-i18n="logout">
+                    Log out
+                </span>
+
             </button>
+
         </div>
 
     </aside>
+
 
     <!-- MAIN -->
     <main class="main">
@@ -1141,54 +1252,85 @@ button{
                     class="mobile-menu-btn"
                     onclick="openSidebar()"
                     aria-label="Open menu">
+
                     ☰
+
                 </button>
 
                 <div>
-                    <div class="page-title"
-                         data-i18n="dashboard">
+
+                    <div
+                        class="page-title"
+                        data-i18n="dashboard">
+
                         Dashboard
+
                     </div>
 
-                    <div class="page-subtitle"
-                         data-i18n="overview">
+                    <div
+                        class="page-subtitle"
+                        data-i18n="overview">
+
                         Overview of your ChatNova account
+
                     </div>
+
                 </div>
 
             </div>
 
+
             <div class="topbar-right">
 
                 <div class="lang">
-                    <button id="langEN"
-                            onclick="setLanguage('en')">
+
+                    <button
+                        id="langEN"
+                        onclick="setLanguage('en')">
+
                         EN
+
                     </button>
 
-                    <button id="langZH"
-                            onclick="setLanguage('zh')">
+                    <button
+                        id="langZH"
+                        onclick="setLanguage('zh')">
+
                         中文
+
                     </button>
+
                 </div>
+
 
                 <div class="profile-mini">
 
-                    <div id="avatar"
-                         class="avatar">
+                    <div
+                        id="avatar"
+                        class="avatar">
+
                         C
+
                     </div>
 
                     <div>
-                        <div id="topName"
-                             class="profile-name">
+
+                        <div
+                            id="topName"
+                            class="profile-name">
+
                             Customer
+
                         </div>
 
-                        <div id="topEmail"
-                             class="profile-email">
+                        <div
+                            id="topEmail"
+                            class="profile-email">
+
                             —
+
                         </div>
+
                     </div>
 
                 </div>
@@ -1197,144 +1339,225 @@ button{
 
         </header>
 
+
         <section class="content">
 
-            <div id="apiNotice"
-                 class="api-notice"></div>
+            <div
+                id="apiNotice"
+                class="api-notice">
+            </div>
+
 
             <!-- WELCOME -->
+
             <div class="welcome">
 
                 <div>
+
                     <h1>
+
                         <span data-i18n="welcome">
                             Welcome back
                         </span>,
-                        <span id="welcomeName">there</span>
+
+                        <span id="welcomeName">
+                            there
+                        </span>
+
                     </h1>
 
                     <p data-i18n="welcomeSub">
+
                         Manage your WhatsApp business communication from one place.
+
                     </p>
+
                 </div>
 
+
                 <div class="plan-badge">
+
                     <span class="dot"></span>
-                    <span id="planText">Starter</span>
+
+                    <span id="planText">
+                        Starter
+                    </span>
+
                     <span>·</span>
-                    <span id="planStatus">Active</span>
+
+                    <span id="planStatus">
+                        Active
+                    </span>
+
                 </div>
 
             </div>
 
+
             <!-- STATS -->
+
             <div class="grid">
 
                 <div class="card stat-card">
 
-                    <div class="stat-label"
-                         data-i18n="messagesSent">
+                    <div
+                        class="stat-label"
+                        data-i18n="messagesSent">
+
                         Messages Sent
+
                     </div>
 
-                    <div id="messagesSent"
-                         class="stat-value">
+                    <div
+                        id="messagesSent"
+                        class="stat-value">
+
                         0
+
                     </div>
 
-                    <div class="stat-note"
-                         data-i18n="allTime">
+                    <div
+                        class="stat-note"
+                        data-i18n="allTime">
+
                         All time
+
                     </div>
 
                 </div>
 
+
                 <div class="card stat-card">
 
-                    <div class="stat-label"
-                         data-i18n="whatsappAccounts">
+                    <div
+                        class="stat-label"
+                        data-i18n="whatsappAccounts">
+
                         WhatsApp Accounts
+
                     </div>
 
-                    <div id="whatsappAccounts"
-                         class="stat-value">
+                    <div
+                        id="whatsappAccounts"
+                        class="stat-value">
+
                         0
+
                     </div>
 
-                    <div class="stat-note"
-                         data-i18n="connectedAccounts">
+                    <div
+                        class="stat-note"
+                        data-i18n="connectedAccounts">
+
                         Connected accounts
+
                     </div>
 
                 </div>
 
+
                 <div class="card stat-card">
 
-                    <div class="stat-label"
-                         data-i18n="onlineAccounts">
+                    <div
+                        class="stat-label"
+                        data-i18n="onlineAccounts">
+
                         Online Accounts
+
                     </div>
 
-                    <div id="onlineAccounts"
-                         class="stat-value green">
+                    <div
+                        id="onlineAccounts"
+                        class="stat-value green">
+
                         0
+
                     </div>
 
-                    <div class="stat-note"
-                         data-i18n="currentlyOnline">
+                    <div
+                        class="stat-note"
+                        data-i18n="currentlyOnline">
+
                         Currently online
+
                     </div>
 
                 </div>
 
+
                 <div class="card stat-card">
 
-                    <div class="stat-label"
-                         data-i18n="plan">
+                    <div
+                        class="stat-label"
+                        data-i18n="plan">
+
                         Current Plan
+
                     </div>
 
-                    <div id="statPlan"
-                         class="stat-value">
+                    <div
+                        id="statPlan"
+                        class="stat-value">
+
                         Starter
+
                     </div>
 
-                    <div class="stat-note"
-                         data-i18n="subscription">
+                    <div
+                        class="stat-note"
+                        data-i18n="subscription">
+
                         Subscription
+
                     </div>
 
                 </div>
 
             </div>
 
+
             <!-- CONNECTION + ACCOUNT -->
+
             <div class="two-col">
 
                 <!-- WHATSAPP -->
+
                 <div class="card">
 
                     <div class="card-header">
 
                         <div>
-                            <div class="card-title"
-                                 data-i18n="whatsappConnection">
+
+                            <div
+                                class="card-title"
+                                data-i18n="whatsappConnection">
+
                                 WhatsApp Connection
+
                             </div>
 
-                            <div class="card-sub"
-                                 data-i18n="manageConnection">
+                            <div
+                                class="card-sub"
+                                data-i18n="manageConnection">
+
                                 Manage your WhatsApp business connection
+
                             </div>
+
                         </div>
 
-                        <button class="btn btn-primary btn-small"
-                                onclick="openWhatsApp()"
-                                data-i18n="manage">
+
+                        <button
+                            class="btn btn-primary btn-small"
+                            onclick="openWhatsApp()"
+                            data-i18n="manage">
+
                             Manage
+
                         </button>
 
                     </div>
+
 
                     <div class="card-body">
 
@@ -1348,19 +1571,25 @@ button{
 
                                 <div>
 
-                                    <div class="connection-name"
-                                         id="instanceName">
+                                    <div
+                                        class="connection-name"
+                                        id="instanceName">
+
                                         No WhatsApp account
+
                                     </div>
 
                                     <div class="connection-status">
 
-                                        <span id="connectionDot"
-                                              class="status-dot">
+                                        <span
+                                            id="connectionDot"
+                                            class="status-dot">
                                         </span>
 
                                         <span id="connectionStatus">
+
                                             Checking connection...
+
                                         </span>
 
                                     </div>
@@ -1369,10 +1598,14 @@ button{
 
                             </div>
 
-                            <button class="btn"
-                                    onclick="refreshStatus()"
-                                    data-i18n="refresh">
+
+                            <button
+                                class="btn"
+                                onclick="refreshStatus()"
+                                data-i18n="refresh">
+
                                 Refresh
+
                             </button>
 
                         </div>
@@ -1381,81 +1614,119 @@ button{
 
                 </div>
 
+
                 <!-- ACCOUNT -->
+
                 <div class="card">
 
                     <div class="card-header">
 
                         <div>
-                            <div class="card-title"
-                                 data-i18n="account">
+
+                            <div
+                                class="card-title"
+                                data-i18n="account">
+
                                 Account
+
                             </div>
 
-                            <div class="card-sub"
-                                 data-i18n="accountInfo">
+                            <div
+                                class="card-sub"
+                                data-i18n="accountInfo">
+
                                 Your customer account
+
                             </div>
+
                         </div>
 
                     </div>
+
 
                     <div class="card-body">
 
                         <div class="info-row">
 
-                            <span class="info-label"
-                                  data-i18n="name">
+                            <span
+                                class="info-label"
+                                data-i18n="name">
+
                                 Name
+
                             </span>
 
-                            <span id="accountName"
-                                  class="info-value">
+                            <span
+                                id="accountName"
+                                class="info-value">
+
                                 —
+
                             </span>
 
                         </div>
 
+
                         <div class="info-row">
 
-                            <span class="info-label"
-                                  data-i18n="email">
+                            <span
+                                class="info-label"
+                                data-i18n="email">
+
                                 Email
+
                             </span>
 
-                            <span id="accountEmail"
-                                  class="info-value">
+                            <span
+                                id="accountEmail"
+                                class="info-value">
+
                                 —
+
                             </span>
 
                         </div>
 
+
                         <div class="info-row">
 
-                            <span class="info-label"
-                                  data-i18n="company">
+                            <span
+                                class="info-label"
+                                data-i18n="company">
+
                                 Company
+
                             </span>
 
-                            <span id="accountCompany"
-                                  class="info-value">
+                            <span
+                                id="accountCompany"
+                                class="info-value">
+
                                 —
+
                             </span>
 
                         </div>
 
+
                         <div class="info-row">
 
-                            <span class="info-label"
-                                  data-i18n="status">
+                            <span
+                                class="info-label"
+                                data-i18n="status">
+
                                 Status
+
                             </span>
 
-                            <span id="accountStatus"
-                                  class="info-value">
+                            <span
+                                id="accountStatus"
+                                class="info-value">
+
                                 <span class="badge badge-green">
                                     Active
                                 </span>
+
                             </span>
 
                         </div>
@@ -1466,7 +1737,9 @@ button{
 
             </div>
 
+
             <!-- QR / CONNECTION -->
+
             <div class="two-col">
 
                 <div class="card">
@@ -1474,30 +1747,44 @@ button{
                     <div class="card-header">
 
                         <div>
-                            <div class="card-title"
-                                 data-i18n="connectWhatsapp">
+
+                            <div
+                                class="card-title"
+                                data-i18n="connectWhatsapp">
+
                                 Connect WhatsApp
+
                             </div>
 
-                            <div class="card-sub"
-                                 data-i18n="qrDescription">
+                            <div
+                                class="card-sub"
+                                data-i18n="qrDescription">
+
                                 QR connection will appear here when an instance is created.
+
                             </div>
+
                         </div>
 
                     </div>
+
 
                     <div class="card-body">
 
                         <div class="qr-area">
 
                             <div class="qr-placeholder">
+
                                 QR CODE
+
                             </div>
 
-                            <div class="qr-text"
-                                 data-i18n="qrWaiting">
+                            <div
+                                class="qr-text"
+                                data-i18n="qrWaiting">
+
                                 No active WhatsApp instance yet.
+
                             </div>
 
                         </div>
@@ -1506,23 +1793,33 @@ button{
 
                 </div>
 
+
                 <div class="card">
 
                     <div class="card-header">
 
                         <div>
-                            <div class="card-title"
-                                 data-i18n="quickInfo">
+
+                            <div
+                                class="card-title"
+                                data-i18n="quickInfo">
+
                                 Quick Information
+
                             </div>
 
-                            <div class="card-sub"
-                                 data-i18n="systemInfo">
+                            <div
+                                class="card-sub"
+                                data-i18n="systemInfo">
+
                                 ChatNova system information
+
                             </div>
+
                         </div>
 
                     </div>
+
 
                     <div class="card-body">
 
@@ -1538,11 +1835,15 @@ button{
 
                         </div>
 
+
                         <div class="info-row">
 
-                            <span class="info-label"
-                                  data-i18n="platform">
+                            <span
+                                class="info-label"
+                                data-i18n="platform">
+
                                 Platform
+
                             </span>
 
                             <span class="info-value">
@@ -1551,11 +1852,15 @@ button{
 
                         </div>
 
+
                         <div class="info-row">
 
-                            <span class="info-label"
-                                  data-i18n="backend">
+                            <span
+                                class="info-label"
+                                data-i18n="backend">
+
                                 Backend
+
                             </span>
 
                             <span class="info-value">
@@ -1564,11 +1869,15 @@ button{
 
                         </div>
 
+
                         <div class="info-row">
 
-                            <span class="info-label"
-                                  data-i18n="database">
+                            <span
+                                class="info-label"
+                                data-i18n="database">
+
                                 Database
+
                             </span>
 
                             <span class="info-value">
@@ -1588,6 +1897,7 @@ button{
     </main>
 
 </div>
+
 
 <script>
 
@@ -1619,6 +1929,7 @@ const translations = {
         logout:"Log out",
 
         welcome:"Welcome back",
+
         welcomeSub:
             "Manage your WhatsApp business communication from one place.",
 
@@ -1635,6 +1946,7 @@ const translations = {
         subscription:"Subscription",
 
         whatsappConnection:"WhatsApp Connection",
+
         manageConnection:
             "Manage your WhatsApp business connection",
 
@@ -1650,6 +1962,7 @@ const translations = {
         status:"Status",
 
         connectWhatsapp:"Connect WhatsApp",
+
         qrDescription:
             "QR connection will appear here when an instance is created.",
 
@@ -1657,13 +1970,16 @@ const translations = {
             "No active WhatsApp instance yet.",
 
         quickInfo:"Quick Information",
-        systemInfo:"ChatNova system information",
+
+        systemInfo:
+            "ChatNova system information",
 
         platform:"Platform",
         backend:"Backend",
         database:"Database"
 
     },
+
 
     zh: {
 
@@ -1677,6 +1993,7 @@ const translations = {
         logout:"退出登录",
 
         welcome:"欢迎回来",
+
         welcomeSub:
             "在一个平台管理您的 WhatsApp 商业沟通。",
 
@@ -1693,6 +2010,7 @@ const translations = {
         subscription:"订阅",
 
         whatsappConnection:"WhatsApp 连接",
+
         manageConnection:
             "管理您的 WhatsApp 商业连接",
 
@@ -1708,6 +2026,7 @@ const translations = {
         status:"状态",
 
         connectWhatsapp:"连接 WhatsApp",
+
         qrDescription:
             "创建 WhatsApp 实例后，二维码会显示在这里。",
 
@@ -1715,7 +2034,9 @@ const translations = {
             "目前还没有活跃的 WhatsApp 实例。",
 
         quickInfo:"快速信息",
-        systemInfo:"ChatNova 系统信息",
+
+        systemInfo:
+            "ChatNova 系统信息",
 
         platform:"平台",
         backend:"后端",
@@ -1728,51 +2049,108 @@ const translations = {
 
 /* =========================================
    LANGUAGE
+   MOBILE-SAFE STORAGE
 ========================================= */
 
-let currentLanguage =
-    localStorage.getItem("chatnova_language") || "en";
+let currentLanguage = "en";
+
+try {
+
+    currentLanguage =
+        localStorage.getItem(
+            "chatnova_language"
+        ) || "en";
+
+} catch(error) {
+
+    console.log(
+        "Language storage unavailable:",
+        error
+    );
+
+    currentLanguage = "en";
+
+}
 
 
 function setLanguage(lang){
 
     currentLanguage = lang;
 
-    localStorage.setItem(
-        "chatnova_language",
-        lang
-    );
+    try {
+
+        localStorage.setItem(
+            "chatnova_language",
+            lang
+        );
+
+    } catch(error) {
+
+        console.log(
+            "Language storage unavailable:",
+            error
+        );
+
+    }
+
 
     document.documentElement.lang =
-        lang === "zh" ? "zh-CN" : "en";
+        lang === "zh"
+            ? "zh-CN"
+            : "en";
 
-    document.querySelectorAll("[data-i18n]")
-        .forEach(element => {
 
-            const key =
-                element.getAttribute("data-i18n");
+    document.querySelectorAll(
+        "[data-i18n]"
+    ).forEach(element => {
 
-            if(
-                translations[lang] &&
-                translations[lang][key]
-            ){
-                element.textContent =
-                    translations[lang][key];
-            }
+        const key =
+            element.getAttribute(
+                "data-i18n"
+            );
 
-        });
+        if(
+            translations[lang] &&
+            translations[lang][key]
+        ){
 
-    document.getElementById("langEN")
-        .classList.toggle(
+            element.textContent =
+                translations[lang][key];
+
+        }
+
+    });
+
+
+    const langEN =
+        document.getElementById(
+            "langEN"
+        );
+
+    const langZH =
+        document.getElementById(
+            "langZH"
+        );
+
+
+    if(langEN){
+
+        langEN.classList.toggle(
             "active",
             lang === "en"
         );
 
-    document.getElementById("langZH")
-        .classList.toggle(
+    }
+
+
+    if(langZH){
+
+        langZH.classList.toggle(
             "active",
             lang === "zh"
         );
+
+    }
 
 }
 
@@ -1784,10 +2162,15 @@ function setLanguage(lang){
 function hideLoading(){
 
     const loading =
-        document.getElementById("loadingScreen");
+        document.getElementById(
+            "loadingScreen"
+        );
 
     if(loading){
-        loading.style.display = "none";
+
+        loading.style.display =
+            "none";
+
     }
 
 }
@@ -1796,10 +2179,15 @@ function hideLoading(){
 function showLoadingText(text){
 
     const el =
-        document.getElementById("loadingText");
+        document.getElementById(
+            "loadingText"
+        );
 
     if(el){
-        el.textContent = text;
+
+        el.textContent =
+            text;
+
     }
 
 }
@@ -1824,13 +2212,16 @@ async function fetchWithTimeout(
             timeout
         );
 
+
     try{
 
         return await fetch(
             url,
             {
                 ...options,
-                signal:controller.signal
+                signal:
+                    controller.signal,
+                cache:"no-store"
             }
         );
 
@@ -1850,13 +2241,21 @@ async function fetchWithTimeout(
 function showApiNotice(message){
 
     const notice =
-        document.getElementById("apiNotice");
+        document.getElementById(
+            "apiNotice"
+        );
 
-    if(!notice) return;
+    if(!notice){
 
-    notice.textContent = message;
+        return;
 
-    notice.style.display = "block";
+    }
+
+    notice.textContent =
+        message;
+
+    notice.style.display =
+        "block";
 
 }
 
@@ -1864,10 +2263,15 @@ function showApiNotice(message){
 function hideApiNotice(){
 
     const notice =
-        document.getElementById("apiNotice");
+        document.getElementById(
+            "apiNotice"
+        );
 
     if(notice){
-        notice.style.display = "none";
+
+        notice.style.display =
+            "none";
+
     }
 
 }
@@ -1887,25 +2291,39 @@ async function loadDashboard(){
                 : "Loading your dashboard..."
         );
 
+
         const response =
             await fetchWithTimeout(
-                API_BASE + "/api/dashboard",
+                API_BASE +
+                "/api/dashboard",
+
                 {
                     method:"GET",
+
                     credentials:"include",
+
                     headers:{
-                        "Accept":"application/json"
+                        "Accept":
+                            "application/json"
                     }
                 }
             );
 
+
         let data = {};
 
+
         try{
-            data = await response.json();
+
+            data =
+                await response.json();
+
         }catch{
+
             data = {};
+
         }
+
 
         if(
             response.status === 401 ||
@@ -1916,22 +2334,31 @@ async function loadDashboard(){
                 "login.html";
 
             return;
+
         }
+
 
         if(!response.ok){
 
             showApiNotice(
+
                 currentLanguage === "zh"
+
                     ? "暂时无法读取账户数据，但控制台仍然可以使用。"
+
                     : "Unable to load account data right now, but the portal is still available."
+
             );
 
             hideLoading();
 
             return;
+
         }
 
+
         hideApiNotice();
+
 
         const customer =
             data.customer ||
@@ -1939,101 +2366,198 @@ async function loadDashboard(){
             data.account ||
             {};
 
+
         const fullName =
             customer.full_name ||
             customer.fullName ||
             customer.name ||
             "Customer";
 
+
         const email =
             customer.email ||
             "—";
+
 
         const company =
             customer.company_name ||
             customer.companyName ||
             "—";
 
+
         const plan =
             customer.plan ||
             data.plan ||
             "Starter";
 
+
         const status =
             customer.status ||
             "active";
 
-        document.getElementById(
-            "welcomeName"
-        ).textContent =
-            fullName;
 
-        document.getElementById(
-            "topName"
-        ).textContent =
-            fullName;
+        const welcomeName =
+            document.getElementById(
+                "welcomeName"
+            );
 
-        document.getElementById(
-            "topEmail"
-        ).textContent =
-            email;
+        if(welcomeName){
+
+            welcomeName.textContent =
+                fullName;
+
+        }
+
+
+        const topName =
+            document.getElementById(
+                "topName"
+            );
+
+        if(topName){
+
+            topName.textContent =
+                fullName;
+
+        }
+
+
+        const topEmail =
+            document.getElementById(
+                "topEmail"
+            );
+
+        if(topEmail){
+
+            topEmail.textContent =
+                email;
+
+        }
+
 
         const firstLetter =
             fullName
                 .trim()
                 .charAt(0)
-                .toUpperCase() || "C";
+                .toUpperCase() ||
+            "C";
 
-        document.getElementById(
-            "avatar"
-        ).textContent =
-            firstLetter;
 
-        document.getElementById(
-            "accountName"
-        ).textContent =
-            fullName;
+        const avatar =
+            document.getElementById(
+                "avatar"
+            );
 
-        document.getElementById(
-            "accountEmail"
-        ).textContent =
-            email;
+        if(avatar){
 
-        document.getElementById(
-            "accountCompany"
-        ).textContent =
-            company;
+            avatar.textContent =
+                firstLetter;
 
-        document.getElementById(
-            "accountStatus"
-        ).innerHTML = `
-            <span class="badge badge-green">
-                ${
-                    status.charAt(0).toUpperCase()
-                    + status.slice(1)
-                }
-            </span>
-        `;
+        }
 
-        document.getElementById(
-            "planText"
-        ).textContent =
-            plan;
 
-        document.getElementById(
-            "statPlan"
-        ).textContent =
-            plan;
+        const accountName =
+            document.getElementById(
+                "accountName"
+            );
 
-        document.getElementById(
-            "planStatus"
-        ).textContent =
-            status.charAt(0).toUpperCase()
-            + status.slice(1);
+        if(accountName){
+
+            accountName.textContent =
+                fullName;
+
+        }
+
+
+        const accountEmail =
+            document.getElementById(
+                "accountEmail"
+            );
+
+        if(accountEmail){
+
+            accountEmail.textContent =
+                email;
+
+        }
+
+
+        const accountCompany =
+            document.getElementById(
+                "accountCompany"
+            );
+
+        if(accountCompany){
+
+            accountCompany.textContent =
+                company;
+
+        }
+
+
+        const accountStatus =
+            document.getElementById(
+                "accountStatus"
+            );
+
+        if(accountStatus){
+
+            accountStatus.innerHTML = `
+                <span class="badge badge-green">
+                    ${
+                        status.charAt(0).toUpperCase()
+                        + status.slice(1)
+                    }
+                </span>
+            `;
+
+        }
+
+
+        const planText =
+            document.getElementById(
+                "planText"
+            );
+
+        if(planText){
+
+            planText.textContent =
+                plan;
+
+        }
+
+
+        const statPlan =
+            document.getElementById(
+                "statPlan"
+            );
+
+        if(statPlan){
+
+            statPlan.textContent =
+                plan;
+
+        }
+
+
+        const planStatus =
+            document.getElementById(
+                "planStatus"
+            );
+
+        if(planStatus){
+
+            planStatus.textContent =
+                status.charAt(0).toUpperCase()
+                + status.slice(1);
+
+        }
+
 
         const stats =
             data.stats ||
             {};
+
 
         const messagesSent =
             stats.messagesSent ??
@@ -2042,12 +2566,14 @@ async function loadDashboard(){
             data.messages_sent ??
             0;
 
+
         const whatsappAccounts =
             stats.whatsappAccounts ??
             stats.whatsapp_accounts ??
             data.whatsappAccounts ??
             data.whatsapp_accounts ??
             0;
+
 
         const onlineAccounts =
             stats.onlineAccounts ??
@@ -2056,25 +2582,57 @@ async function loadDashboard(){
             data.online_accounts ??
             0;
 
-        document.getElementById(
-            "messagesSent"
-        ).textContent =
-            Number(messagesSent).toLocaleString();
 
-        document.getElementById(
-            "whatsappAccounts"
-        ).textContent =
-            Number(whatsappAccounts).toLocaleString();
+        const messagesElement =
+            document.getElementById(
+                "messagesSent"
+            );
 
-        document.getElementById(
-            "onlineAccounts"
-        ).textContent =
-            Number(onlineAccounts).toLocaleString();
+        if(messagesElement){
+
+            messagesElement.textContent =
+                Number(
+                    messagesSent
+                ).toLocaleString();
+
+        }
+
+
+        const whatsappElement =
+            document.getElementById(
+                "whatsappAccounts"
+            );
+
+        if(whatsappElement){
+
+            whatsappElement.textContent =
+                Number(
+                    whatsappAccounts
+                ).toLocaleString();
+
+        }
+
+
+        const onlineElement =
+            document.getElementById(
+                "onlineAccounts"
+            );
+
+        if(onlineElement){
+
+            onlineElement.textContent =
+                Number(
+                    onlineAccounts
+                ).toLocaleString();
+
+        }
+
 
         const instances =
             data.instances ||
             data.whatsapp_instances ||
             [];
+
 
         if(
             Array.isArray(instances) &&
@@ -2084,19 +2642,31 @@ async function loadDashboard(){
             const firstInstance =
                 instances[0];
 
-            document.getElementById(
-                "instanceName"
-            ).textContent =
-                firstInstance.instance_name ||
-                firstInstance.instanceName ||
-                "WhatsApp Account";
+
+            const instanceName =
+                document.getElementById(
+                    "instanceName"
+                );
+
+
+            if(instanceName){
+
+                instanceName.textContent =
+                    firstInstance.instance_name ||
+                    firstInstance.instanceName ||
+                    "WhatsApp Account";
+
+            }
 
         }
 
+
         hideLoading();
+
 
         loadConnectionStatus(data)
             .catch(() => {});
+
 
     }catch(error){
 
@@ -2105,11 +2675,17 @@ async function loadDashboard(){
             error
         );
 
+
         showApiNotice(
+
             currentLanguage === "zh"
+
                 ? "连接服务器时出现问题。请稍后刷新。"
+
                 : "There was a problem connecting to the server. Please refresh shortly."
+
         );
+
 
         hideLoading();
 
@@ -2130,33 +2706,49 @@ async function loadConnectionStatus(
 
         const response =
             await fetchWithTimeout(
-                API_BASE + "/api/status",
+
+                API_BASE +
+                "/api/status",
+
                 {
                     method:"GET",
+
                     credentials:"include",
+
                     headers:{
-                        "Accept":"application/json"
+                        "Accept":
+                            "application/json"
                     }
                 }
+
             );
+
 
         if(
             response.status === 401
         ){
+
             return;
+
         }
 
+
         if(!response.ok){
+
             return;
+
         }
+
 
         const data =
             await response.json();
+
 
         const instance =
             data.instance ||
             data.whatsapp ||
             data;
+
 
         const state =
             String(
@@ -2165,22 +2757,32 @@ async function loadConnectionStatus(
                 ""
             ).toLowerCase();
 
+
         const dot =
             document.getElementById(
                 "connectionDot"
             );
+
 
         const statusText =
             document.getElementById(
                 "connectionStatus"
             );
 
-        if(!dot || !statusText){
+
+        if(
+            !dot ||
+            !statusText
+        ){
+
             return;
+
         }
+
 
         dot.className =
             "status-dot";
+
 
         if(
             state.includes("connected") ||
@@ -2192,12 +2794,15 @@ async function loadConnectionStatus(
                 "connected"
             );
 
+
             statusText.textContent =
                 currentLanguage === "zh"
                     ? "已连接"
                     : "Connected";
 
         }
+
+
         else if(
             state.includes("scan") ||
             state.includes("qr") ||
@@ -2208,12 +2813,15 @@ async function loadConnectionStatus(
                 "warning"
             );
 
+
             statusText.textContent =
                 currentLanguage === "zh"
                     ? "等待连接"
                     : "Waiting for connection";
 
         }
+
+
         else if(
             state.includes("error") ||
             state.includes("failed")
@@ -2223,12 +2831,15 @@ async function loadConnectionStatus(
                 "error"
             );
 
+
             statusText.textContent =
                 currentLanguage === "zh"
                     ? "连接错误"
                     : "Connection error";
 
         }
+
+
         else{
 
             statusText.textContent =
@@ -2237,6 +2848,7 @@ async function loadConnectionStatus(
                     : "Disconnected";
 
         }
+
 
     }catch(error){
 
@@ -2261,6 +2873,7 @@ async function refreshStatus(){
             "connectionStatus"
         );
 
+
     if(statusText){
 
         statusText.textContent =
@@ -2269,6 +2882,7 @@ async function refreshStatus(){
                 : "Checking...";
 
     }
+
 
     await loadConnectionStatus();
 
@@ -2296,15 +2910,24 @@ async function logout(){
     try{
 
         await fetchWithTimeout(
-            API_BASE + "/api/logout",
+
+            API_BASE +
+            "/api/logout",
+
             {
                 method:"POST",
+
                 credentials:"include",
+
                 headers:{
-                    "Content-Type":"application/json",
-                    "Accept":"application/json"
+                    "Content-Type":
+                        "application/json",
+
+                    "Accept":
+                        "application/json"
                 }
             }
+
         );
 
     }catch(error){
@@ -2315,6 +2938,7 @@ async function logout(){
         );
 
     }
+
 
     window.location.href =
         "index.html";
@@ -2328,13 +2952,35 @@ async function logout(){
 
 function openSidebar(){
 
-    document
-        .getElementById("sidebar")
-        .classList.add("open");
+    const sidebar =
+        document.getElementById(
+            "sidebar"
+        );
 
-    document
-        .getElementById("mobileOverlay")
-        .classList.add("show");
+
+    const overlay =
+        document.getElementById(
+            "mobileOverlay"
+        );
+
+
+    if(sidebar){
+
+        sidebar.classList.add(
+            "open"
+        );
+
+    }
+
+
+    if(overlay){
+
+        overlay.classList.add(
+            "show"
+        );
+
+    }
+
 
     document.body.style.overflow =
         "hidden";
@@ -2344,13 +2990,35 @@ function openSidebar(){
 
 function closeSidebar(){
 
-    document
-        .getElementById("sidebar")
-        .classList.remove("open");
+    const sidebar =
+        document.getElementById(
+            "sidebar"
+        );
 
-    document
-        .getElementById("mobileOverlay")
-        .classList.remove("show");
+
+    const overlay =
+        document.getElementById(
+            "mobileOverlay"
+        );
+
+
+    if(sidebar){
+
+        sidebar.classList.remove(
+            "open"
+        );
+
+    }
+
+
+    if(overlay){
+
+        overlay.classList.remove(
+            "show"
+        );
+
+    }
+
 
     document.body.style.overflow =
         "";
@@ -2360,24 +3028,107 @@ function closeSidebar(){
 
 /* =========================================
    INITIALIZE
+   MOBILE-SAFE
 ========================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
     () => {
 
-        setLanguage(
-            currentLanguage
-        );
+        try{
+
+            setLanguage(
+                currentLanguage
+            );
+
+        }catch(error){
+
+            console.log(
+                "Language initialization:",
+                error
+            );
+
+        }
+
+
+        const isMobile =
+            window.matchMedia(
+                "(max-width:850px)"
+            ).matches;
+
+
+        const loadingTimeout =
+            isMobile
+                ? 8000
+                : 15000;
+
 
         setTimeout(
             () => {
+
                 hideLoading();
+
             },
-            15000
+            loadingTimeout
         );
 
+
         loadDashboard();
+
+    }
+);
+
+
+/* =========================================
+   MOBILE SAFETY
+   Prevent loader from remaining forever
+========================================= */
+
+window.addEventListener(
+    "error",
+    (event) => {
+
+        console.error(
+            "ChatNova error:",
+            event.error ||
+            event.message
+        );
+
+
+        if(
+            window.matchMedia(
+                "(max-width:850px)"
+            ).matches
+        ){
+
+            hideLoading();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   MOBILE SAFARI BFCache
+========================================= */
+
+window.addEventListener(
+    "pageshow",
+    (event) => {
+
+        if(
+            event.persisted &&
+            window.matchMedia(
+                "(max-width:850px)"
+            ).matches
+        ){
+
+            hideLoading();
+
+            loadDashboard();
+
+        }
 
     }
 );
