@@ -1,9 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#070a09">
 <title>ChatNova Dashboard</title>
 
 <style>
@@ -27,6 +27,13 @@
     padding:0;
 }
 
+html,
+body{
+    width:100%;
+    min-height:100%;
+    overflow-x:hidden;
+}
+
 body{
     font-family:
         Inter,
@@ -40,6 +47,7 @@ body{
         var(--bg);
     color:var(--text);
     min-height:100vh;
+    -webkit-text-size-adjust:100%;
 }
 
 button,
@@ -49,10 +57,16 @@ input{
 
 button{
     cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
 }
+
+/* =========================
+   APP
+========================= */
 
 .app{
     min-height:100vh;
+    width:100%;
     display:flex;
 }
 
@@ -125,6 +139,7 @@ button{
 
 .nav-icon{
     width:19px;
+    min-width:19px;
     text-align:center;
     opacity:.9;
 }
@@ -157,6 +172,7 @@ button{
     width:calc(100% - 250px);
     margin-left:250px;
     min-height:100vh;
+    min-width:0;
 }
 
 .topbar{
@@ -165,9 +181,11 @@ button{
     display:flex;
     align-items:center;
     justify-content:space-between;
+    gap:16px;
     padding:0 32px;
     background:rgba(7,10,9,.7);
     backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
     position:sticky;
     top:0;
     z-index:50;
@@ -177,12 +195,14 @@ button{
     display:flex;
     align-items:center;
     gap:12px;
+    min-width:0;
 }
 
 .mobile-menu-btn{
     display:none;
     width:40px;
     height:40px;
+    min-width:40px;
     border:1px solid var(--border);
     background:var(--panel);
     color:#fff;
@@ -204,6 +224,7 @@ button{
     display:flex;
     align-items:center;
     gap:12px;
+    flex-shrink:0;
 }
 
 .lang{
@@ -222,6 +243,7 @@ button{
     padding:6px 9px;
     border-radius:7px;
     font-size:11px;
+    min-height:28px;
 }
 
 .lang button.active{
@@ -235,11 +257,13 @@ button{
     gap:9px;
     padding-left:10px;
     border-left:1px solid var(--border);
+    min-width:0;
 }
 
 .avatar{
     width:34px;
     height:34px;
+    min-width:34px;
     border-radius:50%;
     background:linear-gradient(135deg,var(--green),#08763f);
     color:#03150c;
@@ -253,12 +277,20 @@ button{
 .profile-name{
     font-size:12px;
     font-weight:600;
+    max-width:150px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
 
 .profile-email{
     color:var(--muted);
     font-size:10px;
     margin-top:2px;
+    max-width:150px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
 
 /* =========================
@@ -268,6 +300,7 @@ button{
 .content{
     padding:32px;
     max-width:1500px;
+    width:100%;
 }
 
 .loading{
@@ -280,6 +313,7 @@ button{
     justify-content:center;
     flex-direction:column;
     gap:14px;
+    padding:20px;
 }
 
 .spinner{
@@ -298,6 +332,7 @@ button{
 .loading-text{
     color:var(--muted);
     font-size:13px;
+    text-align:center;
 }
 
 .api-notice{
@@ -309,6 +344,7 @@ button{
     border-radius:12px;
     padding:12px 14px;
     font-size:13px;
+    line-height:1.5;
 }
 
 /* =========================
@@ -321,17 +357,25 @@ button{
     justify-content:space-between;
     gap:20px;
     margin-bottom:28px;
+    min-width:0;
+}
+
+.welcome > div:first-child{
+    min-width:0;
 }
 
 .welcome h1{
     font-size:30px;
     letter-spacing:-1px;
+    line-height:1.15;
+    overflow-wrap:anywhere;
 }
 
 .welcome p{
     color:var(--muted);
     font-size:14px;
     margin-top:7px;
+    line-height:1.5;
 }
 
 .plan-badge{
@@ -345,11 +389,14 @@ button{
     border-radius:10px;
     font-size:12px;
     font-weight:600;
+    white-space:nowrap;
+    flex-shrink:0;
 }
 
 .dot{
     width:7px;
     height:7px;
+    min-width:7px;
     border-radius:50%;
     background:var(--green);
     box-shadow:0 0 10px rgba(25,211,122,.7);
@@ -377,6 +424,8 @@ button{
     border:1px solid var(--border);
     border-radius:16px;
     box-shadow:var(--shadow);
+    min-width:0;
+    overflow:hidden;
 }
 
 .stat-card{
@@ -386,6 +435,7 @@ button{
 .stat-label{
     color:var(--muted);
     font-size:12px;
+    line-height:1.4;
 }
 
 .stat-value{
@@ -393,12 +443,14 @@ button{
     font-weight:750;
     margin-top:9px;
     letter-spacing:-.7px;
+    overflow-wrap:anywhere;
 }
 
 .stat-note{
     color:var(--muted);
     font-size:11px;
     margin-top:5px;
+    line-height:1.4;
 }
 
 .green{
@@ -414,6 +466,7 @@ button{
     grid-template-columns:1.5fr 1fr;
     gap:20px;
     margin-bottom:20px;
+    min-width:0;
 }
 
 .card-header{
@@ -422,21 +475,30 @@ button{
     display:flex;
     align-items:center;
     justify-content:space-between;
+    gap:15px;
+    min-width:0;
+}
+
+.card-header > div{
+    min-width:0;
 }
 
 .card-title{
     font-size:14px;
     font-weight:700;
+    line-height:1.4;
 }
 
 .card-sub{
     color:var(--muted);
     font-size:11px;
     margin-top:4px;
+    line-height:1.45;
 }
 
 .card-body{
     padding:20px;
+    min-width:0;
 }
 
 /* =========================
@@ -448,17 +510,24 @@ button{
     align-items:center;
     justify-content:space-between;
     gap:20px;
+    min-width:0;
 }
 
 .connection-left{
     display:flex;
     align-items:center;
     gap:15px;
+    min-width:0;
+}
+
+.connection-left > div:last-child{
+    min-width:0;
 }
 
 .connection-icon{
     width:46px;
     height:46px;
+    min-width:46px;
     border-radius:13px;
     display:flex;
     align-items:center;
@@ -471,6 +540,7 @@ button{
 .connection-name{
     font-size:14px;
     font-weight:650;
+    overflow-wrap:anywhere;
 }
 
 .connection-status{
@@ -485,6 +555,7 @@ button{
 .status-dot{
     width:7px;
     height:7px;
+    min-width:7px;
     border-radius:50%;
     background:#777;
 }
@@ -510,6 +581,8 @@ button{
     padding:10px 14px;
     font-size:12px;
     transition:.2s;
+    min-height:40px;
+    white-space:nowrap;
 }
 
 .btn:hover{
@@ -531,6 +604,7 @@ button{
 .btn-small{
     padding:8px 11px;
     font-size:11px;
+    min-height:36px;
 }
 
 /* =========================
@@ -547,11 +621,14 @@ button{
     border:1px dashed rgba(255,255,255,.08);
     border-radius:13px;
     background:rgba(255,255,255,.015);
+    padding:20px;
 }
 
 .qr-placeholder{
     width:130px;
     height:130px;
+    max-width:70vw;
+    max-height:70vw;
     border-radius:12px;
     border:1px dashed rgba(25,211,122,.22);
     display:flex;
@@ -565,6 +642,8 @@ button{
     margin-top:13px;
     color:var(--muted);
     font-size:11px;
+    line-height:1.5;
+    max-width:280px;
 }
 
 /* =========================
@@ -574,10 +653,11 @@ button{
 .info-row{
     display:flex;
     justify-content:space-between;
-    align-items:center;
+    align-items:flex-start;
     padding:12px 0;
     border-bottom:1px solid rgba(255,255,255,.05);
     gap:15px;
+    min-width:0;
 }
 
 .info-row:last-child{
@@ -587,12 +667,15 @@ button{
 .info-label{
     color:var(--muted);
     font-size:12px;
+    flex-shrink:0;
 }
 
 .info-value{
     font-size:12px;
     font-weight:600;
     text-align:right;
+    max-width:70%;
+    overflow-wrap:anywhere;
     word-break:break-word;
 }
 
@@ -612,14 +695,19 @@ button{
 }
 
 /* =========================
-   MOBILE
+   MOBILE OVERLAY
 ========================= */
 
 .mobile-overlay{
     display:none;
 }
 
+/* =========================
+   TABLET
+========================= */
+
 @media(max-width:1100px){
+
     .grid{
         grid-template-columns:repeat(2,1fr);
     }
@@ -629,12 +717,21 @@ button{
     }
 }
 
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:850px){
 
     .sidebar{
-        transform:translateX(-100%);
-        transition:.25s;
+        transform:translateX(-105%);
+        transition:transform .25s ease;
         box-shadow:30px 0 80px rgba(0,0,0,.45);
+        width:min(280px,82vw);
+        padding:
+            calc(18px + env(safe-area-inset-top))
+            16px
+            calc(18px + env(safe-area-inset-bottom));
     }
 
     .sidebar.open{
@@ -646,6 +743,8 @@ button{
         inset:0;
         background:rgba(0,0,0,.55);
         z-index:90;
+        backdrop-filter:blur(2px);
+        -webkit-backdrop-filter:blur(2px);
     }
 
     .mobile-overlay.show{
@@ -655,14 +754,21 @@ button{
     .main{
         width:100%;
         margin-left:0;
+        min-width:0;
     }
 
     .mobile-menu-btn{
-        display:block;
+        display:flex;
+        align-items:center;
+        justify-content:center;
     }
 
     .topbar{
-        padding:0 16px;
+        padding:
+            0
+            max(16px, env(safe-area-inset-right))
+            0
+            max(16px, env(safe-area-inset-left));
     }
 
     .profile-mini{
@@ -670,48 +776,285 @@ button{
     }
 
     .content{
-        padding:20px 16px;
-    }
-}
-
-@media(max-width:600px){
-
-    .grid{
-        grid-template-columns:1fr;
+        padding:
+            22px
+            max(16px, env(safe-area-inset-right))
+            30px
+            max(16px, env(safe-area-inset-left));
     }
 
     .welcome{
-        align-items:flex-start;
-        flex-direction:column;
+        gap:16px;
     }
 
-    .welcome h1{
-        font-size:25px;
+    .grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
     }
 
-    .connection{
-        align-items:flex-start;
-        flex-direction:column;
+    .two-col{
+        grid-template-columns:1fr;
     }
 
-    .connection .btn{
-        width:100%;
-    }
+}
+
+/* =========================
+   SMALL PHONE
+========================= */
+
+@media(max-width:600px){
 
     .topbar{
         height:64px;
+        gap:8px;
+    }
+
+    .topbar-left{
+        gap:9px;
+        min-width:0;
+    }
+
+    .mobile-menu-btn{
+        width:38px;
+        height:38px;
+        min-width:38px;
+        border-radius:10px;
     }
 
     .page-title{
         font-size:16px;
+        line-height:1.2;
     }
 
     .page-subtitle{
         display:none;
     }
 
+    .topbar-right{
+        gap:6px;
+    }
+
+    .lang{
+        padding:2px;
+        border-radius:8px;
+    }
+
     .lang button{
         padding:5px 7px;
+        min-height:28px;
+        font-size:10px;
+    }
+
+    .content{
+        padding-top:18px;
+        padding-bottom:28px;
+    }
+
+    .api-notice{
+        margin-bottom:16px;
+        font-size:12px;
+    }
+
+    .welcome{
+        align-items:flex-start;
+        flex-direction:column;
+        margin-bottom:20px;
+        gap:14px;
+    }
+
+    .welcome h1{
+        font-size:24px;
+        letter-spacing:-.7px;
+    }
+
+    .welcome p{
+        font-size:13px;
+        margin-top:6px;
+    }
+
+    .plan-badge{
+        padding:8px 11px;
+        font-size:11px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+        gap:12px;
+        margin-bottom:16px;
+    }
+
+    .stat-card{
+        padding:17px;
+        border-radius:14px;
+    }
+
+    .stat-value{
+        font-size:25px;
+    }
+
+    .two-col{
+        gap:14px;
+        margin-bottom:14px;
+    }
+
+    .card{
+        border-radius:14px;
+    }
+
+    .card-header{
+        padding:16px;
+        align-items:flex-start;
+        gap:12px;
+    }
+
+    .card-title{
+        font-size:13px;
+    }
+
+    .card-sub{
+        font-size:10px;
+    }
+
+    .card-body{
+        padding:16px;
+    }
+
+    .connection{
+        align-items:stretch;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .connection-left{
+        gap:12px;
+    }
+
+    .connection-icon{
+        width:42px;
+        height:42px;
+        min-width:42px;
+        border-radius:11px;
+    }
+
+    .connection-name{
+        font-size:13px;
+    }
+
+    .connection-status{
+        font-size:10px;
+    }
+
+    .connection .btn{
+        width:100%;
+        min-height:42px;
+    }
+
+    .card-header .btn{
+        flex-shrink:0;
+    }
+
+    .qr-area{
+        min-height:200px;
+        padding:16px;
+    }
+
+    .qr-placeholder{
+        width:115px;
+        height:115px;
+    }
+
+    .info-row{
+        gap:12px;
+        padding:11px 0;
+    }
+
+    .info-label{
+        font-size:11px;
+    }
+
+    .info-value{
+        font-size:11px;
+        max-width:62%;
+    }
+
+}
+
+/* =========================
+   VERY SMALL PHONES
+========================= */
+
+@media(max-width:380px){
+
+    .topbar{
+        padding-left:12px;
+        padding-right:12px;
+    }
+
+    .content{
+        padding-left:12px;
+        padding-right:12px;
+    }
+
+    .mobile-menu-btn{
+        width:36px;
+        height:36px;
+        min-width:36px;
+    }
+
+    .page-title{
+        font-size:15px;
+    }
+
+    .lang button{
+        padding:4px 6px;
+    }
+
+    .welcome h1{
+        font-size:22px;
+    }
+
+    .stat-card,
+    .card-body{
+        padding:14px;
+    }
+
+    .card-header{
+        padding:14px;
+    }
+
+    .info-row{
+        flex-direction:column;
+        gap:5px;
+    }
+
+    .info-value{
+        max-width:100%;
+        width:100%;
+        text-align:left;
+    }
+
+    .card-header .btn{
+        padding:7px 9px;
+        font-size:10px;
+    }
+
+}
+
+/* =========================
+   TOUCH DEVICES
+========================= */
+
+@media(hover:none){
+
+    .nav a{
+        min-height:44px;
+    }
+
+    .logout-btn{
+        min-height:44px;
+    }
+
+    .btn{
+        min-height:42px;
     }
 }
 </style>
@@ -726,7 +1069,8 @@ button{
     </div>
 </div>
 
-<div id="mobileOverlay" class="mobile-overlay"
+<div id="mobileOverlay"
+     class="mobile-overlay"
      onclick="closeSidebar()"></div>
 
 <div class="app">
@@ -795,7 +1139,8 @@ button{
 
                 <button
                     class="mobile-menu-btn"
-                    onclick="openSidebar()">
+                    onclick="openSidebar()"
+                    aria-label="Open menu">
                     ☰
                 </button>
 
@@ -854,7 +1199,8 @@ button{
 
         <section class="content">
 
-            <div id="apiNotice" class="api-notice"></div>
+            <div id="apiNotice"
+                 class="api-notice"></div>
 
             <!-- WELCOME -->
             <div class="welcome">
@@ -1561,17 +1907,6 @@ async function loadDashboard(){
             data = {};
         }
 
-
-        /*
-         IMPORTANT:
-
-         Only redirect when the API explicitly
-         confirms that the session is invalid.
-
-         Network errors / API errors should NOT
-         throw the customer back to login.
-        */
-
         if(
             response.status === 401 ||
             data.authenticated === false
@@ -1582,7 +1917,6 @@ async function loadDashboard(){
 
             return;
         }
-
 
         if(!response.ok){
 
@@ -1597,20 +1931,13 @@ async function loadDashboard(){
             return;
         }
 
-
         hideApiNotice();
-
-
-        /*
-         CUSTOMER
-        */
 
         const customer =
             data.customer ||
             data.user ||
             data.account ||
             {};
-
 
         const fullName =
             customer.full_name ||
@@ -1636,20 +1963,10 @@ async function loadDashboard(){
             customer.status ||
             "active";
 
-
-        /*
-         WELCOME
-        */
-
         document.getElementById(
             "welcomeName"
         ).textContent =
             fullName;
-
-
-        /*
-         TOP PROFILE
-        */
 
         document.getElementById(
             "topName"
@@ -1661,11 +1978,6 @@ async function loadDashboard(){
         ).textContent =
             email;
 
-
-        /*
-         AVATAR
-        */
-
         const firstLetter =
             fullName
                 .trim()
@@ -1676,11 +1988,6 @@ async function loadDashboard(){
             "avatar"
         ).textContent =
             firstLetter;
-
-
-        /*
-         ACCOUNT
-        */
 
         document.getElementById(
             "accountName"
@@ -1697,11 +2004,6 @@ async function loadDashboard(){
         ).textContent =
             company;
 
-
-        /*
-         ACCOUNT STATUS
-        */
-
         document.getElementById(
             "accountStatus"
         ).innerHTML = `
@@ -1712,11 +2014,6 @@ async function loadDashboard(){
                 }
             </span>
         `;
-
-
-        /*
-         PLAN
-        */
 
         document.getElementById(
             "planText"
@@ -1734,15 +2031,9 @@ async function loadDashboard(){
             status.charAt(0).toUpperCase()
             + status.slice(1);
 
-
-        /*
-         STATS
-        */
-
         const stats =
             data.stats ||
             {};
-
 
         const messagesSent =
             stats.messagesSent ??
@@ -1751,14 +2042,12 @@ async function loadDashboard(){
             data.messages_sent ??
             0;
 
-
         const whatsappAccounts =
             stats.whatsappAccounts ??
             stats.whatsapp_accounts ??
             data.whatsappAccounts ??
             data.whatsapp_accounts ??
             0;
-
 
         const onlineAccounts =
             stats.onlineAccounts ??
@@ -1767,28 +2056,20 @@ async function loadDashboard(){
             data.online_accounts ??
             0;
 
-
         document.getElementById(
             "messagesSent"
         ).textContent =
             Number(messagesSent).toLocaleString();
-
 
         document.getElementById(
             "whatsappAccounts"
         ).textContent =
             Number(whatsappAccounts).toLocaleString();
 
-
         document.getElementById(
             "onlineAccounts"
         ).textContent =
             Number(onlineAccounts).toLocaleString();
-
-
-        /*
-         INSTANCE
-        */
 
         const instances =
             data.instances ||
@@ -1812,19 +2093,10 @@ async function loadDashboard(){
 
         }
 
-
         hideLoading();
-
-
-        /*
-         Connection status loads in background.
-
-         It must NOT block the portal.
-        */
 
         loadConnectionStatus(data)
             .catch(() => {});
-
 
     }catch(error){
 
@@ -1832,14 +2104,6 @@ async function loadDashboard(){
             "Dashboard error:",
             error
         );
-
-
-        /*
-         Keep portal visible.
-
-         This prevents mobile Safari / temporary
-         network issues from looking like logout.
-        */
 
         showApiNotice(
             currentLanguage === "zh"
@@ -1876,37 +2140,23 @@ async function loadConnectionStatus(
                 }
             );
 
-
         if(
             response.status === 401
         ){
-
-            /*
-             Do NOT redirect here.
-
-             The main dashboard authentication
-             already handles explicit 401.
-        */
-
             return;
-
         }
-
 
         if(!response.ok){
             return;
         }
 
-
         const data =
             await response.json();
-
 
         const instance =
             data.instance ||
             data.whatsapp ||
             data;
-
 
         const state =
             String(
@@ -1914,7 +2164,6 @@ async function loadConnectionStatus(
                 instance.status ||
                 ""
             ).toLowerCase();
-
 
         const dot =
             document.getElementById(
@@ -1926,10 +2175,12 @@ async function loadConnectionStatus(
                 "connectionStatus"
             );
 
+        if(!dot || !statusText){
+            return;
+        }
 
         dot.className =
             "status-dot";
-
 
         if(
             state.includes("connected") ||
@@ -1987,7 +2238,6 @@ async function loadConnectionStatus(
 
         }
 
-
     }catch(error){
 
         console.log(
@@ -2011,11 +2261,14 @@ async function refreshStatus(){
             "connectionStatus"
         );
 
-    statusText.textContent =
-        currentLanguage === "zh"
-            ? "正在检查..."
-            : "Checking...";
+    if(statusText){
 
+        statusText.textContent =
+            currentLanguage === "zh"
+                ? "正在检查..."
+                : "Checking...";
+
+    }
 
     await loadConnectionStatus();
 
@@ -2027,11 +2280,6 @@ async function refreshStatus(){
 ========================================= */
 
 function openWhatsApp(){
-
-    /*
-     Phase 3 will replace this with the
-     actual WhatsApp Management page.
-    */
 
     window.location.href =
         "whatsapp.html";
@@ -2068,13 +2316,6 @@ async function logout(){
 
     }
 
-
-    /*
-     Logout is intentional.
-
-     Therefore this redirect is correct.
-    */
-
     window.location.href =
         "index.html";
 
@@ -2095,6 +2336,9 @@ function openSidebar(){
         .getElementById("mobileOverlay")
         .classList.add("show");
 
+    document.body.style.overflow =
+        "hidden";
+
 }
 
 
@@ -2107,6 +2351,9 @@ function closeSidebar(){
     document
         .getElementById("mobileOverlay")
         .classList.remove("show");
+
+    document.body.style.overflow =
+        "";
 
 }
 
@@ -2123,21 +2370,12 @@ document.addEventListener(
             currentLanguage
         );
 
-        /*
-         Safety timeout.
-
-         Even if the API hangs, the customer
-         should never be trapped forever on
-         "Loading your dashboard..."
-        */
-
         setTimeout(
             () => {
                 hideLoading();
             },
             15000
         );
-
 
         loadDashboard();
 
@@ -2148,4 +2386,3 @@ document.addEventListener(
 
 </body>
 </html>
-```
