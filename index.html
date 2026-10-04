@@ -1,299 +1,3094 @@
-<title>Customer Portal - Sign In</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>ChatNova — WhatsApp Business, Simplified</title>
+
+<meta
+    name="description"
+    content="ChatNova is a WhatsApp Provider Platform for managing WhatsApp accounts, conversations, customers, automation and business messaging."
+>
 
 <style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(25,195,125,.13),
+            transparent 35%
+        ),
+        #050807;
+
+    color: #f5f7f6;
+
+    line-height: 1.5;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+}
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+:root {
+
+    --green: #19c37d;
+    --green-hover: #14a96b;
+
+    --bg: #050807;
+    --bg-soft: #09100d;
+
+    --card: #0c1411;
+
+    --border:
+        rgba(255,255,255,.08);
+
+    --text: #f5f7f6;
+
+    --muted: #9aa6a1;
+
+    --muted-dark: #69756f;
+}
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.container {
+    width: 100%;
+    max-width: 1180px;
+
+    margin: auto;
+
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.navbar {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 100;
+
+    background:
+        rgba(5,8,7,.86);
+
+    backdrop-filter:
+        blur(18px);
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.nav-inner {
+
+    min-height: 76px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    font-size: 19px;
+
+    font-weight: 800;
+}
+
+.brand-logo {
+
+    width: 39px;
+    height: 39px;
+
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #19c37d,
+            #0f8d5b
+        );
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 15px;
+
+    font-weight: 900;
+
+    box-shadow:
+        0 8px 25px
+        rgba(25,195,125,.20);
+}
+
+.nav-links {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 28px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+.nav-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.language {
+
+    display: flex;
+
+    gap: 3px;
+
+    padding: 3px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 8px;
+}
+
+.lang {
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    padding: 6px 8px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+.lang.active {
+
+    background: rgba(25,195,125,.14);
+
+    color: var(--green);
+}
+
+.btn {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 17px;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    transition: .2s;
+
+    cursor: pointer;
+
+    border: none;
+}
+
+.btn-outline {
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.03);
+}
+
+.btn-outline:hover {
+    background:
+        rgba(255,255,255,.07);
+}
+
+.btn-green {
+
+    background: var(--green);
+
+    color: #04100a;
+
+    box-shadow:
+        0 8px 25px
+        rgba(25,195,125,.15);
+}
+
+.btn-green:hover {
+    background: var(--green-hover);
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+
+    padding:
+        105px 0
+        95px;
+
+    text-align: center;
+}
+
+.badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding:
+        7px 12px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(25,195,125,.08);
+
+    border:
+        1px solid
+        rgba(25,195,125,.18);
+
+    color:
+        #6ee7b7;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    margin-bottom: 25px;
+}
+
+.badge-dot {
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background:
+        var(--green);
+
+    box-shadow:
+        0 0 10px
+        var(--green);
+}
+
+.hero h1 {
+
+    max-width: 850px;
+
+    margin:
+        0 auto 22px;
+
+    font-size:
+        clamp(42px, 7vw, 76px);
+
+    line-height: 1.02;
+
+    letter-spacing: -3px;
+
+    font-weight: 850;
+}
+
+.hero h1 span {
+    color: var(--green);
+}
+
+.hero-description {
+
+    max-width: 690px;
+
+    margin: auto;
+
+    color: var(--muted);
+
+    font-size: 17px;
+
+    line-height: 1.75;
+}
+
+.hero-actions {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 34px;
+}
+
+.hero-note {
+
+    margin-top: 18px;
+
+    color: var(--muted-dark);
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   HERO MOCKUP
+========================================= */
+
+.dashboard-preview {
+
+    max-width: 980px;
+
+    margin:
+        70px auto 0;
+
+    padding: 9px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(25,195,125,.20),
+            rgba(255,255,255,.04)
+        );
+
+    box-shadow:
+        0 35px 100px
+        rgba(0,0,0,.55);
+}
+
+.preview-window {
+
+    background: #090f0c;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius: 13px;
+
+    overflow: hidden;
+
+    text-align: left;
+}
+
+.preview-top {
+
+    height: 43px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 0 15px;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.preview-dot {
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #39443f;
+}
+
+.preview-body {
+
+    display: grid;
+
+    grid-template-columns:
+        165px 1fr;
+}
+
+.preview-sidebar {
+
+    min-height: 300px;
+
+    border-right:
+        1px solid var(--border);
+
+    padding: 18px 12px;
+}
+
+.preview-sidebar-item {
+
+    padding: 9px 10px;
+
+    border-radius: 7px;
+
+    color: var(--muted-dark);
+
+    font-size: 10px;
+
+    margin-bottom: 5px;
+}
+
+.preview-sidebar-item.active {
+
+    background:
+        rgba(25,195,125,.10);
+
+    color:
+        var(--green);
+}
+
+.preview-content {
+
+    padding: 25px;
+}
+
+.preview-heading {
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    margin-bottom: 18px;
+}
+
+.preview-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 12px;
+}
+
+.preview-card {
+
+    background:
+        #0d1612;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 10px;
+
+    padding: 15px;
+}
+
+.preview-label {
+
+    color: var(--muted-dark);
+
+    font-size: 9px;
+
+    margin-bottom: 8px;
+}
+
+.preview-number {
+
+    font-size: 20px;
+
+    font-weight: 800;
+}
+
+.preview-green {
+    color: var(--green);
+}
+
+
+/* =========================================
+   SECTION
+========================================= */
+
+section {
+    padding: 95px 0;
+}
+
+.section-header {
+
+    max-width: 680px;
+
+    margin:
+        0 auto 50px;
+
+    text-align: center;
+}
+
+.section-kicker {
+
+    color:
+        var(--green);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.4px;
+
+    margin-bottom: 12px;
+}
+
+.section-header h2 {
+
+    font-size:
+        clamp(29px,4vw,43px);
+
+    line-height: 1.15;
+
+    letter-spacing: -1.2px;
+
+    margin-bottom: 14px;
+}
+
+.section-header p {
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   INTRO
+========================================= */
+
+.intro {
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(25,195,125,.025),
+            transparent
+        );
+}
+
+.intro-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 70px;
+
+    align-items: center;
+}
+
+.intro h2 {
+
+    font-size: 38px;
+
+    line-height: 1.15;
+
+    letter-spacing: -1px;
+
+    margin-bottom: 20px;
+}
+
+.intro p {
+
+    color: var(--muted);
+
+    font-size: 15px;
+
+    line-height: 1.8;
+
+    margin-bottom: 15px;
+}
+
+.intro-points {
+
+    margin-top: 25px;
+}
+
+.intro-point {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-bottom: 15px;
+
+    font-size: 13px;
+
+    color: #d5ddd9;
+}
+
+.check {
+
+    flex-shrink: 0;
+
+    width: 21px;
+    height: 21px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(25,195,125,.12);
+
+    color:
+        var(--green);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 11px;
+}
+
+.info-card {
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 18px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 20px 70px
+        rgba(0,0,0,.25);
+}
+
+.info-card-title {
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}
+
+.info-card-text {
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    margin-bottom: 24px;
+}
+
+.info-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        13px 0;
+
+    border-bottom:
+        1px solid var(--border);
+
+    font-size: 12px;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-status {
+    color: var(--green);
+}
+
+
+/* =========================================
+   FEATURES
+========================================= */
+
+.features {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 15px;
+}
+
+.feature-card {
+
+    background:
+        rgba(12,20,17,.82);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 15px;
+
+    padding: 25px;
+
+    transition: .2s;
+}
+
+.feature-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        rgba(25,195,125,.24);
+
+    background:
+        #0d1713;
+}
+
+.feature-icon {
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background:
+        rgba(25,195,125,.10);
+
+    color:
+        var(--green);
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    margin-bottom: 18px;
+}
+
+.feature-card h3 {
+
+    font-size: 16px;
+
+    margin-bottom: 9px;
+}
+
+.feature-card p {
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   PRICING
+========================================= */
+
+.pricing-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 14px;
+
+    align-items: stretch;
+}
+
+.price-card {
+
+    position: relative;
+
+    background:
+        #0b1210;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 16px;
+
+    padding: 25px;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+.price-card.popular {
+
+    border:
+        1px solid
+        rgba(25,195,125,.45);
+
+    box-shadow:
+        0 20px 60px
+        rgba(25,195,125,.08);
+}
+
+.popular-label {
+
+    position: absolute;
+
+    top: -11px;
+
+    right: 18px;
+
+    background:
+        var(--green);
+
+    color:
+        #031009;
+
+    border-radius: 999px;
+
+    padding: 5px 9px;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    text-transform: uppercase;
+}
+
+.price-name {
+
+    font-size: 17px;
+
+    font-weight: 800;
+
+    margin-bottom: 7px;
+}
+
+.price-description {
+
+    color:
+        var(--muted);
+
+    font-size: 11px;
+
+    min-height: 36px;
+}
+
+.price {
+
+    margin:
+        23px 0;
+
+    font-size: 35px;
+
+    font-weight: 850;
+
+    letter-spacing: -1px;
+}
+
+.price small {
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    font-weight: 400;
+}
+
+.price-features {
+
+    list-style: none;
+
+    flex: 1;
+}
+
+.price-features li {
+
+    display: flex;
+
+    gap: 8px;
+
+    margin-bottom: 11px;
+
+    color: #c7d0cb;
+
+    font-size: 11px;
+}
+
+.price-features li::before {
+
+    content: "✓";
+
+    color:
+        var(--green);
+
+    font-weight: 800;
+}
+
+.price-btn {
+
+    margin-top: 22px;
+
+    width: 100%;
+}
+
+
+/* =========================================
+   HOW IT WORKS
+========================================= */
+
+.steps {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 14px;
+}
+
+.step {
+
+    position: relative;
+
+    padding: 25px;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 15px;
+}
+
+.step-number {
+
+    width: 31px;
+    height: 31px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background:
+        rgba(25,195,125,.11);
+
+    color:
+        var(--green);
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    margin-bottom: 17px;
+}
+
+.step h3 {
+
+    font-size: 15px;
+
+    margin-bottom: 8px;
+}
+
+.step p {
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================
+   FAQ
+========================================= */
+
+.faq {
+
+    max-width: 780px;
+
+    margin: auto;
+}
+
+.faq-item {
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.faq-question {
+
+    width: 100%;
+
+    background: transparent;
+
+    border: none;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    text-align: left;
+
+    padding:
+        21px 0;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+.faq-question span:last-child {
+
+    color:
+        var(--green);
+
+    font-size: 20px;
+
+    font-weight: 400;
+}
+
+.faq-answer {
+
+    display: none;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    line-height: 1.75;
+
+    padding:
+        0 30px 20px 0;
+}
+
+.faq-item.open .faq-answer {
+    display: block;
+}
+
+
+/* =========================================
+   CTA
+========================================= */
+
+.cta {
+
+    padding:
+        80px 25px;
+
+    margin-bottom: 80px;
+
+    border:
+        1px solid
+        rgba(25,195,125,.16);
+
+    border-radius: 22px;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(25,195,125,.09),
+            transparent 65%
+        ),
+        #09100d;
+}
+
+.cta h2 {
+
+    font-size:
+        clamp(29px,4vw,43px);
+
+    letter-spacing: -1px;
+
+    margin-bottom: 13px;
+}
+
+.cta p {
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+    margin-bottom: 27px;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+
+    border-top:
+        1px solid var(--border);
+
+    padding:
+        35px 0;
+
+    color:
+        var(--muted-dark);
+
+    font-size: 11px;
+}
+
+.footer-inner {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.footer-brand {
+
+    color: #c4cec9;
+
+    font-weight: 800;
+
+    font-size: 13px;
+}
+
+.footer-links {
+
+    display: flex;
+
+    gap: 20px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .nav-links {
+        display: none;
     }
 
-    body {
-        font-family: Arial, Helvetica, sans-serif;
-        min-height: 100vh;
-        background: #07110d;
-        color: #111827;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .pricing-grid {
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
-    .login-container {
-        width: 100%;
-        max-width: 430px;
-        padding: 25px;
+    .steps {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .intro-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .features {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .container {
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+
+    .nav-inner {
+        min-height: 67px;
+    }
+
+    .nav-actions .btn-outline {
+        display: none;
     }
 
     .brand {
-        text-align: center;
-        color: white;
-        margin-bottom: 25px;
+        font-size: 17px;
     }
 
-    .brand-logo {
-        width: 60px;
-        height: 60px;
-        margin: 0 auto 15px;
-
-        border-radius: 16px;
-        background: #19c37d;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        font-size: 25px;
-        font-weight: bold;
-
-        box-shadow: 0 10px 30px rgba(25, 195, 125, 0.25);
+    .hero {
+        padding:
+            75px 0
+            70px;
     }
 
-    .brand h1 {
-        font-size: 25px;
-        margin-bottom: 8px;
+    .hero h1 {
+        letter-spacing: -2px;
     }
 
-    .brand p {
-        color: #9ca3af;
+    .hero-description {
         font-size: 14px;
     }
 
-    .login-card {
-        background: white;
-        border-radius: 18px;
-        padding: 30px;
-
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.30);
+    .hero-actions {
+        flex-direction: column;
     }
 
-    .login-card h2 {
-        font-size: 22px;
-        margin-bottom: 8px;
-    }
-
-    .description {
-        color: #6b7280;
-        font-size: 13px;
-        line-height: 1.5;
-        margin-bottom: 22px;
-    }
-
-    .notice {
-        background: #f0fdf4;
-        border: 1px solid #bbf7d0;
-        color: #166534;
-
-        border-radius: 10px;
-        padding: 12px;
-
-        font-size: 12px;
-        line-height: 1.5;
-
-        margin-bottom: 20px;
-    }
-
-    .login-card label {
-        display: block;
-
-        margin-top: 16px;
-        margin-bottom: 7px;
-
-        font-size: 14px;
-        font-weight: bold;
-    }
-
-    .login-card input {
+    .hero-actions .btn {
         width: 100%;
-
-        padding: 13px;
-
-        border: 1px solid #d1d5db;
-        border-radius: 9px;
-
-        font-size: 15px;
-        outline: none;
-
-        transition: 0.2s;
     }
 
-    .login-card input:focus {
-        border-color: #19c37d;
-
-        box-shadow:
-            0 0 0 3px rgba(25, 195, 125, 0.12);
+    .dashboard-preview {
+        margin-top: 45px;
     }
 
-    .btn-primary {
-        width: 100%;
-
-        padding: 13px;
-
-        border-radius: 9px;
-        border: none;
-
-        margin-top: 20px;
-
-        cursor: pointer;
-
-        font-size: 15px;
-        font-weight: bold;
-
-        background: #19c37d;
-        color: white;
-
-        transition: 0.2s;
+    .preview-sidebar {
+        display: none;
     }
 
-    .btn-primary:hover {
-        background: #14a96b;
+    .preview-body {
+        grid-template-columns: 1fr;
     }
 
-    .login-links {
-        text-align: center;
-
-        margin-top: 18px;
-
-        font-size: 13px;
-
-        color: #6b7280;
+    .preview-grid {
+        grid-template-columns:
+            1fr;
     }
 
-    .login-links a {
-        color: #16a36a;
-        text-decoration: none;
+    section {
+        padding: 70px 0;
     }
 
-    .login-links a:hover {
-        text-decoration: underline;
+    .features {
+        grid-template-columns: 1fr;
     }
 
-    .security-note {
-        margin-top: 18px;
-
-        text-align: center;
-
-        color: #9ca3af;
-
-        font-size: 11px;
-        line-height: 1.5;
+    .pricing-grid {
+        grid-template-columns: 1fr;
     }
 
-    .copyright {
-        text-align: center;
-
-        color: #6b7280;
-
-        margin-top: 20px;
-
-        font-size: 12px;
+    .steps {
+        grid-template-columns: 1fr;
     }
 
-    @media (max-width: 480px) {
-
-        .login-container {
-            padding: 18px;
-        }
-
-        .login-card {
-            padding: 24px;
-        }
-
-        .brand h1 {
-            font-size: 22px;
-        }
+    .intro h2 {
+        font-size: 30px;
     }
+
+    .footer-inner {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+}
+
+
+/* =========================================
+   CHINESE
+========================================= */
+
+body.zh .en {
+    display: none;
+}
+
+body:not(.zh) .zh {
+    display: none;
+}
+
 </style>
-<div class="brand">
 
-    <div class="brand-logo">
-        WP
-    </div>
-
-    <h1>
-        Customer Portal
-    </h1>
-
-    <p>
-        Manage your messaging service
-    </p>
-
-</div>
+</head>
 
 
-<div class="login-card">
-
-    <h2>
-        Sign in
-    </h2>
-
-    <p class="description">
-        Access your customer account and manage your
-        messaging service settings.
-    </p>
+<body>
 
 
-    <div class="notice">
-        <strong>Important</strong><br>
-        This portal is operated independently and is not
-        an official WhatsApp or Meta login service.
-        Do not enter third-party account credentials here.
-    </div>
+<!-- ========================================
+     NAVIGATION
+========================================= -->
+
+<nav class="navbar">
+
+<div class="container nav-inner">
+
+    <a href="#home" class="brand">
+
+        <div class="brand-logo">
+            CN
+        </div>
+
+        <span>
+            ChatNova
+        </span>
+
+    </a>
 
 
-    <form onsubmit="login(event)">
+    <div class="nav-links">
 
-        <label for="email">
-            Email
-        </label>
-        <input
-            type="email"
-            id="email"
-            placeholder="you@example.com"
-            autocomplete="email"
-            required
-        >
+        <a href="#home">
+            <span class="en">Home</span>
+            <span class="zh">首页</span>
+        </a>
 
+        <a href="#features">
+            <span class="en">Features</span>
+            <span class="zh">功能</span>
+        </a>
 
-        <label for="accessCode">
-            Access Code
-        </label>
+        <a href="#pricing">
+            <span class="en">Pricing</span>
+            <span class="zh">价格</span>
+        </a>
 
-        <input
-            type="text"
-            id="accessCode"
-            placeholder="Enter your access code"
-            autocomplete="off"
-            required
-        >
+        <a href="#how">
+            <span class="en">How It Works</span>
+            <span class="zh">使用方式</span>
+        </a>
 
-
-        <button
-            type="submit"
-            class="btn-primary"
-        >
-            Sign In
-        </button>
-
-    </form>
-
-
-    <div class="login-links">
-
-        <a href="register.html">
-            Create Account
+        <a href="#faq">
+            FAQ
         </a>
 
     </div>
 
 
-    <div class="security-note">
-        Never enter your WhatsApp, Meta, Google,
-        or other third-party account password here.
+    <div class="nav-actions">
+
+        <div class="language">
+
+            <button
+                class="lang active"
+                id="enBtn"
+                onclick="setLanguage('en')"
+            >
+                EN
+            </button>
+
+            <button
+                class="lang"
+                id="zhBtn"
+                onclick="setLanguage('zh')"
+            >
+                中文
+            </button>
+
+        </div>
+
+
+        <a
+            href="login.html"
+            class="btn btn-outline"
+        >
+            <span class="en">Login</span>
+            <span class="zh">登录</span>
+        </a>
+
+
+        <a
+            href="register.html"
+            class="btn btn-green"
+        >
+            <span class="en">Get Started</span>
+            <span class="zh">开始使用</span>
+        </a>
+
     </div>
 
 </div>
 
+</nav>
 
-<p class="copyright">
-    © 2026 Customer Portal
-</p>
+
+
+<!-- ========================================
+     HERO
+========================================= -->
+
+<section
+    class="hero"
+    id="home"
+>
+
+<div class="container">
+
+    <div class="badge">
+
+        <span class="badge-dot"></span>
+
+        <span class="en">
+            WhatsApp Provider Platform
+        </span>
+
+        <span class="zh">
+            WhatsApp 商业通讯平台
+        </span>
+
+    </div>
+
+
+    <h1>
+
+        <span class="en">
+            WhatsApp Business,
+            <span>Simplified.</span>
+        </span>
+
+        <span class="zh">
+            WhatsApp 商业通讯，
+            <span>更简单。</span>
+        </span>
+
+    </h1>
+
+
+    <p class="hero-description">
+
+        <span class="en">
+            Manage WhatsApp accounts, customer conversations,
+            contacts, automation and business messaging
+            from one powerful platform.
+        </span>
+
+        <span class="zh">
+            通过一个强大的平台，集中管理 WhatsApp 账户、
+            客户对话、联系人、自动化及商业通讯。
+        </span>
+
+    </p>
+
+
+    <div class="hero-actions">
+
+        <a
+            href="register.html"
+            class="btn btn-green"
+        >
+            <span class="en">
+                Get Started
+            </span>
+
+            <span class="zh">
+                立即开始
+            </span>
+        </a>
+
+
+        <a
+            href="#pricing"
+            class="btn btn-outline"
+        >
+            <span class="en">
+                View Pricing
+            </span>
+
+            <span class="zh">
+                查看价格
+            </span>
+        </a>
+
+    </div>
+
+
+    <div class="hero-note">
+
+        <span class="en">
+            Built for businesses that manage WhatsApp at scale.
+        </span>
+
+        <span class="zh">
+            为需要规模化管理 WhatsApp 的企业而设计。
+        </span>
+
+    </div>
+
+
+    <!-- DASHBOARD VISUAL -->
+
+    <div class="dashboard-preview">
+
+        <div class="preview-window">
+
+            <div class="preview-top">
+
+                <span class="preview-dot"></span>
+                <span class="preview-dot"></span>
+                <span class="preview-dot"></span>
+
+            </div>
+
+
+            <div class="preview-body">
+
+                <div class="preview-sidebar">
+
+                    <div class="preview-sidebar-item active">
+                        Dashboard
+                    </div>
+
+                    <div class="preview-sidebar-item">
+                        WhatsApp
+                    </div>
+
+                    <div class="preview-sidebar-item">
+                        Messages
+                    </div>
+
+                    <div class="preview-sidebar-item">
+                        Contacts
+                    </div>
+
+                    <div class="preview-sidebar-item">
+                        Billing
+                    </div>
+
+                    <div class="preview-sidebar-item">
+                        Settings
+                    </div>
+
+                </div>
+
+
+                <div class="preview-content">
+
+                    <div class="preview-heading">
+                        Business Overview
+                    </div>
+
+
+                    <div class="preview-grid">
+
+                        <div class="preview-card">
+
+                            <div class="preview-label">
+                                WhatsApp Accounts
+                            </div>
+
+                            <div class="preview-number preview-green">
+                                3
+                            </div>
+
+                        </div>
+
+
+                        <div class="preview-card">
+
+                            <div class="preview-label">
+                                Messages
+                            </div>
+
+                            <div class="preview-number">
+                                1,284
+                            </div>
+
+                        </div>
+
+
+                        <div class="preview-card">
+
+                            <div class="preview-label">
+                                Active Contacts
+                            </div>
+
+                            <div class="preview-number">
+                                486
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+
+<!-- ========================================
+     INTRODUCTION
+========================================= -->
+
+<section class="intro">
+
+<div class="container">
+
+    <div class="intro-grid">
+
+
+        <div>
+
+            <div class="section-kicker">
+                <span class="en">The Platform</span>
+                <span class="zh">平台介绍</span>
+            </div>
+
+
+            <h2>
+
+                <span class="en">
+                    One place for your
+                    WhatsApp operations.
+                </span>
+
+                <span class="zh">
+                    一个平台，
+                    管理您的 WhatsApp 业务。
+                </span>
+
+            </h2>
+
+
+            <p>
+
+                <span class="en">
+                    ChatNova brings the essential tools for
+                    WhatsApp business communication into one
+                    centralized customer platform.
+                </span>
+
+                <span class="zh">
+                    ChatNova 将 WhatsApp 商业通讯所需的核心工具
+                    集中到一个统一的客户平台。
+                </span>
+
+            </p>
+
+
+            <p>
+
+                <span class="en">
+                    Connect your WhatsApp accounts, manage
+                    conversations, organize customer information,
+                    automate repetitive tasks and monitor your
+                    business activity.
+                </span>
+
+                <span class="zh">
+                    连接 WhatsApp 账户、管理对话、整理客户资料、
+                    自动处理重复工作，并掌握您的业务活动。
+                </span>
+
+            </p>
+
+
+            <div class="intro-points">
+
+                <div class="intro-point">
+
+                    <div class="check">
+                        ✓
+                    </div>
+
+                    <span class="en">
+                        Centralized WhatsApp management
+                    </span>
+
+                    <span class="zh">
+                        集中管理 WhatsApp
+                    </span>
+
+                </div>
+
+
+                <div class="intro-point">
+
+                    <div class="check">
+                        ✓
+                    </div>
+
+                    <span class="en">
+                        Customer conversations and history
+                    </span>
+
+                    <span class="zh">
+                        客户对话与聊天记录
+                    </span>
+
+                </div>
+
+
+                <div class="intro-point">
+
+                    <div class="check">
+                        ✓
+                    </div>
+
+                    <span class="en">
+                        Automation and business workflows
+                    </span>
+
+                    <span class="zh">
+                        自动化及业务流程
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-card-title">
+                ChatNova Platform
+            </div>
+
+            <div class="info-card-text">
+
+                <span class="en">
+                    A centralized environment for your
+                    WhatsApp business operations.
+                </span>
+
+                <span class="zh">
+                    集中管理 WhatsApp 商业业务的工作平台。
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span>
+                    WhatsApp Management
+                </span>
+
+                <span class="info-status">
+                    Available
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span>
+                    Unified Inbox
+                </span>
+
+                <span class="info-status">
+                    Available
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span>
+                    Customer Management
+                </span>
+
+                <span class="info-status">
+                    Available
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span>
+                    Automation
+                </span>
+
+                <span class="info-status">
+                    Available
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span>
+                    API Integration
+                </span>
+
+                <span class="info-status">
+                    Pro+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+
+<!-- ========================================
+     FEATURES
+========================================= -->
+
+<section id="features">
+
+<div class="container">
+
+    <div class="section-header">
+
+        <div class="section-kicker">
+            <span class="en">Features</span>
+            <span class="zh">平台功能</span>
+        </div>
+
+        <h2>
+
+            <span class="en">
+                Everything you need to manage WhatsApp.
+            </span>
+
+            <span class="zh">
+                管理 WhatsApp 所需的一切。
+            </span>
+
+        </h2>
+
+        <p>
+
+            <span class="en">
+                Built around the daily workflow of businesses
+                handling customer conversations and messaging.
+            </span>
+
+            <span class="zh">
+                围绕企业日常客户沟通及消息管理流程打造。
+            </span>
+
+        </p>
+
+    </div>
+
+
+    <div class="features">
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                WA
+            </div>
+
+            <h3>
+                WhatsApp Management
+            </h3>
+
+            <p>
+
+                <span class="en">
+                    Manage multiple WhatsApp connections,
+                    connection status and account settings
+                    from one dashboard.
+                </span>
+
+                <span class="zh">
+                    从一个控制面板管理多个 WhatsApp
+                    连接、连接状态及账户设置。
+                </span>
+
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                IN
+            </div>
+
+            <h3>
+                Unified Inbox
+            </h3>
+
+            <p>
+
+                <span class="en">
+                    Keep customer conversations organized
+                    and accessible from a centralized inbox.
+                </span>
+
+                <span class="zh">
+                    将客户对话集中在统一收件箱中，
+                    更方便管理和跟进。
+                </span>
+
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                CR
+            </div>
+
+            <h3>
+                Customer Management
+            </h3>
+
+            <p>
+
+                <span class="en">
+                    Organize contacts, customer profiles
+                    and conversation history in one place.
+                </span>
+
+                <span class="zh">
+                    集中管理联系人、客户资料及聊天记录。
+                </span>
+
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                AU
+            </div>
+
+            <h3>
+                Automation
+            </h3>
+
+            <p>
+
+                <span class="en">
+                    Reduce repetitive work with automated
+                    replies and business communication workflows.
+                </span>
+
+                <span class="zh">
+                    通过自动回复及业务流程自动化，
+                    减少重复工作。
+                </span>
+
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                AN
+            </div>
+
+            <h3>
+                Analytics & Reports
+            </h3>
+
+            <p>
+
+                <span class="en">
+                    Monitor messaging activity, account status,
+                    usage and business performance.
+                </span>
+
+                <span class="zh">
+                    掌握消息活动、账户状态、使用量及业务表现。
+                </span>
+
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                API
+            </div>
+
+            <h3>
+                API Integration
+            </h3>
+
+            <p>
+
+                <span class="en">
+                    Connect ChatNova with your own systems
+                    and build customized business workflows.
+                </span>
+
+                <span class="zh">
+                    将 ChatNova 与您自己的系统连接，
+                    建立定制化业务流程。
+                </span>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+
+<!-- ========================================
+     PRICING
+========================================= -->
+
+<section
+    id="pricing"
+    style="
+        background:
+        rgba(255,255,255,.012);
+    "
+>
+
+<div class="container">
+
+    <div class="section-header">
+
+        <div class="section-kicker">
+            <span class="en">Pricing</span>
+            <span class="zh">价格方案</span>
+        </div>
+
+        <h2>
+
+            <span class="en">
+                Simple plans that scale with your business.
+            </span>
+
+            <span class="zh">
+                简单透明，随业务规模成长。
+            </span>
+
+        </h2>
+
+        <p>
+
+            <span class="en">
+                Choose the number of WhatsApp accounts and
+                features your business needs.
+            </span>
+
+            <span class="zh">
+                根据您的 WhatsApp 账户数量及业务需求选择方案。
+            </span>
+
+        </p>
+
+    </div>
+
+
+    <div class="pricing-grid">
+
+
+        <!-- STARTER -->
+
+        <div class="price-card">
+
+            <div class="price-name">
+                Starter
+            </div>
+
+            <div class="price-description">
+
+                <span class="en">
+                    For small businesses getting started.
+                </span>
+
+                <span class="zh">
+                    适合刚开始使用的中小企业。
+                </span>
+
+            </div>
+
+
+            <div class="price">
+                $49
+                <small>/month</small>
+            </div>
+
+
+            <ul class="price-features">
+
+                <li>
+                    1 WhatsApp account
+                </li>
+
+                <li>
+                    2 users
+                </li>
+
+                <li>
+                    Unified Inbox
+                </li>
+
+                <li>
+                    Contacts & chat history
+                </li>
+
+                <li>
+                    Basic automation
+                </li>
+
+                <li>
+                    Dashboard
+                </li>
+
+                <li>
+                    Basic reports
+                </li>
+
+            </ul>
+
+
+            <a
+                href="register.html"
+                class="btn btn-outline price-btn"
+            >
+                Get Started
+            </a>
+
+        </div>
+
+
+
+        <!-- PRO -->
+
+        <div class="price-card popular">
+
+            <div class="popular-label">
+                Most Popular
+            </div>
+
+            <div class="price-name">
+                Pro
+            </div>
+
+            <div class="price-description">
+
+                <span class="en">
+                    For growing businesses.
+                </span>
+
+                <span class="zh">
+                    适合正在成长的企业。
+                </span>
+
+            </div>
+
+
+            <div class="price">
+                $99
+                <small>/month</small>
+            </div>
+
+
+            <ul class="price-features">
+
+                <li>
+                    3 WhatsApp accounts
+                </li>
+
+                <li>
+                    5 users
+                </li>
+
+                <li>
+                    Everything in Starter
+                </li>
+
+                <li>
+                    Advanced automation
+                </li>
+
+                <li>
+                    API integration
+                </li>
+
+                <li>
+                    Advanced analytics
+                </li>
+
+                <li>
+                    Broadcast / notification tools
+                </li>
+
+                <li>
+                    Advanced reports
+                </li>
+
+                <li>
+                    Priority support
+                </li>
+
+            </ul>
+
+
+            <a
+                href="register.html"
+                class="btn btn-green price-btn"
+            >
+                Get Started
+            </a>
+
+        </div>
+
+
+
+        <!-- BUSINESS -->
+
+        <div class="price-card">
+
+            <div class="price-name">
+                Business
+            </div>
+
+            <div class="price-description">
+
+                <span class="en">
+                    For larger teams and operations.
+                </span>
+
+                <span class="zh">
+                    适合大型团队及业务运营。
+                </span>
+
+            </div>
+
+
+            <div class="price">
+                $299
+                <small>/month</small>
+            </div>
+
+
+            <ul class="price-features">
+
+                <li>
+                    10 WhatsApp accounts
+                </li>
+
+                <li>
+                    15 users
+                </li>
+
+                <li>
+                    Everything in Pro
+                </li>
+
+                <li>
+                    Advanced API
+                </li>
+
+                <li>
+                    Advanced automation
+                </li>
+
+                <li>
+                    Team management
+                </li>
+
+                <li>
+                    Detailed reports
+                </li>
+
+                <li>
+                    Higher usage limits
+                </li>
+
+                <li>
+                    Priority support
+                </li>
+
+            </ul>
+
+
+            <a
+                href="register.html"
+                class="btn btn-outline price-btn"
+            >
+                Get Started
+            </a>
+
+        </div>
+
+
+
+        <!-- ENTERPRISE -->
+
+        <div class="price-card">
+
+            <div class="price-name">
+                Enterprise
+            </div>
+
+            <div class="price-description">
+
+                <span class="en">
+                    Custom infrastructure for larger operations.
+                </span>
+
+                <span class="zh">
+                    为大型业务提供定制化方案。
+                </span>
+
+            </div>
+
+
+            <div class="price">
+                Custom
+            </div>
+
+
+            <ul class="price-features">
+
+                <li>
+                    10+ WhatsApp accounts
+                </li>
+
+                <li>
+                    Custom users
+                </li>
+
+                <li>
+                    Custom API limits
+                </li>
+
+                <li>
+                    Advanced automation
+                </li>
+
+                <li>
+                    Dedicated requirements
+                </li>
+
+                <li>
+                    Custom integrations
+                </li>
+
+                <li>
+                    Priority support
+                </li>
+
+            </ul>
+
+
+            <a
+                href="register.html"
+                class="btn btn-outline price-btn"
+            >
+                Contact / Start
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <p
+        style="
+            text-align:center;
+            color:#69756f;
+            font-size:10px;
+            margin-top:22px;
+        "
+    >
+
+        <span class="en">
+            ChatNova subscription fees cover platform features.
+            Third-party WhatsApp/provider usage fees may apply separately.
+        </span>
+
+        <span class="zh">
+            ChatNova 订阅费用用于平台功能。
+            第三方 WhatsApp / Provider 使用费用可能另行收取。
+        </span>
+
+    </p>
+
+</div>
+
+</section>
+
+
+
+<!-- ========================================
+     HOW IT WORKS
+========================================= -->
+
+<section id="how">
+
+<div class="container">
+
+    <div class="section-header">
+
+        <div class="section-kicker">
+            <span class="en">How It Works</span>
+            <span class="zh">使用方式</span>
+        </div>
+
+        <h2>
+
+            <span class="en">
+                Start managing your WhatsApp operation in four steps.
+            </span>
+
+            <span class="zh">
+                四个步骤，开始管理您的 WhatsApp 业务。
+            </span>
+
+        </h2>
+
+    </div>
+
+
+    <div class="steps">
+
+
+        <div class="step">
+
+            <div class="step-number">
+                01
+            </div>
+
+            <h3>
+                Create Account
+            </h3>
+
+            <p>
+
+                <span class="en">
+                    Create your ChatNova customer account
+                    and choose the plan that fits your business.
+                </span>
+
+                <span class="zh">
+                    创建 ChatNova 客户账户，
+                    选择适合您的业务方案。
+                </span>
+
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                02
+            </div>
+
+            <h3>
+                Connect WhatsApp
+            </h3>
+
+            <p>
+
+                <span class="en">
+                    Connect and manage your WhatsApp
+                    business instance through the platform.
+                </span>
+
+                <span class="zh">
+                    通过平台连接并管理您的
+                    WhatsApp Business 实例。
+                </span>
+
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                03
+            </div>
+
+            <h3>
+                Manage Customers
+            </h3>
+
+            <p>
+
+                <span class="en">
+                    Handle conversations, contacts and
+                    customer history from one workspace.
+                </span>
+
+                <span class="zh">
+                    在统一工作区管理对话、
+                    联系人及客户记录。
+                </span>
+
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                04
+            </div>
+
+            <h3>
+                Automate & Scale
+            </h3>
+
+            <p>
+
+                <span class="en">
+                    Use automation, analytics and APIs
+                    to improve your business workflow.
+                </span>
+
+                <span class="zh">
+                    使用自动化、分析工具及 API，
+                    提升业务效率并扩大规模。
+                </span>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+
+<!-- ========================================
+     FAQ
+========================================= -->
+
+<section
+    id="faq"
+    style="
+        background:
+        rgba(255,255,255,.012);
+    "
+>
+
+<div class="container">
+
+    <div class="section-header">
+
+        <div class="section-kicker">
+            FAQ
+        </div>
+
+        <h2>
+
+            <span class="en">
+                Frequently asked questions.
+            </span>
+
+            <span class="zh">
+                常见问题
+            </span>
+
+        </h2>
+
+    </div>
+
+
+    <div class="faq">
+
+
+        <div class="faq-item">
+
+            <button
+                class="faq-question"
+                onclick="toggleFaq(this)"
+            >
+
+                <span>
+                    What is ChatNova?
+                </span>
+
+                <span>
+                    +
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                ChatNova is a WhatsApp Provider Platform
+                designed to help businesses manage WhatsApp
+                accounts, conversations, customers,
+                automation and business messaging from
+                one centralized platform.
+
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <button
+                class="faq-question"
+                onclick="toggleFaq(this)"
+            >
+
+                <span>
+                    How many WhatsApp accounts can I connect?
+                </span>
+
+                <span>
+                    +
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                Starter includes 1 WhatsApp account,
+                Pro includes 3, Business includes 10,
+                while Enterprise plans can be customized.
+
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <button
+                class="faq-question"
+                onclick="toggleFaq(this)"
+            >
+
+                <span>
+                    Does ChatNova replace WhatsApp?
+                </span>
+
+                <span>
+                    +
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                No. ChatNova provides a centralized platform
+                for managing supported WhatsApp business
+                connections and related customer workflows.
+
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <button
+                class="faq-question"
+                onclick="toggleFaq(this)"
+            >
+
+                <span>
+                    Are WhatsApp/provider fees included?
+                </span>
+
+                <span>
+                    +
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                ChatNova subscription pricing covers the
+                ChatNova platform. Third-party WhatsApp,
+                provider or usage-related fees may apply
+                separately depending on the connection
+                and service used.
+
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <button
+                class="faq-question"
+                onclick="toggleFaq(this)"
+            >
+
+                <span>
+                    Can I upgrade my plan later?
+                </span>
+
+                <span>
+                    +
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                Yes. ChatNova is designed so customers can
+                move to a higher plan as their WhatsApp
+                operations grow.
+
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <button
+                class="faq-question"
+                onclick="toggleFaq(this)"
+            >
+
+                <span>
+                    Is there an Enterprise plan?
+                </span>
+
+                <span>
+                    +
+                </span>
+
+            </button>
+
+            <div class="faq-answer">
+
+                Yes. Enterprise plans can be customized for
+                larger teams, additional WhatsApp accounts,
+                higher usage requirements, API integrations
+                and other business needs.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+
+<!-- ========================================
+     CTA
+========================================= -->
+
+<div class="container">
+
+<section class="cta">
+
+    <h2>
+
+        <span class="en">
+            Ready to simplify your WhatsApp operations?
+        </span>
+
+        <span class="zh">
+            准备好简化您的 WhatsApp 业务了吗？
+        </span>
+
+    </h2>
+
+
+    <p>
+
+        <span class="en">
+            Start with ChatNova and build your business
+            communication workflow in one place.
+        </span>
+
+        <span class="zh">
+            使用 ChatNova，在一个平台建立您的
+            商业通讯工作流程。
+        </span>
+
+    </p>
+
+
+    <a
+        href="register.html"
+        class="btn btn-green"
+    >
+
+        <span class="en">
+            Create Your Account
+        </span>
+
+        <span class="zh">
+            创建您的账户
+        </span>
+
+    </a>
+
+</section>
+
+</div>
+
+
+
+<!-- ========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+<div class="container footer-inner">
+
+    <div>
+
+        <div class="footer-brand">
+            ChatNova
+        </div>
+
+        <div style="margin-top:5px;">
+            WhatsApp Provider Platform
+        </div>
+
+    </div>
+
+
+    <div class="footer-links">
+
+        <a href="#features">
+            Features
+        </a>
+
+        <a href="#pricing">
+            Pricing
+        </a>
+
+        <a href="#faq">
+            FAQ
+        </a>
+
+        <a href="login.html">
+            Login
+        </a>
+
+    </div>
+
+
+    <div>
+        © 2026 ChatNova
+    </div>
+
+</div>
+
+</footer>
+
+
+
+<script>
+
+/* =========================================
+   LANGUAGE
+========================================= */
+
+let language =
+    localStorage.getItem("chatnova_language") || "en";
+
+
+function setLanguage(lang) {
+
+    language = lang;
+
+    localStorage.setItem(
+        "chatnova_language",
+        lang
+    );
+
+    document.body.classList.toggle(
+        "zh",
+        lang === "zh"
+    );
+
+    document.documentElement.lang =
+        lang === "zh"
+            ? "zh-CN"
+            : "en";
+
+    document.title =
+        lang === "zh"
+            ? "ChatNova — WhatsApp 商业通讯平台"
+            : "ChatNova — WhatsApp Business, Simplified";
+
+
+    document.getElementById("enBtn")
+        .classList.toggle(
+            "active",
+            lang === "en"
+        );
+
+    document.getElementById("zhBtn")
+        .classList.toggle(
+            "active",
+            lang === "zh"
+        );
+
+}
+
+
+/* =========================================
+   FAQ
+========================================= */
+
+function toggleFaq(button) {
+
+    const item =
+        button.parentElement;
+
+    const wasOpen =
+        item.classList.contains("open");
+
+
+    document
+        .querySelectorAll(".faq-item")
+        .forEach(function(el) {
+
+            el.classList.remove("open");
+
+            const symbol =
+                el.querySelector(
+                    ".faq-question span:last-child"
+                );
+
+            if (symbol) {
+                symbol.textContent = "+";
+            }
+
+        });
+
+
+    if (!wasOpen) {
+
+        item.classList.add("open");
+
+        const symbol =
+            button.querySelector(
+                "span:last-child"
+            );
+
+        if (symbol) {
+            symbol.textContent = "−";
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   INITIAL LANGUAGE
+========================================= */
+
+setLanguage(language);
+
+</script>
+
+</body>
+</html>
