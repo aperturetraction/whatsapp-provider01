@@ -2,12 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
 
     <title>Login — ChatNova</title>
-    <meta name="description" content="Login to your ChatNova WhatsApp Business dashboard.">
+
+    <meta
+        name="description"
+        content="Login to your ChatNova WhatsApp Business dashboard."
+    >
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -49,7 +57,10 @@
                 var(--bg);
 
             color: var(--text);
+
             overflow-x: hidden;
+
+            -webkit-text-size-adjust: 100%;
         }
 
         a {
@@ -62,13 +73,19 @@
             font: inherit;
         }
 
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
         .page {
             width: 100%;
             min-height: 100vh;
             min-height: 100dvh;
+
             display: flex;
             flex-direction: column;
         }
+
 
         /* =====================================================
            HEADER
@@ -151,6 +168,7 @@
             color: var(--text);
         }
 
+
         /* =====================================================
            LANGUAGE
         ===================================================== */
@@ -199,6 +217,7 @@
             font-weight: 700;
         }
 
+
         /* =====================================================
            MAIN
         ===================================================== */
@@ -222,6 +241,7 @@
 
             max-width: 430px;
         }
+
 
         /* =====================================================
            HEADING
@@ -253,6 +273,7 @@
             line-height: 1.6;
         }
 
+
         /* =====================================================
            CARD
         ===================================================== */
@@ -278,6 +299,7 @@
                 0 30px 80px rgba(0,0,0,0.45),
                 inset 0 1px 0 rgba(255,255,255,0.025);
         }
+
 
         /* =====================================================
            FORM
@@ -323,7 +345,6 @@
             outline: none;
 
             -webkit-appearance: none;
-
             appearance: none;
 
             transition:
@@ -341,6 +362,7 @@
             box-shadow:
                 0 0 0 3px rgba(25,212,123,0.08);
         }
+
 
         /* =====================================================
            PASSWORD
@@ -381,6 +403,7 @@
         .show-password:hover {
             color: var(--green);
         }
+
 
         /* =====================================================
            OPTIONS
@@ -432,6 +455,7 @@
             text-decoration: underline;
         }
 
+
         /* =====================================================
            BUTTON
         ===================================================== */
@@ -478,6 +502,7 @@
 
             transform: none;
         }
+
 
         /* =====================================================
            MESSAGE
@@ -529,6 +554,7 @@
             color: #f5d47c;
         }
 
+
         /* =====================================================
            DIVIDER
         ===================================================== */
@@ -558,6 +584,7 @@
             background: var(--border);
         }
 
+
         /* =====================================================
            REGISTER
         ===================================================== */
@@ -581,6 +608,7 @@
         .register-link:hover {
             text-decoration: underline;
         }
+
 
         /* =====================================================
            SECURITY
@@ -608,6 +636,7 @@
             color: var(--green);
         }
 
+
         /* =====================================================
            FOOTER
         ===================================================== */
@@ -623,6 +652,7 @@
 
             font-size: 11px;
         }
+
 
         /* =====================================================
            SPINNER
@@ -649,10 +679,13 @@
         }
 
         @keyframes spin {
+
             to {
                 transform: rotate(360deg);
             }
+
         }
+
 
         /* =====================================================
            TABLET
@@ -694,6 +727,7 @@
                 border-radius: 17px;
             }
         }
+
 
         /* =====================================================
            MOBILE
@@ -867,6 +901,7 @@
             }
         }
 
+
         /* =====================================================
            VERY SMALL PHONES
         ===================================================== */
@@ -910,12 +945,15 @@
                 margin-left: auto;
             }
         }
+
     </style>
 </head>
+
 
 <body>
 
 <div class="page">
+
 
     <!-- =====================================================
          HEADER
@@ -923,7 +961,10 @@
 
     <header>
 
-        <a href="index.html" class="brand">
+        <a
+            href="index.html"
+            class="brand"
+        >
 
             <div class="brand-mark">
                 C
@@ -941,7 +982,8 @@
             <a
                 href="index.html"
                 class="home-link"
-                data-i18n="backHome">
+                data-i18n="backHome"
+            >
                 ← Back to home
             </a>
 
@@ -952,15 +994,18 @@
                     type="button"
                     class="lang-btn active"
                     id="langEN"
-                    onclick="setLanguage('en')">
+                    onclick="setLanguage('en')"
+                >
                     EN
                 </button>
+
 
                 <button
                     type="button"
                     class="lang-btn"
                     id="langZH"
-                    onclick="setLanguage('zh')">
+                    onclick="setLanguage('zh')"
+                >
                     中文
                 </button>
 
@@ -979,6 +1024,7 @@
 
         <div class="login-wrapper">
 
+
             <div class="login-heading">
 
                 <h1 data-i18n="title">
@@ -994,17 +1040,20 @@
 
             <div class="login-card">
 
+
                 <!-- MESSAGE -->
 
                 <div
                     id="message"
-                    class="message">
+                    class="message"
+                >
                 </div>
 
 
                 <!-- LOGIN FORM -->
 
                 <form id="loginForm">
+
 
                     <!-- EMAIL -->
 
@@ -1013,9 +1062,11 @@
                         <label
                             class="form-label"
                             for="email"
-                            data-i18n="emailLabel">
+                            data-i18n="emailLabel"
+                        >
                             Email address
                         </label>
+
 
                         <input
                             id="email"
@@ -1026,7 +1077,8 @@
                             autocapitalize="none"
                             spellcheck="false"
                             placeholder="you@example.com"
-                            required>
+                            required
+                        >
 
                     </div>
 
@@ -1038,9 +1090,11 @@
                         <label
                             class="form-label"
                             for="password"
-                            data-i18n="passwordLabel">
+                            data-i18n="passwordLabel"
+                        >
                             Password
                         </label>
+
 
                         <div class="password-row">
 
@@ -1050,14 +1104,17 @@
                                 type="password"
                                 autocomplete="current-password"
                                 placeholder="Enter your password"
-                                required>
+                                required
+                            >
+
 
                             <button
                                 type="button"
                                 class="show-password"
                                 id="showPassword"
                                 onclick="togglePassword()"
-                                data-i18n="show">
+                                data-i18n="show"
+                            >
                                 Show
                             </button>
 
@@ -1074,7 +1131,8 @@
 
                             <input
                                 type="checkbox"
-                                id="remember">
+                                id="remember"
+                            >
 
                             <span data-i18n="remember">
                                 Remember me
@@ -1087,7 +1145,8 @@
                             href="#"
                             class="forgot"
                             onclick="forgotPassword(event)"
-                            data-i18n="forgot">
+                            data-i18n="forgot"
+                        >
                             Forgot password?
                         </a>
 
@@ -1100,7 +1159,8 @@
                         type="submit"
                         class="btn btn-primary"
                         id="loginButton"
-                        data-i18n="signIn">
+                        data-i18n="signIn"
+                    >
                         Sign in
                     </button>
 
@@ -1111,7 +1171,8 @@
 
                 <div
                     class="divider"
-                    data-i18n="or">
+                    data-i18n="or"
+                >
                     OR
                 </div>
 
@@ -1129,7 +1190,8 @@
                     <a
                         href="register.html"
                         class="register-link"
-                        data-i18n="createAccount">
+                        data-i18n="createAccount"
+                    >
                         Create account
                     </a>
 
@@ -1254,6 +1316,7 @@
 
             forgotMessage:
                 "Password recovery will be available soon."
+
         },
 
 
@@ -1318,9 +1381,90 @@
 
             forgotMessage:
                 "密码恢复功能即将开放。"
+
         }
 
     };
+
+
+    /* =====================================================
+       SAFE STORAGE
+    ===================================================== */
+
+    function getStorage(
+        key,
+        fallback = null
+    ){
+
+        try {
+
+            const value =
+                localStorage.getItem(key);
+
+            return value !== null
+                ? value
+                : fallback;
+
+        } catch(error) {
+
+            console.warn(
+                "ChatNova storage read failed:",
+                error
+            );
+
+            return fallback;
+
+        }
+
+    }
+
+
+    function setStorage(
+        key,
+        value
+    ){
+
+        try {
+
+            localStorage.setItem(
+                key,
+                value
+            );
+
+            return true;
+
+        } catch(error) {
+
+            console.warn(
+                "ChatNova storage write failed:",
+                error
+            );
+
+            return false;
+
+        }
+
+    }
+
+
+    function removeStorage(
+        key
+    ){
+
+        try {
+
+            localStorage.removeItem(key);
+
+        } catch(error) {
+
+            console.warn(
+                "ChatNova storage remove failed:",
+                error
+            );
+
+        }
+
+    }
 
 
     /* =====================================================
@@ -1328,65 +1472,170 @@
     ===================================================== */
 
     let currentLanguage =
-        localStorage.getItem(LANGUAGE_KEY) || "en";
+        getStorage(
+            LANGUAGE_KEY,
+            "en"
+        );
 
 
-    function setLanguage(language) {
+    if (
+        currentLanguage !== "en" &&
+        currentLanguage !== "zh"
+    ){
+
+        currentLanguage =
+            "en";
+
+    }
+
+
+    function setLanguage(
+        language
+    ){
+
+        if (
+            language !== "en" &&
+            language !== "zh"
+        ){
+
+            language = "en";
+
+        }
+
 
         currentLanguage =
             language;
 
-        localStorage.setItem(
+
+        setStorage(
             LANGUAGE_KEY,
             language
         );
 
+
         applyLanguage();
+
     }
 
 
-    function applyLanguage() {
+    function applyLanguage(){
 
         const t =
-            translations[currentLanguage];
+            translations[
+                currentLanguage
+            ];
 
 
         document
-            .querySelectorAll("[data-i18n]")
-            .forEach(element => {
+            .querySelectorAll(
+                "[data-i18n]"
+            )
+            .forEach(
+                element => {
 
-                const key =
-                    element.getAttribute("data-i18n");
+                    const key =
+                        element.getAttribute(
+                            "data-i18n"
+                        );
 
-                if (t[key]) {
 
-                    element.textContent =
-                        t[key];
+                    if (
+                        t &&
+                        t[key]
+                    ){
+
+                        element.textContent =
+                            t[key];
+
+                    }
+
                 }
+            );
 
-            });
+
+        const langEN =
+            document.getElementById(
+                "langEN"
+            );
 
 
-        document
-            .getElementById("langEN")
-            .classList.toggle(
+        const langZH =
+            document.getElementById(
+                "langZH"
+            );
+
+
+        if(langEN){
+
+            langEN.classList.toggle(
                 "active",
                 currentLanguage === "en"
             );
 
+        }
 
-        document
-            .getElementById("langZH")
-            .classList.toggle(
+
+        if(langZH){
+
+            langZH.classList.toggle(
                 "active",
                 currentLanguage === "zh"
             );
+
+        }
 
 
         document.documentElement.lang =
             currentLanguage === "zh"
                 ? "zh"
                 : "en";
+
+
+        /* Restore password button language */
+
+        const password =
+            document.getElementById(
+                "password"
+            );
+
+
+        const showPassword =
+            document.getElementById(
+                "showPassword"
+            );
+
+
+        if(
+            password &&
+            showPassword
+        ){
+
+            showPassword.textContent =
+                password.type === "password"
+                    ? t.show
+                    : t.hide;
+
+        }
+
+
+        /* Restore login button if not loading */
+
+        const button =
+            document.getElementById(
+                "loginButton"
+            );
+
+
+        if(
+            button &&
+            !button.disabled
+        ){
+
+            button.textContent =
+                t.signIn;
+
+        }
+
     }
 
 
@@ -1397,29 +1646,54 @@
     function showMessage(
         message,
         type = "error"
-    ) {
+    ){
 
         const box =
-            document.getElementById("message");
+            document.getElementById(
+                "message"
+            );
+
+
+        if(!box){
+
+            return;
+
+        }
+
 
         box.textContent =
             message;
 
+
         box.className =
-            "message show " + type;
+            "message show " +
+            type;
+
     }
 
 
-    function hideMessage() {
+    function hideMessage(){
 
         const box =
-            document.getElementById("message");
+            document.getElementById(
+                "message"
+            );
+
+
+        if(!box){
+
+            return;
+
+        }
+
 
         box.className =
             "message";
 
+
         box.textContent =
             "";
+
     }
 
 
@@ -1427,34 +1701,59 @@
        PASSWORD VISIBILITY
     ===================================================== */
 
-    function togglePassword() {
+    function togglePassword(){
 
         const input =
-            document.getElementById("password");
+            document.getElementById(
+                "password"
+            );
+
 
         const button =
-            document.getElementById("showPassword");
+            document.getElementById(
+                "showPassword"
+            );
+
+
+        if(
+            !input ||
+            !button
+        ){
+
+            return;
+
+        }
+
 
         const t =
-            translations[currentLanguage];
+            translations[
+                currentLanguage
+            ];
 
 
-        if (input.type === "password") {
+        if(
+            input.type ===
+            "password"
+        ){
 
             input.type =
                 "text";
 
+
             button.textContent =
                 t.hide;
 
-        } else {
+        }else{
 
             input.type =
                 "password";
 
+
             button.textContent =
                 t.show;
+
         }
+
     }
 
 
@@ -1466,7 +1765,7 @@
         url,
         options = {},
         timeout = 15000
-    ) {
+    ){
 
         const controller =
             new AbortController();
@@ -1474,42 +1773,54 @@
 
         const timer =
             setTimeout(
-                () => controller.abort(),
+                () => {
+
+                    controller.abort();
+
+                },
                 timeout
             );
 
 
         try {
 
-            const response =
-                await fetch(
-                    url,
-                    {
-                        ...options,
+            return await fetch(
+                url,
+                {
+                    ...options,
 
-                        signal:
-                            controller.signal
-                    }
-                );
+                    signal:
+                        controller.signal,
 
-            return response;
+                    cache:
+                        "no-store"
+                }
+            );
 
         } finally {
 
             clearTimeout(timer);
+
         }
+
     }
 
 
     /* =====================================================
-       LOGIN
+       LOGIN FORM
     ===================================================== */
 
-    document
-        .getElementById("loginForm")
-        .addEventListener(
+    const loginForm =
+        document.getElementById(
+            "loginForm"
+        );
+
+
+    if(loginForm){
+
+        loginForm.addEventListener(
             "submit",
-            async function(event) {
+            async function(event){
 
                 event.preventDefault();
 
@@ -1518,7 +1829,9 @@
 
                 const email =
                     document
-                        .getElementById("email")
+                        .getElementById(
+                            "email"
+                        )
                         .value
                         .trim()
                         .toLowerCase();
@@ -1526,17 +1839,25 @@
 
                 const password =
                     document
-                        .getElementById("password")
+                        .getElementById(
+                            "password"
+                        )
                         .value;
 
 
                 const button =
-                    document
-                        .getElementById("loginButton");
+                    document.getElementById(
+                        "loginButton"
+                    );
 
 
-                if (!email || !password) {
+                if(
+                    !email ||
+                    !password
+                ){
+
                     return;
+
                 }
 
 
@@ -1546,11 +1867,13 @@
 
                 button.innerHTML =
                     '<span class="spinner"></span>' +
-                    translations[currentLanguage]
-                        .signingIn;
+                    translations[
+                        currentLanguage
+                    ].signingIn;
 
 
                 try {
+
 
                     /* =========================================
                        STEP 1 — LOGIN
@@ -1563,7 +1886,8 @@
                             "/api/login",
 
                             {
-                                method: "POST",
+                                method:
+                                    "POST",
 
                                 headers: {
 
@@ -1572,6 +1896,7 @@
 
                                     "Accept":
                                         "application/json"
+
                                 },
 
                                 body:
@@ -1584,9 +1909,11 @@
                                             password
 
                                     })
+
                             },
 
                             15000
+
                         );
 
 
@@ -1603,18 +1930,20 @@
 
                         loginData =
                             null;
+
                     }
 
 
-                    if (
+                    if(
                         !loginResponse.ok ||
                         !loginData ||
                         !loginData.success
-                    ) {
+                    ){
 
                         throw new Error(
                             "LOGIN_FAILED"
                         );
+
                     }
 
 
@@ -1626,14 +1955,15 @@
                         loginData.token;
 
 
-                    if (
+                    if(
                         !token ||
                         typeof token !== "string"
-                    ) {
+                    ){
 
                         throw new Error(
                             "NO_TOKEN"
                         );
+
                     }
 
 
@@ -1641,10 +1971,20 @@
                        STEP 3 — SAVE TOKEN
                     ========================================= */
 
-                    localStorage.setItem(
-                        TOKEN_KEY,
-                        token
-                    );
+                    const tokenSaved =
+                        setStorage(
+                            TOKEN_KEY,
+                            token
+                        );
+
+
+                    if(!tokenSaved){
+
+                        throw new Error(
+                            "STORAGE_FAILED"
+                        );
+
+                    }
 
 
                     /* =========================================
@@ -1658,7 +1998,8 @@
                             "/api/me",
 
                             {
-                                method: "GET",
+                                method:
+                                    "GET",
 
                                 headers: {
 
@@ -1668,10 +2009,13 @@
                                     "Authorization":
                                         "Bearer " +
                                         token
+
                                 }
+
                             },
 
                             10000
+
                         );
 
 
@@ -1688,22 +2032,24 @@
 
                         meData =
                             null;
+
                     }
 
 
-                    if (
+                    if(
                         !meResponse.ok ||
                         !meData ||
                         !meData.success
-                    ) {
+                    ){
 
-                        localStorage.removeItem(
+                        removeStorage(
                             TOKEN_KEY
                         );
 
                         throw new Error(
                             "SESSION_FAILED"
                         );
+
                     }
 
 
@@ -1711,25 +2057,22 @@
                        STEP 5 — SAVE USER
                     ========================================= */
 
-                    if (meData.customer) {
+                    const customer =
+                        meData.customer ||
+                        meData.user ||
+                        null;
 
-                        localStorage.setItem(
+
+                    if(customer){
+
+                        setStorage(
                             USER_KEY,
 
                             JSON.stringify(
-                                meData.customer
+                                customer
                             )
                         );
 
-                    } else if (meData.user) {
-
-                        localStorage.setItem(
-                            USER_KEY,
-
-                            JSON.stringify(
-                                meData.user
-                            )
-                        );
                     }
 
 
@@ -1738,14 +2081,18 @@
                     ========================================= */
 
                     showMessage(
-                        translations[currentLanguage]
-                            .success,
+
+                        translations[
+                            currentLanguage
+                        ].success,
+
                         "success"
+
                     );
 
 
                     setTimeout(
-                        function() {
+                        function(){
 
                             window.location.href =
                                 "dashboard.html";
@@ -1754,7 +2101,8 @@
                         500
                     );
 
-                } catch (error) {
+
+                } catch(error){
 
                     console.error(
                         "ChatNova login error:",
@@ -1762,51 +2110,93 @@
                     );
 
 
-                    localStorage.removeItem(
+                    removeStorage(
                         TOKEN_KEY
                     );
 
 
-                    if (
+                    if(
                         error.message ===
                         "LOGIN_FAILED"
-                    ) {
+                    ){
 
                         showMessage(
-                            translations[currentLanguage]
-                                .invalidLogin,
+
+                            translations[
+                                currentLanguage
+                            ].invalidLogin,
+
                             "error"
+
                         );
 
-                    } else if (
+                    }
+
+                    else if(
                         error.message ===
                         "SESSION_FAILED"
-                    ) {
+                    ){
 
                         showMessage(
-                            translations[currentLanguage]
-                                .sessionError,
+
+                            translations[
+                                currentLanguage
+                            ].sessionError,
+
                             "error"
+
                         );
 
-                    } else if (
+                    }
+
+                    else if(
                         error.message ===
                         "NO_TOKEN"
-                    ) {
+                    ){
 
                         showMessage(
-                            translations[currentLanguage]
-                                .sessionError,
+
+                            translations[
+                                currentLanguage
+                            ].sessionError,
+
                             "error"
+
                         );
 
-                    } else {
+                    }
+
+                    else if(
+                        error.message ===
+                        "STORAGE_FAILED"
+                    ){
 
                         showMessage(
-                            translations[currentLanguage]
-                                .connectionError,
-                            "error"
+
+                            currentLanguage === "zh"
+
+                                ? "浏览器无法保存登录会话，请检查 Safari 的网站存储设置。"
+
+                                : "Your browser could not save the login session. Please check your browser storage settings.",
+
+                            "warning"
+
                         );
+
+                    }
+
+                    else{
+
+                        showMessage(
+
+                            translations[
+                                currentLanguage
+                            ].connectionError,
+
+                            "error"
+
+                        );
+
                     }
 
 
@@ -1815,28 +2205,39 @@
 
 
                     button.textContent =
-                        translations[currentLanguage]
-                            .signIn;
+                        translations[
+                            currentLanguage
+                        ].signIn;
+
                 }
 
             }
         );
+
+    }
 
 
     /* =====================================================
        FORGOT PASSWORD
     ===================================================== */
 
-    function forgotPassword(event) {
+    function forgotPassword(
+        event
+    ){
 
         event.preventDefault();
 
 
         showMessage(
-            translations[currentLanguage]
-                .forgotMessage,
+
+            translations[
+                currentLanguage
+            ].forgotMessage,
+
             "warning"
+
         );
+
     }
 
 
@@ -1844,20 +2245,22 @@
        CHECK EXISTING SESSION
     ===================================================== */
 
-    async function checkExistingSession() {
+    async function checkExistingSession(){
 
         const token =
-            localStorage.getItem(
+            getStorage(
                 TOKEN_KEY
             );
 
 
-        if (!token) {
+        if(!token){
+
             return;
+
         }
 
 
-        try {
+        try{
 
             const response =
                 await fetchWithTimeout(
@@ -1866,7 +2269,9 @@
                     "/api/me",
 
                     {
-                        method: "GET",
+
+                        method:
+                            "GET",
 
                         headers: {
 
@@ -1876,59 +2281,89 @@
                             "Authorization":
                                 "Bearer " +
                                 token
+
                         }
+
                     },
 
                     8000
+
                 );
 
 
-            if (!response.ok) {
+            if(!response.ok){
 
-                localStorage.removeItem(
+                removeStorage(
                     TOKEN_KEY
                 );
 
-                localStorage.removeItem(
+                removeStorage(
                     USER_KEY
                 );
 
                 return;
+
             }
 
 
-            const data =
-                await response.json();
+            let data =
+                null;
 
 
-            if (
+            try{
+
+                data =
+                    await response.json();
+
+            }catch{
+
+                data =
+                    null;
+
+            }
+
+
+            if(
                 data &&
                 data.success
-            ) {
+            ){
 
-                if (data.customer) {
+                const customer =
+                    data.customer ||
+                    data.user ||
+                    null;
 
-                    localStorage.setItem(
+
+                if(customer){
+
+                    setStorage(
+
                         USER_KEY,
 
                         JSON.stringify(
-                            data.customer
+                            customer
                         )
+
                     );
+
                 }
 
 
                 window.location.href =
                     "dashboard.html";
+
             }
 
-        } catch (error) {
+
+        }catch(error){
 
             console.warn(
                 "Existing session check skipped:",
                 error
             );
+
         }
+
     }
 
 
@@ -1936,9 +2371,64 @@
        INITIALIZE
     ===================================================== */
 
-    applyLanguage();
+    document.addEventListener(
+        "DOMContentLoaded",
+        function(){
 
-    checkExistingSession();
+            try{
+
+                applyLanguage();
+
+            }catch(error){
+
+                console.error(
+                    "Language initialization error:",
+                    error
+                );
+
+            }
+
+
+            /*
+             * Do not block the login page
+             * waiting for old sessions.
+             *
+             * Session check runs in background.
+             */
+
+            checkExistingSession();
+
+        }
+    );
+
+
+    /* =====================================================
+       MOBILE SAFETY
+    ===================================================== */
+
+    window.addEventListener(
+        "pageshow",
+        function(event){
+
+            if(event.persisted){
+
+                try{
+
+                    applyLanguage();
+
+                }catch(error){
+
+                    console.warn(
+                        "Page restore error:",
+                        error
+                    );
+
+                }
+
+            }
+
+        }
+    );
 
 </script>
 
