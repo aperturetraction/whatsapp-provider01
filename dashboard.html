@@ -1,199 +1,2459 @@
-<div class="brand">
-  <div class="logo">WP</div>
-  <span>Customer Portal</span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ChatNova — Customer Portal</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #070909;
+    --bg2: #0b0f0d;
+    --card: #101512;
+    --card2: #131a16;
+    --border: #202923;
+    --border-light: #28322c;
+
+    --green: #18c984;
+    --green-dark: #0d9f66;
+    --green-soft: rgba(24,201,132,0.10);
+    --green-glow: rgba(24,201,132,0.18);
+
+    --text: #f4f7f5;
+    --text-soft: #c5cec8;
+    --muted: #7c8981;
+    --muted2: #5f6b64;
+
+    --danger: #ef4444;
+
+    --sidebar: 245px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 75% 0%,
+            rgba(24,201,132,0.035),
+            transparent 32%
+        ),
+        var(--bg);
+
+    color: var(--text);
+    min-height: 100vh;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #070909;
+}
+
+.loading-box {
+    text-align: center;
+}
+
+.loader {
+    width: 38px;
+    height: 38px;
+
+    border: 3px solid #1c2821;
+    border-top-color: var(--green);
+
+    border-radius: 50%;
+
+    animation: spin .8s linear infinite;
+
+    margin: 0 auto 15px;
+}
+
+.loading-text {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =====================================================
+   APP
+===================================================== */
+
+.app {
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: var(--sidebar);
+
+    background: #090d0b;
+
+    border-right: 1px solid var(--border);
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px 15px;
+
+    z-index: 100;
+
+    transition: transform .25s ease;
+}
+
+
+/* BRAND */
+
+.brand {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 5px 9px 28px;
+}
+
+.logo {
+    width: 39px;
+    height: 39px;
+
+    border-radius: 11px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--green),
+            var(--green-dark)
+        );
+
+    color: #04120c;
+
+    font-size: 17px;
+    font-weight: 900;
+
+    box-shadow:
+        0 0 25px rgba(24,201,132,.13);
+}
+
+.brand-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-name {
+    font-size: 18px;
+    font-weight: 800;
+
+    letter-spacing: -.4px;
+}
+
+.brand-sub {
+    color: var(--muted);
+    font-size: 9px;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    margin-top: 2px;
+}
+
+
+/* NAV */
+
+.nav-label {
+    color: #56635b;
+
+    font-size: 9px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.2px;
+
+    padding: 0 10px 9px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.nav-item {
+    min-height: 43px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 0 12px;
+
+    border-radius: 10px;
+
+    color: #89958e;
+
+    font-size: 13px;
+
+    transition: .18s ease;
+}
+
+.nav-item:hover {
+    background: #121915;
+    color: white;
+}
+
+.nav-item.active {
+    background: var(--green-soft);
+    color: var(--green);
+
+    border: 1px solid rgba(24,201,132,.08);
+}
+
+.nav-icon {
+    width: 19px;
+
+    text-align: center;
+
+    font-size: 15px;
+}
+
+
+/* SIDEBAR BOTTOM */
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.plan-box {
+    padding: 14px;
+
+    margin-bottom: 11px;
+
+    border-radius: 13px;
+
+    border: 1px solid var(--border);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(24,201,132,.075),
+            rgba(255,255,255,.01)
+        );
+}
+
+.plan-label {
+    color: var(--muted);
+
+    font-size: 9px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 5px;
+}
+
+.plan-name {
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.plan-status {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    color: var(--green);
+
+    font-size: 10px;
+
+    margin-top: 7px;
+}
+
+.online-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--green);
+
+    box-shadow:
+        0 0 8px rgba(24,201,132,.7);
+}
+
+.logout {
+    width: 100%;
+
+    height: 41px;
+
+    border-radius: 9px;
+
+    border: 1px solid var(--border);
+
+    background: transparent;
+
+    color: #8c9891;
+
+    transition: .18s ease;
+}
+
+.logout:hover {
+    background: #131915;
+    color: white;
+
+    border-color: var(--border-light);
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main {
+    margin-left: var(--sidebar);
+
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   TOPBAR
+===================================================== */
+
+.topbar {
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 32px;
+
+    border-bottom: 1px solid var(--border);
+
+    background:
+        rgba(7,9,9,.9);
+
+    backdrop-filter: blur(12px);
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 50;
+}
+
+.page-title h1 {
+    font-size: 19px;
+
+    letter-spacing: -.3px;
+
+    font-weight: 750;
+}
+
+.page-title p {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-top: 3px;
+}
+
+.top-right {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+}
+
+
+/* LANGUAGE */
+
+.language {
+    display: flex;
+
+    gap: 3px;
+
+    padding: 4px;
+
+    border: 1px solid var(--border);
+
+    background: #0e1310;
+
+    border-radius: 8px;
+}
+
+.language button {
+    border: 0;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    border-radius: 6px;
+
+    padding: 5px 8px;
+
+    font-size: 10px;
+}
+
+.language button.active {
+    background: #1a211d;
+
+    color: white;
+}
+
+
+/* PROFILE */
+
+.profile-mini {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding-left: 13px;
+
+    border-left: 1px solid var(--border);
+}
+
+.avatar {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #164c38,
+            #10251b
+        );
+
+    border: 1px solid rgba(24,201,132,.25);
+
+    color: var(--green);
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+.profile-info {
+    max-width: 160px;
+}
+
+.profile-name {
+    font-size: 11px;
+    font-weight: 650;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.profile-email {
+    color: var(--muted);
+
+    font-size: 9px;
+
+    margin-top: 2px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* MOBILE BUTTON */
+
+.mobile-menu {
+    display: none;
+
+    width: 39px;
+    height: 39px;
+
+    border-radius: 9px;
+
+    border: 1px solid var(--border);
+
+    background: #101512;
+
+    color: white;
+
+    font-size: 17px;
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content {
+    padding: 31px 32px 55px;
+
+    max-width: 1450px;
+}
+
+
+/* WELCOME */
+
+.welcome {
+    margin-bottom: 26px;
+}
+
+.welcome h2 {
+    font-size: 27px;
+
+    letter-spacing: -.8px;
+
+    font-weight: 780;
+}
+
+.welcome p {
+    color: var(--muted);
+
+    font-size: 12px;
+
+    margin-top: 7px;
+}
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card {
+    background:
+        linear-gradient(
+            145deg,
+            #111713,
+            #0d120f
+        );
+
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+
+    padding: 21px;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+    height: 150px;
+
+    right: -90px;
+    top: -90px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(24,201,132,.025);
+
+    pointer-events: none;
+}
+
+.card.full {
+    grid-column: 1 / -1;
+}
+
+.card h2 {
+    font-size: 14px;
+
+    font-weight: 700;
+
+    margin-bottom: 6px;
+}
+
+.card-description {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+    margin-bottom: 18px;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 14px;
+
+    border-radius: 10px;
+
+    background: #0c110e;
+
+    border: 1px solid #1b241e;
+}
+
+.status {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #f1b44c;
+
+    background: rgba(245,158,11,.07);
+
+    border: 1px solid rgba(245,158,11,.10);
+
+    padding: 6px 9px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #f59e0b;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 39px;
+
+    padding: 0 16px;
+
+    border-radius: 9px;
+
+    border: 1px solid var(--green);
+
+    background: var(--green);
+
+    color: #04130c;
+
+    font-size: 11px;
+
+    font-weight: 750;
+
+    transition: .18s ease;
+}
+
+.button:hover {
+    background: #20d992;
+
+    border-color: #20d992;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 20px rgba(24,201,132,.12);
+}
+
+.button.secondary {
+    background: transparent;
+
+    border-color: var(--border-light);
+
+    color: #c1cbc5;
+}
+
+.button.secondary:hover {
+    background: #151c18;
+
+    color: white;
+
+    border-color: #344139;
+
+    box-shadow: none;
+}
+
+.menu {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 19px;
+}
+
+
+/* =====================================================
+   QR AREA
+===================================================== */
+
+.qr-area {
+    min-height: 205px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    text-align: center;
+
+    border: 1px dashed #263129;
+
+    border-radius: 13px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(24,201,132,.025),
+            transparent 65%
+        );
+}
+
+.qr-icon {
+    width: 54px;
+    height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #151c18;
+
+    border: 1px solid #263029;
+
+    color: var(--green);
+
+    font-size: 24px;
+
+    margin-bottom: 13px;
+}
+
+.qr-area strong {
+    font-size: 13px;
+}
+
+.qr-area p {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    max-width: 340px;
+
+    line-height: 1.5;
+}
+
+
+/* =====================================================
+   STATISTICS
+===================================================== */
+
+.stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+.stat {
+    padding: 17px;
+
+    background: #0c110e;
+
+    border: 1px solid #1c251f;
+
+    border-radius: 11px;
+}
+
+.stat-label {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    margin-bottom: 9px;
+}
+
+.stat-value {
+    font-size: 23px;
+
+    font-weight: 800;
+
+    letter-spacing: -.5px;
+}
+
+
+/* =====================================================
+   ACCOUNT INFO
+===================================================== */
+
+.account-info {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+.info-box {
+    background: #0c110e;
+
+    border: 1px solid #1c251f;
+
+    border-radius: 10px;
+
+    padding: 14px;
+}
+
+.info-label {
+    color: var(--muted2);
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 7px;
+}
+
+.info-value {
+    color: #dce3df;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   SECURITY
+===================================================== */
+
+.security {
+    max-width: 760px;
+
+    margin: 30px auto 0;
+
+    text-align: center;
+
+    color: #56635b;
+
+    font-size: 9px;
+
+    line-height: 1.7;
+
+    padding: 0 20px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1000px) {
+
+    .account-info {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card.full {
+        grid-column: auto;
+    }
+}
+
+
+@media (max-width: 780px) {
+
+    :root {
+        --sidebar: 245px;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .topbar {
+        padding: 0 17px;
+
+        gap: 10px;
+    }
+
+    .page-title {
+        flex: 1;
+    }
+
+    .page-title h1 {
+        font-size: 16px;
+    }
+
+    .profile-info {
+        display: none;
+    }
+
+    .content {
+        padding: 25px 17px 45px;
+    }
+}
+
+
+@media (max-width: 560px) {
+
+    .language {
+        display: none;
+    }
+
+    .welcome h2 {
+        font-size: 23px;
+    }
+
+    .status-row {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .account-info {
+        grid-template-columns: 1fr;
+    }
+
+    .menu {
+        flex-direction: column;
+    }
+
+    .menu .button {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOADING
+===================================================== -->
+
+<div class="loading" id="loading">
+
+    <div class="loading-box">
+
+        <div class="loader"></div>
+
+        <div class="loading-text">
+            Loading ChatNova...
+        </div>
+
+    </div>
+
 </div>
 
-<button class="logout" onclick="logout()">
-  Logout
-</button>
+
+
+<div class="app">
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+
+        <div class="logo">
+            C
+        </div>
+
+        <div class="brand-info">
+
+            <div class="brand-name">
+                ChatNova
+            </div>
+
+            <div class="brand-sub">
+                WhatsApp Provider
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-label">
+        MENU
+    </div>
+
+
+    <nav class="nav">
+
+        <a
+            href="dashboard.html"
+            class="nav-item active">
+
+            <span class="nav-icon">
+                ⌂
+            </span>
+
+            <span>
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <a
+            href="whatsapp.html"
+            class="nav-item">
+
+            <span class="nav-icon">
+                ◉
+            </span>
+
+            <span>
+                WhatsApp
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item">
+
+            <span class="nav-icon">
+                ◌
+            </span>
+
+            <span>
+                Messages
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item">
+
+            <span class="nav-icon">
+                ♙
+            </span>
+
+            <span>
+                Contacts
+            </span>
+
+        </a>
+
+
+        <a
+            href="billing.html"
+            class="nav-item">
+
+            <span class="nav-icon">
+                ◫
+            </span>
+
+            <span>
+                Billing
+            </span>
+
+        </a>
+
+
+        <a
+            href="profile.html"
+            class="nav-item">
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span>
+                Settings
+            </span>
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="plan-box">
+
+            <div class="plan-label">
+                CURRENT PLAN
+            </div>
+
+            <div
+                class="plan-name"
+                id="sidebarPlan">
+                Starter
+            </div>
+
+            <div class="plan-status">
+
+                <span class="online-dot"></span>
+
+                Active
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="logout"
+            onclick="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+<!-- TOPBAR -->
+
+<header class="topbar">
+
+
+    <button
+        class="mobile-menu"
+        id="mobileMenu">
+
+        ☰
+
+    </button>
+
+
+    <div class="page-title">
+
+        <h1>
+            Customer Portal
+        </h1>
+
+        <p>
+            Manage your messaging service.
+        </p>
+
+    </div>
+
+
+    <div class="top-right">
+
+
+        <div class="language">
+
+            <button
+                id="langEN"
+                onclick="setLanguage('en')"
+                class="active">
+
+                EN
+
+            </button>
+
+            <button
+                id="langZH"
+                onclick="setLanguage('zh')">
+
+                中文
+
+            </button>
+
+        </div>
+
+
+        <div class="profile-mini">
+
+            <div
+                class="avatar"
+                id="topAvatar">
+
+                C
+
+            </div>
+
+
+            <div class="profile-info">
+
+                <div
+                    class="profile-name"
+                    id="topName">
+
+                    Customer
+
+                </div>
+
+                <div
+                    class="profile-email"
+                    id="topEmail">
+
+                    —
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     CONTENT
+===================================================== -->
+
+<section class="content">
+
+
+<!-- WELCOME -->
+
 <section class="welcome">
-  <h1 id="welcomeName">Welcome</h1>
-  <p>Manage your messaging service from your customer dashboard.</p>
+
+    <h2>
+
+        <span id="welcomeName">
+            Welcome
+        </span>
+
+    </h2>
+
+    <p>
+        Manage your messaging service from your customer dashboard.
+    </p>
+
 </section>
+
+
 
 <div class="grid">
 
-  <!-- CONNECTION -->
-  <section class="card">
 
-    <h2>Messaging Service</h2>
+<!-- =====================================================
+     CONNECTION
+===================================================== -->
+
+<section class="card">
+
+    <h2>
+        Messaging Service
+    </h2>
 
     <p class="card-description">
-      Manage your connected messaging service.
+        Manage your connected messaging service.
     </p>
+
 
     <div class="status-row">
 
-      <span class="status">
-        <span class="status-dot"></span>
-        Not Connected
-      </span>
+        <span
+            class="status"
+            id="connectionStatus">
 
-      <span style="font-size:12px;color:#78857e;">
-        Waiting for connection
-      </span>
+            <span class="status-dot"></span>
+
+            Not Connected
+
+        </span>
+
+
+        <span
+            id="connectionMessage"
+            style="
+                font-size:10px;
+                color:#78857e;
+            ">
+
+            Waiting for connection
+
+        </span>
 
     </div>
+
 
     <div style="margin-top:18px;">
-      <button class="button" onclick="connectService()">
-        Connect Service
-      </button>
+
+        <button
+            class="button"
+            onclick="connectService()">
+
+            Connect Service
+
+        </button>
+
     </div>
 
-  </section>
+</section>
 
 
-  <!-- PLAN -->
-  <section class="card">
 
-    <h2>Current Plan</h2>
+<!-- =====================================================
+     PLAN
+===================================================== -->
+
+<section class="card">
+
+    <h2>
+        Current Plan
+    </h2>
 
     <p class="card-description">
-      Your current service subscription.
+        Your current service subscription.
     </p>
 
-    <div style="font-size:26px;font-weight:bold;margin-bottom:5px;">
-      Starter
+
+    <div
+        id="planName"
+        style="
+            font-size:26px;
+            font-weight:800;
+            margin-bottom:5px;
+        ">
+
+        Starter
+
     </div>
 
-    <div style="color:#718078;font-size:13px;">
-      Messaging service management
+
+    <div
+        style="
+            color:#718078;
+            font-size:11px;
+        ">
+
+        Messaging service management
+
     </div>
+
 
     <div class="menu">
-      <a href="billing.html" class="button secondary">
-        Billing
-      </a>
-    </div>
 
-  </section>
+        <a
+            href="billing.html"
+            class="button secondary">
 
+            Billing
 
-  <!-- QR -->
-  <section class="card full">
-
-    <h2>Connection</h2>
-
-    <p class="card-description">
-      When your messaging service is ready, the connection QR code
-      will appear here.
-    </p>
-
-    <div class="qr-area">
-
-      <div class="qr-icon">▦</div>
-
-      <strong>No QR code available</strong>
-
-      <p style="font-size:12px;margin:7px 0 15px;">
-        Start the connection process to generate a QR code.
-      </p>
-
-      <button class="button" onclick="connectService()">
-        Start Connection
-      </button>
+        </a>
 
     </div>
 
-  </section>
+</section>
 
 
-  <!-- STATISTICS -->
-  <section class="card full">
 
-    <h2>Account Overview</h2>
+<!-- =====================================================
+     QR
+===================================================== -->
+
+<section class="card full">
+
+    <h2>
+        Connection
+    </h2>
 
     <p class="card-description">
-      Your service usage summary.
+        When your messaging service is ready,
+        the connection QR code will appear here.
     </p>
+
+
+    <div
+        class="qr-area"
+        id="qrArea">
+
+        <div class="qr-icon">
+            ▦
+        </div>
+
+
+        <strong>
+            No QR code available
+        </strong>
+
+
+        <p style="
+            font-size:10px;
+            margin:7px 0 15px;
+        ">
+
+            Start the connection process
+            to generate a QR code.
+
+        </p>
+
+
+        <button
+            class="button"
+            onclick="connectService()">
+
+            Start Connection
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     STATISTICS
+===================================================== -->
+
+<section class="card full">
+
+    <h2>
+        Account Overview
+    </h2>
+
+    <p class="card-description">
+        Your service usage summary.
+    </p>
+
 
     <div class="stats">
 
-      <div class="stat">
-        <div class="stat-label">Messages Sent</div>
-        <div class="stat-value">0</div>
-      </div>
 
-      <div class="stat">
-        <div class="stat-label">Messages Received</div>
-        <div class="stat-value">0</div>
-      </div>
+        <div class="stat">
 
-      <div class="stat">
-        <div class="stat-label">Service Balance</div>
-        <div class="stat-value">RM 0.00</div>
-      </div>
+            <div class="stat-label">
+                Messages Sent
+            </div>
+
+            <div
+                class="stat-value"
+                id="messagesSent">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Messages Received
+            </div>
+
+            <div
+                class="stat-value"
+                id="messagesReceived">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Service Balance
+            </div>
+
+            <div
+                class="stat-value"
+                id="serviceBalance">
+
+                RM 0.00
+
+            </div>
+
+        </div>
+
 
     </div>
 
-  </section>
+</section>
 
 
-  <!-- ACCOUNT -->
-  <section class="card full">
 
-    <h2>Account Information</h2>
+<!-- =====================================================
+     ACCOUNT
+===================================================== -->
+
+<section class="card full">
+
+    <h2>
+        Account Information
+    </h2>
 
     <p class="card-description">
-      Your customer account details.
+        Your customer account details.
     </p>
+
 
     <div class="account-info">
 
-      <div class="info-box">
-        <div class="info-label">FULL NAME</div>
-        <div class="info-value" id="userName">
-          -
-        </div>
-      </div>
 
-      <div class="info-box">
-        <div class="info-label">EMAIL</div>
-        <div class="info-value" id="userEmail">
-          -
-        </div>
-      </div>
+        <div class="info-box">
 
-      <div class="info-box">
-        <div class="info-label">PHONE / WHATSAPP</div>
-        <div class="info-value" id="userPhone">
-          -
-        </div>
-      </div>
+            <div class="info-label">
+                FULL NAME
+            </div>
 
-      <div class="info-box">
-        <div class="info-label">ACCOUNT STATUS</div>
-        <div class="info-value">
-          Active
+            <div
+                class="info-value"
+                id="userName">
+
+                -
+
+            </div>
+
         </div>
-      </div>
+
+
+        <div class="info-box">
+
+            <div class="info-label">
+                EMAIL
+            </div>
+
+            <div
+                class="info-value"
+                id="userEmail">
+
+                -
+
+            </div>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <div class="info-label">
+                PHONE / WHATSAPP
+            </div>
+
+            <div
+                class="info-value"
+                id="userPhone">
+
+                -
+
+            </div>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <div class="info-label">
+                ACCOUNT STATUS
+            </div>
+
+            <div
+                class="info-value"
+                id="userStatus">
+
+                Active
+
+            </div>
+
+        </div>
+
 
     </div>
+
 
     <div class="menu">
 
-      <a href="profile.html" class="button secondary">
-        Edit Profile
-      </a>
 
-      <a href="whatsapp.html" class="button secondary">
-        Manage Service
-      </a>
+        <a
+            href="profile.html"
+            class="button secondary">
 
-      <a href="billing.html" class="button secondary">
-        Payments
-      </a>
+            Edit Profile
+
+        </a>
+
+
+        <a
+            href="whatsapp.html"
+            class="button secondary">
+
+            Manage Service
+
+        </a>
+
+
+        <a
+            href="billing.html"
+            class="button secondary">
+
+            Payments
+
+        </a>
+
 
     </div>
 
-  </section>
+</section>
+
+
 
 </div>
+
+
+
+<!-- SECURITY -->
 
 <div class="security">
-  This portal is operated independently and is not an official
-  WhatsApp or Meta login service.
-  <br>
-  Never enter third-party passwords or verification codes.
+
+    This portal is operated independently and is not an official
+    WhatsApp or Meta login service.
+
+    <br>
+
+    Never enter third-party passwords or verification codes.
+
 </div>
+
+
+</section>
+
+</main>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   API
+===================================================== */
+
+const API_BASE =
+    "https://whatsapp-provider-api.b79gn827py.workers.dev";
+
+
+/* =====================================================
+   LANGUAGE
+===================================================== */
+
+const translations = {
+
+    en: {
+
+        waiting:
+            "Waiting for connection",
+
+        connected:
+            "Connected",
+
+        notConnected:
+            "Not Connected",
+
+        connectionActive:
+            "Messaging service is connected",
+
+        connectionWaiting:
+            "Waiting for connection"
+
+    },
+
+    zh: {
+
+        waiting:
+            "等待连接",
+
+        connected:
+            "已连接",
+
+        notConnected:
+            "未连接",
+
+        connectionActive:
+            "通讯服务已连接",
+
+        connectionWaiting:
+            "等待连接"
+
+    }
+
+};
+
+
+let currentLanguage =
+    localStorage.getItem(
+        "chatnova_language"
+    ) || "en";
+
+
+function setLanguage(language) {
+
+    currentLanguage = language;
+
+    localStorage.setItem(
+        "chatnova_language",
+        language
+    );
+
+    document
+        .getElementById("langEN")
+        .classList.toggle(
+            "active",
+            language === "en"
+        );
+
+    document
+        .getElementById("langZH")
+        .classList.toggle(
+            "active",
+            language === "zh"
+        );
+
+
+    updateConnectionLanguage();
+
+}
+
+
+function updateConnectionLanguage() {
+
+    const status =
+        document.getElementById(
+            "connectionStatus"
+        );
+
+    const message =
+        document.getElementById(
+            "connectionMessage"
+        );
+
+    const connected =
+        status.dataset.connected === "true";
+
+
+    if (connected) {
+
+        status.innerHTML = `
+            <span class="status-dot"
+                  style="background:#18c984;">
+            </span>
+            ${translations[currentLanguage].connected}
+        `;
+
+        status.style.color =
+            "#18c984";
+
+        status.style.background =
+            "rgba(24,201,132,.07)";
+
+        message.textContent =
+            translations[
+                currentLanguage
+            ].connectionActive;
+
+    } else {
+
+        status.innerHTML = `
+            <span class="status-dot"></span>
+            ${translations[currentLanguage].notConnected}
+        `;
+
+        status.style.color =
+            "#f1b44c";
+
+        status.style.background =
+            "rgba(245,158,11,.07)";
+
+        message.textContent =
+            translations[
+                currentLanguage
+            ].connectionWaiting;
+
+    }
+
+}
+
+
+setLanguage(currentLanguage);
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function safeValue(value) {
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+        return "-";
+    }
+
+    return value;
+}
+
+
+function numberValue(value) {
+
+    const n = Number(value);
+
+    if (Number.isNaN(n)) {
+        return "0";
+    }
+
+    return n.toLocaleString();
+
+}
+
+
+function initials(name) {
+
+    if (!name) {
+        return "C";
+    }
+
+    const parts =
+        String(name)
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean);
+
+
+    if (parts.length === 1) {
+
+        return parts[0]
+            .substring(0,2)
+            .toUpperCase();
+
+    }
+
+
+    return (
+        parts[0][0] +
+        parts[parts.length - 1][0]
+    ).toUpperCase();
+
+}
+
+
+/* =====================================================
+   LOAD DASHBOARD
+===================================================== */
+
+async function loadDashboard() {
+
+    try {
+
+        const response =
+            await fetch(
+                API_BASE + "/api/dashboard",
+                {
+                    method: "GET",
+
+                    credentials: "include",
+
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "ChatNova dashboard:",
+            data
+        );
+
+
+        /* NOT LOGGED IN */
+
+        if (
+            response.status === 401 ||
+            data.authenticated === false
+        ) {
+
+            window.location.href =
+                "index.html";
+
+            return;
+
+        }
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Dashboard failed to load."
+            );
+
+        }
+
+
+        const customer =
+            data.customer || {};
+
+        const stats =
+            data.stats || {};
+
+
+        /* =================================================
+           CUSTOMER
+        ================================================= */
+
+        const fullName =
+            customer.fullName ||
+            customer.full_name ||
+            "Customer";
+
+
+        const email =
+            customer.email ||
+            "-";
+
+
+        const phone =
+            customer.phone ||
+            "-";
+
+
+        const company =
+            customer.companyName ||
+            customer.company_name ||
+            "-";
+
+
+        const plan =
+            customer.plan ||
+            "Starter";
+
+
+        const status =
+            customer.status ||
+            "active";
+
+
+        /* =================================================
+           TOP PROFILE
+        ================================================= */
+
+        document.getElementById(
+            "welcomeName"
+        ).textContent =
+            fullName;
+
+
+        document.getElementById(
+            "topName"
+        ).textContent =
+            fullName;
+
+
+        document.getElementById(
+            "topEmail"
+        ).textContent =
+            email;
+
+
+        document.getElementById(
+            "topAvatar"
+        ).textContent =
+            initials(fullName);
+
+
+        /* =================================================
+           ACCOUNT
+        ================================================= */
+
+        document.getElementById(
+            "userName"
+        ).textContent =
+            fullName;
+
+
+        document.getElementById(
+            "userEmail"
+        ).textContent =
+            email;
+
+
+        document.getElementById(
+            "userPhone"
+        ).textContent =
+            phone;
+
+
+        document.getElementById(
+            "userStatus"
+        ).textContent =
+            status;
+
+
+        /* =================================================
+           PLAN
+        ================================================= */
+
+        document.getElementById(
+            "planName"
+        ).textContent =
+            plan;
+
+
+        document.getElementById(
+            "sidebarPlan"
+        ).textContent =
+            plan;
+
+
+        /* =================================================
+           MESSAGE STATISTICS
+        ================================================= */
+
+        document.getElementById(
+            "messagesSent"
+        ).textContent =
+            numberValue(
+                stats.messagesSent ||
+                0
+            );
+
+
+        document.getElementById(
+            "messagesReceived"
+        ).textContent =
+            numberValue(
+                stats.messagesReceived ||
+                0
+            );
+
+
+        /* =================================================
+           LOAD WHATSAPP STATUS
+        ================================================= */
+
+        await loadConnectionStatus(
+            data
+        );
+
+
+        /* =================================================
+           REMOVE LOADING
+        ================================================= */
+
+        document.getElementById(
+            "loading"
+        ).style.display =
+            "none";
+
+
+    } catch (error) {
+
+        console.error(
+            "Dashboard error:",
+            error
+        );
+
+
+        document.querySelector(
+            ".loading-text"
+        ).textContent =
+            "Unable to load dashboard.";
+
+
+        setTimeout(
+            () => {
+
+                window.location.href =
+                    "index.html";
+
+            },
+            1800
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CONNECTION STATUS
+===================================================== */
+
+async function loadConnectionStatus(
+    dashboardData
+) {
+
+    let connected = false;
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_BASE + "/api/status",
+                {
+                    method: "GET",
+                    credentials: "include"
+                }
+            );
+
+
+        if (response.ok) {
+
+            const data =
+                await response.json();
+
+
+            if (
+                data.greenApi === true ||
+                data.greenApi === "connected" ||
+                data.greenApi?.connected === true
+            ) {
+
+                connected = true;
+
+            }
+
+        }
+
+    } catch (error) {
+
+        console.warn(
+            "Status check failed:",
+            error
+        );
+
+    }
+
+
+    /*
+       Also check dashboard instance data
+       if the Worker later returns it.
+    */
+
+    const instances =
+        dashboardData.whatsappInstances ||
+        dashboardData.instances ||
+        [];
+
+
+    if (
+        Array.isArray(instances) &&
+        instances.length > 0
+    ) {
+
+        connected =
+            instances.some(
+                instance => {
+
+                    const status =
+                        String(
+                            instance.status ||
+                            ""
+                        ).toLowerCase();
+
+                    return (
+                        status === "connected" ||
+                        status === "online"
+                    );
+
+                }
+            );
+
+    }
+
+
+    const statusElement =
+        document.getElementById(
+            "connectionStatus"
+        );
+
+
+    statusElement.dataset.connected =
+        connected
+            ? "true"
+            : "false";
+
+
+    updateConnectionLanguage();
+
+}
+
+
+/* =====================================================
+   CONNECT SERVICE
+===================================================== */
+
+function connectService() {
+
+    /*
+       GREEN-API connection will be
+       connected here later.
+
+       For now redirect to the
+       WhatsApp management page.
+    */
+
+    window.location.href =
+        "whatsapp.html";
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout() {
+
+    try {
+
+        await fetch(
+            API_BASE + "/api/logout",
+            {
+                method: "POST",
+
+                credentials: "include",
+
+                headers: {
+                    "Accept":
+                        "application/json"
+                }
+            }
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "Logout error:",
+            error
+        );
+
+    }
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =====================================================
+   MOBILE SIDEBAR
+===================================================== */
+
+document
+    .getElementById("mobileMenu")
+    .addEventListener(
+        "click",
+        () => {
+
+            document
+                .getElementById("sidebar")
+                .classList.toggle(
+                    "open"
+                );
+
+        }
+    );
+
+
+/* CLOSE MOBILE SIDEBAR */
+
+document
+    .querySelectorAll(".nav-item")
+    .forEach(item => {
+
+        item.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .getElementById("sidebar")
+                    .classList.remove(
+                        "open"
+                    );
+
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadDashboard();
+
+</script>
+
+</body>
+</html>
