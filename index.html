@@ -107,7 +107,7 @@ button {
 
     top: 0;
 
-    z-index: 100;
+    z-index: 1000;
 
     background:
         rgba(5,8,7,.86);
@@ -141,6 +141,8 @@ button {
     font-size: 19px;
 
     font-weight: 800;
+
+    flex-shrink: 0;
 }
 
 .brand-logo {
@@ -232,9 +234,11 @@ button {
 
 .lang.active {
 
-    background: rgba(25,195,125,.14);
+    background:
+        rgba(25,195,125,.14);
 
-    color: var(--green);
+    color:
+        var(--green);
 }
 
 .btn {
@@ -277,9 +281,11 @@ button {
 
 .btn-green {
 
-    background: var(--green);
+    background:
+        var(--green);
 
-    color: #04100a;
+    color:
+        #04100a;
 
     box-shadow:
         0 8px 25px
@@ -287,8 +293,197 @@ button {
 }
 
 .btn-green:hover {
-    background: var(--green-hover);
-    transform: translateY(-1px);
+
+    background:
+        var(--green-hover);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================
+   MOBILE MENU BUTTON
+========================================= */
+
+.mobile-menu-btn {
+
+    display: none;
+
+    width: 42px;
+    height: 42px;
+
+    padding: 0;
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,.03);
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    cursor: pointer;
+}
+
+.mobile-menu-btn span {
+
+    display: block;
+
+    width: 18px;
+    height: 2px;
+
+    border-radius: 2px;
+
+    background:
+        #ffffff;
+
+    transition:
+        transform .2s,
+        opacity .2s;
+}
+
+.mobile-menu-btn.active span:nth-child(1) {
+    transform:
+        translateY(7px)
+        rotate(45deg);
+}
+
+.mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-btn.active span:nth-child(3) {
+    transform:
+        translateY(-7px)
+        rotate(-45deg);
+}
+
+
+/* =========================================
+   MOBILE MENU
+========================================= */
+
+.mobile-menu {
+
+    display: none;
+
+    position: fixed;
+
+    top: 76px;
+
+    left: 16px;
+    right: 16px;
+
+    z-index: 999;
+
+    padding: 12px;
+
+    background:
+        rgba(9,15,12,.98);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.55);
+
+    backdrop-filter:
+        blur(20px);
+}
+
+.mobile-menu.open {
+    display: block;
+}
+
+.mobile-menu a {
+
+    display: block;
+
+    padding: 13px 14px;
+
+    border-radius: 9px;
+
+    color:
+        var(--muted);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition:
+        .2s;
+}
+
+.mobile-menu a:hover {
+
+    background:
+        rgba(25,195,125,.08);
+
+    color:
+        #ffffff;
+}
+
+.mobile-menu-divider {
+
+    height: 1px;
+
+    margin:
+        8px 0;
+
+    background:
+        var(--border);
+}
+
+.mobile-login {
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    color:
+        #ffffff !important;
+
+    text-align:
+        center;
+}
+
+.mobile-get-started {
+
+    margin-top:
+        8px;
+
+    background:
+        var(--green);
+
+    color:
+        #04100a !important;
+
+    text-align:
+        center;
+
+    font-weight:
+        800 !important;
+}
+
+.mobile-get-started:hover {
+
+    background:
+        var(--green-hover) !important;
+
+    color:
+        #04100a !important;
 }
 
 
@@ -434,7 +629,8 @@ button {
 
 .preview-window {
 
-    background: #090f0c;
+    background:
+        #090f0c;
 
     border:
         1px solid
@@ -470,7 +666,8 @@ button {
 
     border-radius: 50%;
 
-    background: #39443f;
+    background:
+        #39443f;
 }
 
 .preview-body {
@@ -488,20 +685,26 @@ button {
     border-right:
         1px solid var(--border);
 
-    padding: 18px 12px;
+    padding:
+        18px 12px;
 }
 
 .preview-sidebar-item {
 
-    padding: 9px 10px;
+    padding:
+        9px 10px;
 
-    border-radius: 7px;
+    border-radius:
+        7px;
 
-    color: var(--muted-dark);
+    color:
+        var(--muted-dark);
 
-    font-size: 10px;
+    font-size:
+        10px;
 
-    margin-bottom: 5px;
+    margin-bottom:
+        5px;
 }
 
 .preview-sidebar-item.active {
@@ -515,16 +718,20 @@ button {
 
 .preview-content {
 
-    padding: 25px;
+    padding:
+        25px;
 }
 
 .preview-heading {
 
-    font-size: 18px;
+    font-size:
+        18px;
 
-    font-weight: 800;
+    font-weight:
+        800;
 
-    margin-bottom: 18px;
+    margin-bottom:
+        18px;
 }
 
 .preview-grid {
@@ -534,7 +741,8 @@ button {
     grid-template-columns:
         repeat(3,1fr);
 
-    gap: 12px;
+    gap:
+        12px;
 }
 
 .preview-card {
@@ -545,29 +753,37 @@ button {
     border:
         1px solid var(--border);
 
-    border-radius: 10px;
+    border-radius:
+        10px;
 
-    padding: 15px;
+    padding:
+        15px;
 }
 
 .preview-label {
 
-    color: var(--muted-dark);
+    color:
+        var(--muted-dark);
 
-    font-size: 9px;
+    font-size:
+        9px;
 
-    margin-bottom: 8px;
+    margin-bottom:
+        8px;
 }
 
 .preview-number {
 
-    font-size: 20px;
+    font-size:
+        20px;
 
-    font-weight: 800;
+    font-weight:
+        800;
 }
 
 .preview-green {
-    color: var(--green);
+    color:
+        var(--green);
 }
 
 
@@ -576,17 +792,20 @@ button {
 ========================================= */
 
 section {
-    padding: 95px 0;
+    padding:
+        95px 0;
 }
 
 .section-header {
 
-    max-width: 680px;
+    max-width:
+        680px;
 
     margin:
         0 auto 50px;
 
-    text-align: center;
+    text-align:
+        center;
 }
 
 .section-kicker {
@@ -594,15 +813,20 @@ section {
     color:
         var(--green);
 
-    font-size: 11px;
+    font-size:
+        11px;
 
-    font-weight: 800;
+    font-weight:
+        800;
 
-    text-transform: uppercase;
+    text-transform:
+        uppercase;
 
-    letter-spacing: 1.4px;
+    letter-spacing:
+        1.4px;
 
-    margin-bottom: 12px;
+    margin-bottom:
+        12px;
 }
 
 .section-header h2 {
@@ -610,20 +834,26 @@ section {
     font-size:
         clamp(29px,4vw,43px);
 
-    line-height: 1.15;
+    line-height:
+        1.15;
 
-    letter-spacing: -1.2px;
+    letter-spacing:
+        -1.2px;
 
-    margin-bottom: 14px;
+    margin-bottom:
+        14px;
 }
 
 .section-header p {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    font-size: 14px;
+    font-size:
+        14px;
 
-    line-height: 1.7;
+    line-height:
+        1.7;
 }
 
 
@@ -644,64 +874,85 @@ section {
 
 .intro-grid {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         1fr 1fr;
 
-    gap: 70px;
+    gap:
+        70px;
 
-    align-items: center;
+    align-items:
+        center;
 }
 
 .intro h2 {
 
-    font-size: 38px;
+    font-size:
+        38px;
 
-    line-height: 1.15;
+    line-height:
+        1.15;
 
-    letter-spacing: -1px;
+    letter-spacing:
+        -1px;
 
-    margin-bottom: 20px;
+    margin-bottom:
+        20px;
 }
 
 .intro p {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    font-size: 15px;
+    font-size:
+        15px;
 
-    line-height: 1.8;
+    line-height:
+        1.8;
 
-    margin-bottom: 15px;
+    margin-bottom:
+        15px;
 }
 
 .intro-points {
-
-    margin-top: 25px;
+    margin-top:
+        25px;
 }
 
 .intro-point {
 
-    display: flex;
+    display:
+        flex;
 
-    gap: 12px;
+    gap:
+        12px;
 
-    margin-bottom: 15px;
+    margin-bottom:
+        15px;
 
-    font-size: 13px;
+    font-size:
+        13px;
 
-    color: #d5ddd9;
+    color:
+        #d5ddd9;
 }
 
 .check {
 
-    flex-shrink: 0;
+    flex-shrink:
+        0;
 
-    width: 21px;
-    height: 21px;
+    width:
+        21px;
 
-    border-radius: 50%;
+    height:
+        21px;
+
+    border-radius:
+        50%;
 
     background:
         rgba(25,195,125,.12);
@@ -709,12 +960,17 @@ section {
     color:
         var(--green);
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
-    justify-content: center;
+    align-items:
+        center;
 
-    font-size: 11px;
+    justify-content:
+        center;
+
+    font-size:
+        11px;
 }
 
 .info-card {
@@ -725,9 +981,11 @@ section {
     border:
         1px solid var(--border);
 
-    border-radius: 18px;
+    border-radius:
+        18px;
 
-    padding: 30px;
+    padding:
+        30px;
 
     box-shadow:
         0 20px 70px
@@ -736,29 +994,38 @@ section {
 
 .info-card-title {
 
-    font-size: 18px;
+    font-size:
+        18px;
 
-    font-weight: 800;
+    font-weight:
+        800;
 
-    margin-bottom: 8px;
+    margin-bottom:
+        8px;
 }
 
 .info-card-text {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    font-size: 13px;
+    font-size:
+        13px;
 
-    margin-bottom: 24px;
+    margin-bottom:
+        24px;
 }
 
 .info-row {
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
     padding:
         13px 0;
@@ -766,15 +1033,18 @@ section {
     border-bottom:
         1px solid var(--border);
 
-    font-size: 12px;
+    font-size:
+        12px;
 }
 
 .info-row:last-child {
-    border-bottom: none;
+    border-bottom:
+        none;
 }
 
 .info-status {
-    color: var(--green);
+    color:
+        var(--green);
 }
 
 
@@ -784,12 +1054,14 @@ section {
 
 .features {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(3,1fr);
 
-    gap: 15px;
+    gap:
+        15px;
 }
 
 .feature-card {
@@ -800,11 +1072,14 @@ section {
     border:
         1px solid var(--border);
 
-    border-radius: 15px;
+    border-radius:
+        15px;
 
-    padding: 25px;
+    padding:
+        25px;
 
-    transition: .2s;
+    transition:
+        .2s;
 }
 
 .feature-card:hover {
@@ -821,15 +1096,23 @@ section {
 
 .feature-icon {
 
-    width: 42px;
-    height: 42px;
+    width:
+        42px;
 
-    display: flex;
+    height:
+        42px;
 
-    align-items: center;
-    justify-content: center;
+    display:
+        flex;
 
-    border-radius: 10px;
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        10px;
 
     background:
         rgba(25,195,125,.10);
@@ -837,27 +1120,35 @@ section {
     color:
         var(--green);
 
-    font-size: 18px;
+    font-size:
+        18px;
 
-    font-weight: 800;
+    font-weight:
+        800;
 
-    margin-bottom: 18px;
+    margin-bottom:
+        18px;
 }
 
 .feature-card h3 {
 
-    font-size: 16px;
+    font-size:
+        16px;
 
-    margin-bottom: 9px;
+    margin-bottom:
+        9px;
 }
 
 .feature-card p {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    font-size: 12px;
+    font-size:
+        12px;
 
-    line-height: 1.7;
+    line-height:
+        1.7;
 }
 
 
@@ -867,19 +1158,23 @@ section {
 
 .pricing-grid {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(4,1fr);
 
-    gap: 14px;
+    gap:
+        14px;
 
-    align-items: stretch;
+    align-items:
+        stretch;
 }
 
 .price-card {
 
-    position: relative;
+    position:
+        relative;
 
     background:
         #0b1210;
@@ -887,13 +1182,17 @@ section {
     border:
         1px solid var(--border);
 
-    border-radius: 16px;
+    border-radius:
+        16px;
 
-    padding: 25px;
+    padding:
+        25px;
 
-    display: flex;
+    display:
+        flex;
 
-    flex-direction: column;
+    flex-direction:
+        column;
 }
 
 .price-card.popular {
@@ -909,11 +1208,14 @@ section {
 
 .popular-label {
 
-    position: absolute;
+    position:
+        absolute;
 
-    top: -11px;
+    top:
+        -11px;
 
-    right: 18px;
+    right:
+        18px;
 
     background:
         var(--green);
@@ -921,24 +1223,32 @@ section {
     color:
         #031009;
 
-    border-radius: 999px;
+    border-radius:
+        999px;
 
-    padding: 5px 9px;
+    padding:
+        5px 9px;
 
-    font-size: 9px;
+    font-size:
+        9px;
 
-    font-weight: 900;
+    font-weight:
+        900;
 
-    text-transform: uppercase;
+    text-transform:
+        uppercase;
 }
 
 .price-name {
 
-    font-size: 17px;
+    font-size:
+        17px;
 
-    font-weight: 800;
+    font-weight:
+        800;
 
-    margin-bottom: 7px;
+    margin-bottom:
+        7px;
 }
 
 .price-description {
@@ -946,9 +1256,11 @@ section {
     color:
         var(--muted);
 
-    font-size: 11px;
+    font-size:
+        11px;
 
-    min-height: 36px;
+    min-height:
+        36px;
 }
 
 .price {
@@ -956,57 +1268,74 @@ section {
     margin:
         23px 0;
 
-    font-size: 35px;
+    font-size:
+        35px;
 
-    font-weight: 850;
+    font-weight:
+        850;
 
-    letter-spacing: -1px;
+    letter-spacing:
+        -1px;
 }
 
 .price small {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    font-size: 11px;
+    font-size:
+        11px;
 
-    font-weight: 400;
+    font-weight:
+        400;
 }
 
 .price-features {
 
-    list-style: none;
+    list-style:
+        none;
 
-    flex: 1;
+    flex:
+        1;
 }
 
 .price-features li {
 
-    display: flex;
+    display:
+        flex;
 
-    gap: 8px;
+    gap:
+        8px;
 
-    margin-bottom: 11px;
+    margin-bottom:
+        11px;
 
-    color: #c7d0cb;
+    color:
+        #c7d0cb;
 
-    font-size: 11px;
+    font-size:
+        11px;
 }
 
 .price-features li::before {
 
-    content: "✓";
+    content:
+        "✓";
 
     color:
         var(--green);
 
-    font-weight: 800;
+    font-weight:
+        800;
 }
 
 .price-btn {
 
-    margin-top: 22px;
+    margin-top:
+        22px;
 
-    width: 100%;
+    width:
+        100%;
 }
 
 
@@ -1016,19 +1345,23 @@ section {
 
 .steps {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(4,1fr);
 
-    gap: 14px;
+    gap:
+        14px;
 }
 
 .step {
 
-    position: relative;
+    position:
+        relative;
 
-    padding: 25px;
+    padding:
+        25px;
 
     background:
         var(--card);
@@ -1036,20 +1369,29 @@ section {
     border:
         1px solid var(--border);
 
-    border-radius: 15px;
+    border-radius:
+        15px;
 }
 
 .step-number {
 
-    width: 31px;
-    height: 31px;
+    width:
+        31px;
 
-    display: flex;
+    height:
+        31px;
 
-    align-items: center;
-    justify-content: center;
+    display:
+        flex;
 
-    border-radius: 8px;
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        8px;
 
     background:
         rgba(25,195,125,.11);
@@ -1057,27 +1399,35 @@ section {
     color:
         var(--green);
 
-    font-size: 11px;
+    font-size:
+        11px;
 
-    font-weight: 900;
+    font-weight:
+        900;
 
-    margin-bottom: 17px;
+    margin-bottom:
+        17px;
 }
 
 .step h3 {
 
-    font-size: 15px;
+    font-size:
+        15px;
 
-    margin-bottom: 8px;
+    margin-bottom:
+        8px;
 }
 
 .step p {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    font-size: 11px;
+    font-size:
+        11px;
 
-    line-height: 1.65;
+    line-height:
+        1.65;
 }
 
 
@@ -1087,9 +1437,11 @@ section {
 
 .faq {
 
-    max-width: 780px;
+    max-width:
+        780px;
 
-    margin: auto;
+    margin:
+        auto;
 }
 
 .faq-item {
@@ -1100,30 +1452,41 @@ section {
 
 .faq-question {
 
-    width: 100%;
+    width:
+        100%;
 
-    background: transparent;
+    background:
+        transparent;
 
-    border: none;
+    border:
+        none;
 
-    color: white;
+    color:
+        white;
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
-    text-align: left;
+    text-align:
+        left;
 
     padding:
         21px 0;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
-    font-size: 14px;
+    font-size:
+        14px;
 
-    font-weight: 700;
+    font-weight:
+        700;
 }
 
 .faq-question span:last-child {
@@ -1131,27 +1494,34 @@ section {
     color:
         var(--green);
 
-    font-size: 20px;
+    font-size:
+        20px;
 
-    font-weight: 400;
+    font-weight:
+        400;
 }
 
 .faq-answer {
 
-    display: none;
+    display:
+        none;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    font-size: 12px;
+    font-size:
+        12px;
 
-    line-height: 1.75;
+    line-height:
+        1.75;
 
     padding:
         0 30px 20px 0;
 }
 
 .faq-item.open .faq-answer {
-    display: block;
+    display:
+        block;
 }
 
 
@@ -1164,15 +1534,18 @@ section {
     padding:
         80px 25px;
 
-    margin-bottom: 80px;
+    margin-bottom:
+        80px;
 
     border:
         1px solid
         rgba(25,195,125,.16);
 
-    border-radius: 22px;
+    border-radius:
+        22px;
 
-    text-align: center;
+    text-align:
+        center;
 
     background:
         radial-gradient(
@@ -1188,18 +1561,23 @@ section {
     font-size:
         clamp(29px,4vw,43px);
 
-    letter-spacing: -1px;
+    letter-spacing:
+        -1px;
 
-    margin-bottom: 13px;
+    margin-bottom:
+        13px;
 }
 
 .cta p {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    font-size: 14px;
+    font-size:
+        14px;
 
-    margin-bottom: 27px;
+    margin-bottom:
+        27px;
 }
 
 
@@ -1218,43 +1596,58 @@ footer {
     color:
         var(--muted-dark);
 
-    font-size: 11px;
+    font-size:
+        11px;
 }
 
 .footer-inner {
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 }
 
 .footer-brand {
 
-    color: #c4cec9;
+    color:
+        #c4cec9;
 
-    font-weight: 800;
+    font-weight:
+        800;
 
-    font-size: 13px;
+    font-size:
+        13px;
 }
 
 .footer-links {
 
-    display: flex;
+    display:
+        flex;
 
-    gap: 20px;
+    gap:
+        20px;
+}
+
+.footer-links a:hover {
+    color:
+        #ffffff;
 }
 
 
 /* =========================================
-   MOBILE
+   RESPONSIVE
 ========================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
 
     .nav-links {
-        display: none;
+        gap:
+            16px;
     }
 
     .pricing-grid {
@@ -1268,7 +1661,8 @@ footer {
     }
 
     .intro-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
     }
 
     .features {
@@ -1278,57 +1672,114 @@ footer {
 
 }
 
+
+@media (max-width: 900px) {
+
+    .nav-links {
+        display:
+            none;
+    }
+
+    .nav-actions {
+        display:
+            none;
+    }
+
+    .mobile-menu-btn {
+        display:
+            flex;
+    }
+
+    .mobile-menu {
+        top:
+            76px;
+    }
+
+}
+
+
 @media (max-width: 600px) {
 
     .container {
-        padding-left: 17px;
-        padding-right: 17px;
+
+        padding-left:
+            17px;
+
+        padding-right:
+            17px;
     }
 
     .nav-inner {
-        min-height: 67px;
+        min-height:
+            67px;
     }
 
-    .nav-actions .btn-outline {
-        display: none;
+    .mobile-menu {
+        top:
+            67px;
+
+        left:
+            12px;
+
+        right:
+            12px;
     }
 
     .brand {
-        font-size: 17px;
+        font-size:
+            17px;
+    }
+
+    .brand-logo {
+        width:
+            37px;
+
+        height:
+            37px;
     }
 
     .hero {
+
         padding:
             75px 0
             70px;
     }
 
     .hero h1 {
-        letter-spacing: -2px;
+        letter-spacing:
+            -2px;
     }
 
     .hero-description {
-        font-size: 14px;
+        font-size:
+            14px;
     }
 
     .hero-actions {
-        flex-direction: column;
+
+        flex-direction:
+            column;
     }
 
     .hero-actions .btn {
-        width: 100%;
+        width:
+            100%;
     }
 
     .dashboard-preview {
-        margin-top: 45px;
+
+        margin-top:
+            45px;
     }
 
     .preview-sidebar {
-        display: none;
+        display:
+            none;
     }
 
     .preview-body {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
     }
 
     .preview-grid {
@@ -1337,28 +1788,48 @@ footer {
     }
 
     section {
-        padding: 70px 0;
+        padding:
+            70px 0;
     }
 
     .features {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
     }
 
     .pricing-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
     }
 
     .steps {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
     }
 
     .intro h2 {
-        font-size: 30px;
+        font-size:
+            30px;
     }
 
     .footer-inner {
-        flex-direction: column;
-        gap: 15px;
+
+        flex-direction:
+            column;
+
+        gap:
+            15px;
+
+        text-align:
+            center;
+    }
+
+    .footer-links {
+        flex-wrap:
+            wrap;
+
+        justify-content:
+            center;
     }
 
 }
@@ -1369,11 +1840,13 @@ footer {
 ========================================= */
 
 body.zh .en {
-    display: none;
+    display:
+        none;
 }
 
 body:not(.zh) .zh {
-    display: none;
+    display:
+        none;
 }
 
 </style>
@@ -1434,6 +1907,8 @@ body:not(.zh) .zh {
     </div>
 
 
+    <!-- DESKTOP ACTIONS -->
+
     <div class="nav-actions">
 
         <div class="language">
@@ -1441,6 +1916,7 @@ body:not(.zh) .zh {
             <button
                 class="lang active"
                 id="enBtn"
+                type="button"
                 onclick="setLanguage('en')"
             >
                 EN
@@ -1449,6 +1925,7 @@ body:not(.zh) .zh {
             <button
                 class="lang"
                 id="zhBtn"
+                type="button"
                 onclick="setLanguage('zh')"
             >
                 中文
@@ -1475,6 +1952,135 @@ body:not(.zh) .zh {
         </a>
 
     </div>
+
+
+    <!-- MOBILE MENU BUTTON -->
+
+    <button
+        class="mobile-menu-btn"
+        id="mobileMenuBtn"
+        type="button"
+        onclick="toggleMobileMenu()"
+        aria-label="Open menu"
+        aria-expanded="false"
+    >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </button>
+
+</div>
+
+
+<!-- MOBILE MENU -->
+
+<div
+    class="mobile-menu"
+    id="mobileMenu"
+>
+
+    <a
+        href="#home"
+        onclick="closeMobileMenu()"
+    >
+        <span class="en">Home</span>
+        <span class="zh">首页</span>
+    </a>
+
+
+    <a
+        href="#features"
+        onclick="closeMobileMenu()"
+    >
+        <span class="en">Features</span>
+        <span class="zh">功能</span>
+    </a>
+
+
+    <a
+        href="#pricing"
+        onclick="closeMobileMenu()"
+    >
+        <span class="en">Pricing</span>
+        <span class="zh">价格</span>
+    </a>
+
+
+    <a
+        href="#how"
+        onclick="closeMobileMenu()"
+    >
+        <span class="en">How It Works</span>
+        <span class="zh">使用方式</span>
+    </a>
+
+
+    <a
+        href="#faq"
+        onclick="closeMobileMenu()"
+    >
+        FAQ
+    </a>
+
+
+    <div class="mobile-menu-divider"></div>
+
+
+    <!-- MOBILE LANGUAGE -->
+
+    <div
+        class="language"
+        style="
+            width:max-content;
+            margin:8px 0;
+        "
+    >
+
+        <button
+            class="lang active"
+            id="mobileEnBtn"
+            type="button"
+            onclick="setLanguage('en')"
+        >
+            EN
+        </button>
+
+        <button
+            class="lang"
+            id="mobileZhBtn"
+            type="button"
+            onclick="setLanguage('zh')"
+        >
+            中文
+        </button>
+
+    </div>
+
+
+    <!-- MOBILE LOGIN -->
+
+    <a
+        href="login.html"
+        class="mobile-login"
+        onclick="closeMobileMenu()"
+    >
+        <span class="en">Login</span>
+        <span class="zh">登录</span>
+    </a>
+
+
+    <!-- MOBILE GET STARTED -->
+
+    <a
+        href="register.html"
+        class="mobile-get-started"
+        onclick="closeMobileMenu()"
+    >
+        <span class="en">Get Started</span>
+        <span class="zh">开始使用</span>
+    </a>
 
 </div>
 
@@ -2698,6 +3304,7 @@ body:not(.zh) .zh {
 
             <button
                 class="faq-question"
+                type="button"
                 onclick="toggleFaq(this)"
             >
 
@@ -2728,6 +3335,7 @@ body:not(.zh) .zh {
 
             <button
                 class="faq-question"
+                type="button"
                 onclick="toggleFaq(this)"
             >
 
@@ -2756,6 +3364,7 @@ body:not(.zh) .zh {
 
             <button
                 class="faq-question"
+                type="button"
                 onclick="toggleFaq(this)"
             >
 
@@ -2784,6 +3393,7 @@ body:not(.zh) .zh {
 
             <button
                 class="faq-question"
+                type="button"
                 onclick="toggleFaq(this)"
             >
 
@@ -2814,6 +3424,7 @@ body:not(.zh) .zh {
 
             <button
                 class="faq-question"
+                type="button"
                 onclick="toggleFaq(this)"
             >
 
@@ -2842,6 +3453,7 @@ body:not(.zh) .zh {
 
             <button
                 class="faq-question"
+                type="button"
                 onclick="toggleFaq(this)"
             >
 
@@ -3018,19 +3630,186 @@ function setLanguage(lang) {
             : "ChatNova — WhatsApp Business, Simplified";
 
 
-    document.getElementById("enBtn")
-        .classList.toggle(
+    /* DESKTOP LANGUAGE */
+
+    const enBtn =
+        document.getElementById("enBtn");
+
+    const zhBtn =
+        document.getElementById("zhBtn");
+
+    if (enBtn) {
+
+        enBtn.classList.toggle(
             "active",
             lang === "en"
         );
 
-    document.getElementById("zhBtn")
-        .classList.toggle(
+    }
+
+    if (zhBtn) {
+
+        zhBtn.classList.toggle(
             "active",
             lang === "zh"
         );
 
+    }
+
+
+    /* MOBILE LANGUAGE */
+
+    const mobileEnBtn =
+        document.getElementById("mobileEnBtn");
+
+    const mobileZhBtn =
+        document.getElementById("mobileZhBtn");
+
+    if (mobileEnBtn) {
+
+        mobileEnBtn.classList.toggle(
+            "active",
+            lang === "en"
+        );
+
+    }
+
+    if (mobileZhBtn) {
+
+        mobileZhBtn.classList.toggle(
+            "active",
+            lang === "zh"
+        );
+
+    }
+
 }
+
+
+/* =========================================
+   MOBILE MENU
+========================================= */
+
+function toggleMobileMenu() {
+
+    const menu =
+        document.getElementById("mobileMenu");
+
+    const button =
+        document.getElementById("mobileMenuBtn");
+
+    if (!menu || !button) {
+        return;
+    }
+
+    const isOpen =
+        menu.classList.toggle("open");
+
+    button.classList.toggle(
+        "active",
+        isOpen
+    );
+
+    button.setAttribute(
+        "aria-expanded",
+        isOpen ? "true" : "false"
+    );
+
+    button.setAttribute(
+        "aria-label",
+        isOpen
+            ? "Close menu"
+            : "Open menu"
+    );
+
+}
+
+
+function closeMobileMenu() {
+
+    const menu =
+        document.getElementById("mobileMenu");
+
+    const button =
+        document.getElementById("mobileMenuBtn");
+
+    if (menu) {
+
+        menu.classList.remove(
+            "open"
+        );
+
+    }
+
+    if (button) {
+
+        button.classList.remove(
+            "active"
+        );
+
+        button.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        button.setAttribute(
+            "aria-label",
+            "Open menu"
+        );
+
+    }
+
+}
+
+
+/* Close mobile menu when clicking outside */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const menu =
+            document.getElementById(
+                "mobileMenu"
+            );
+
+        const button =
+            document.getElementById(
+                "mobileMenuBtn"
+            );
+
+        if (!menu || !button) {
+            return;
+        }
+
+        if (
+            menu.classList.contains("open") &&
+            !menu.contains(event.target) &&
+            !button.contains(event.target)
+        ) {
+
+            closeMobileMenu();
+
+        }
+
+    }
+);
+
+
+/* Close menu when resizing to desktop */
+
+window.addEventListener(
+    "resize",
+    function() {
+
+        if (window.innerWidth > 900) {
+
+            closeMobileMenu();
+
+        }
+
+    }
+);
 
 
 /* =========================================
@@ -3058,7 +3837,10 @@ function toggleFaq(button) {
                 );
 
             if (symbol) {
-                symbol.textContent = "+";
+
+                symbol.textContent =
+                    "+";
+
             }
 
         });
@@ -3074,7 +3856,10 @@ function toggleFaq(button) {
             );
 
         if (symbol) {
-            symbol.textContent = "−";
+
+            symbol.textContent =
+                "−";
+
         }
 
     }
