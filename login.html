@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <title>Login — ChatNova</title>
     <meta name="description" content="Login to your ChatNova WhatsApp Business dashboard.">
@@ -16,20 +16,21 @@
 
         :root {
             --bg: #070909;
-            --bg-soft: #0b0f0e;
             --card: #101513;
-            --card-2: #131a17;
             --border: rgba(255,255,255,0.09);
             --text: #f5f7f6;
             --muted: #8e9994;
             --green: #19d47b;
-            --green-dark: #0fae62;
-            --danger: #ff5f6d;
-            --warning: #f5c451;
+            --green-hover: #24e284;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
         }
 
         body {
-            min-height: 100vh;
             font-family:
                 Inter,
                 -apple-system,
@@ -38,6 +39,7 @@
                 Roboto,
                 Arial,
                 sans-serif;
+
             background:
                 radial-gradient(
                     circle at 50% 0%,
@@ -45,7 +47,9 @@
                     transparent 35%
                 ),
                 var(--bg);
+
             color: var(--text);
+            overflow-x: hidden;
         }
 
         a {
@@ -59,45 +63,67 @@
         }
 
         .page {
+            width: 100%;
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
         }
 
-        /* =========================
+        /* =====================================================
            HEADER
-        ========================= */
+        ===================================================== */
 
         header {
-            height: 76px;
+            width: 100%;
+            min-height: 76px;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             padding: 0 42px;
+
             border-bottom: 1px solid var(--border);
-            background: rgba(7,9,9,0.82);
+
+            background: rgba(7,9,9,0.88);
+
             backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
 
         .brand {
             display: flex;
             align-items: center;
+
             gap: 11px;
+
             font-weight: 800;
             font-size: 20px;
+
             letter-spacing: -0.4px;
+
+            white-space: nowrap;
         }
 
         .brand-mark {
             width: 34px;
             height: 34px;
+
+            flex: 0 0 34px;
+
             border-radius: 10px;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             background: rgba(25,212,123,0.12);
+
             border: 1px solid rgba(25,212,123,0.28);
+
             color: var(--green);
+
             font-size: 17px;
             font-weight: 900;
         }
@@ -105,80 +131,135 @@
         .header-right {
             display: flex;
             align-items: center;
+
             gap: 18px;
+
+            min-width: 0;
         }
 
         .home-link {
             color: var(--muted);
+
             font-size: 14px;
-            transition: 0.2s;
+
+            white-space: nowrap;
+
+            transition: color 0.2s;
         }
 
         .home-link:hover {
             color: var(--text);
         }
 
+        /* =====================================================
+           LANGUAGE
+        ===================================================== */
+
         .language {
             display: flex;
-            gap: 5px;
+
+            gap: 4px;
+
             padding: 4px;
+
             border-radius: 9px;
+
             border: 1px solid var(--border);
+
             background: rgba(255,255,255,0.025);
+
+            flex-shrink: 0;
         }
 
         .lang-btn {
             border: 0;
+
             background: transparent;
+
             color: var(--muted);
+
             padding: 6px 9px;
+
             border-radius: 6px;
+
             cursor: pointer;
+
             font-size: 12px;
+
+            transition:
+                background 0.2s,
+                color 0.2s;
         }
 
         .lang-btn.active {
             color: #06110b;
+
             background: var(--green);
+
             font-weight: 700;
         }
 
-        /* =========================
+        /* =====================================================
            MAIN
-        ========================= */
+        ===================================================== */
 
         main {
+            width: 100%;
+
             flex: 1;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             padding: 60px 20px;
         }
 
         .login-wrapper {
             width: 100%;
+
             max-width: 430px;
         }
 
+        /* =====================================================
+           HEADING
+        ===================================================== */
+
         .login-heading {
+            width: 100%;
+
             text-align: center;
+
             margin-bottom: 28px;
         }
 
         .login-heading h1 {
             font-size: 34px;
+
             line-height: 1.15;
+
             letter-spacing: -1px;
+
             margin-bottom: 10px;
         }
 
         .login-heading p {
             color: var(--muted);
+
             font-size: 14px;
+
             line-height: 1.6;
         }
 
+        /* =====================================================
+           CARD
+        ===================================================== */
+
         .login-card {
+            width: 100%;
+
             background:
                 linear-gradient(
                     180deg,
@@ -186,39 +267,65 @@
                     rgba(255,255,255,0.01)
                 ),
                 var(--card);
+
             border: 1px solid var(--border);
+
             border-radius: 20px;
+
             padding: 32px;
+
             box-shadow:
                 0 30px 80px rgba(0,0,0,0.45),
                 inset 0 1px 0 rgba(255,255,255,0.025);
         }
 
-        /* =========================
+        /* =====================================================
            FORM
-        ========================= */
+        ===================================================== */
 
         .form-group {
+            width: 100%;
+
             margin-bottom: 20px;
         }
 
         .form-label {
             display: block;
+
             margin-bottom: 8px;
+
             color: #dfe6e2;
+
             font-size: 13px;
+
             font-weight: 600;
         }
 
         .input {
+            display: block;
+
             width: 100%;
+
+            max-width: 100%;
+
             height: 50px;
+
             padding: 0 15px;
+
             border-radius: 11px;
+
             border: 1px solid rgba(255,255,255,0.10);
+
             background: #090d0c;
+
             color: var(--text);
+
             outline: none;
+
+            -webkit-appearance: none;
+
+            appearance: none;
+
             transition:
                 border-color 0.2s,
                 box-shadow 0.2s;
@@ -230,11 +337,19 @@
 
         .input:focus {
             border-color: rgba(25,212,123,0.60);
-            box-shadow: 0 0 0 3px rgba(25,212,123,0.08);
+
+            box-shadow:
+                0 0 0 3px rgba(25,212,123,0.08);
         }
+
+        /* =====================================================
+           PASSWORD
+        ===================================================== */
 
         .password-row {
             position: relative;
+
+            width: 100%;
         }
 
         .password-row .input {
@@ -243,62 +358,101 @@
 
         .show-password {
             position: absolute;
-            right: 11px;
+
+            right: 8px;
+
             top: 50%;
+
             transform: translateY(-50%);
+
             border: 0;
+
             background: transparent;
+
             color: var(--muted);
+
             cursor: pointer;
+
             font-size: 12px;
-            padding: 7px;
+
+            padding: 8px;
         }
 
         .show-password:hover {
             color: var(--green);
         }
 
+        /* =====================================================
+           OPTIONS
+        ===================================================== */
+
         .form-options {
+            width: 100%;
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
+
             gap: 12px;
+
             margin: -3px 0 22px;
         }
 
         .remember {
             display: flex;
+
             align-items: center;
+
             gap: 8px;
+
             color: var(--muted);
+
             font-size: 12px;
+
+            min-width: 0;
         }
 
         .remember input {
             accent-color: var(--green);
+
+            flex-shrink: 0;
         }
 
         .forgot {
             color: var(--green);
+
             font-size: 12px;
+
+            white-space: nowrap;
         }
 
         .forgot:hover {
             text-decoration: underline;
         }
 
-        /* =========================
+        /* =====================================================
            BUTTON
-        ========================= */
+        ===================================================== */
 
         .btn {
+            display: block;
+
             width: 100%;
+
             height: 51px;
+
             border: 0;
+
             border-radius: 11px;
+
             cursor: pointer;
+
             font-weight: 750;
+
             font-size: 14px;
+
             transition:
                 transform 0.15s,
                 opacity 0.2s,
@@ -307,31 +461,44 @@
 
         .btn-primary {
             background: var(--green);
+
             color: #041009;
         }
 
         .btn-primary:hover {
-            background: #24e284;
+            background: var(--green-hover);
+
             transform: translateY(-1px);
         }
 
         .btn:disabled {
             cursor: not-allowed;
+
             opacity: 0.55;
+
             transform: none;
         }
 
-        /* =========================
+        /* =====================================================
            MESSAGE
-        ========================= */
+        ===================================================== */
 
         .message {
             display: none;
+
+            width: 100%;
+
             margin-bottom: 18px;
+
             padding: 12px 13px;
+
             border-radius: 10px;
+
             font-size: 13px;
+
             line-height: 1.5;
+
+            overflow-wrap: anywhere;
         }
 
         .message.show {
@@ -340,55 +507,74 @@
 
         .message.error {
             background: rgba(255,95,109,0.08);
+
             border: 1px solid rgba(255,95,109,0.22);
+
             color: #ff9da6;
         }
 
         .message.success {
             background: rgba(25,212,123,0.08);
+
             border: 1px solid rgba(25,212,123,0.22);
+
             color: #70e8ad;
         }
 
         .message.warning {
             background: rgba(245,196,81,0.08);
+
             border: 1px solid rgba(245,196,81,0.22);
+
             color: #f5d47c;
         }
 
-        /* =========================
+        /* =====================================================
            DIVIDER
-        ========================= */
+        ===================================================== */
 
         .divider {
             display: flex;
+
             align-items: center;
+
             gap: 12px;
+
             margin: 25px 0;
+
             color: #5e6964;
+
             font-size: 11px;
         }
 
         .divider::before,
         .divider::after {
             content: "";
+
             height: 1px;
+
             flex: 1;
+
             background: var(--border);
         }
 
-        /* =========================
+        /* =====================================================
            REGISTER
-        ========================= */
+        ===================================================== */
 
         .register-text {
             text-align: center;
+
             color: var(--muted);
+
             font-size: 13px;
+
+            line-height: 1.6;
         }
 
         .register-link {
             color: var(--green);
+
             font-weight: 700;
         }
 
@@ -396,17 +582,25 @@
             text-decoration: underline;
         }
 
-        /* =========================
+        /* =====================================================
            SECURITY
-        ========================= */
+        ===================================================== */
 
         .security {
             display: flex;
+
             justify-content: center;
+
+            align-items: center;
+
             gap: 7px;
+
             margin-top: 22px;
+
             color: #69736f;
+
             font-size: 11px;
+
             text-align: center;
         }
 
@@ -414,30 +608,43 @@
             color: var(--green);
         }
 
-        /* =========================
+        /* =====================================================
            FOOTER
-        ========================= */
+        ===================================================== */
 
         footer {
+            width: 100%;
+
             padding: 20px;
+
             text-align: center;
+
             color: #535d59;
+
             font-size: 11px;
         }
 
-        /* =========================
-           LOADING
-        ========================= */
+        /* =====================================================
+           SPINNER
+        ===================================================== */
 
         .spinner {
             display: inline-block;
+
             width: 15px;
+
             height: 15px;
+
             margin-right: 7px;
+
             vertical-align: -3px;
+
             border: 2px solid rgba(0,0,0,0.25);
+
             border-top-color: #06110b;
+
             border-radius: 50%;
+
             animation: spin 0.7s linear infinite;
         }
 
@@ -447,25 +654,16 @@
             }
         }
 
-        /* =========================
-           MOBILE
-        ========================= */
+        /* =====================================================
+           TABLET
+        ===================================================== */
 
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
 
             header {
-                height: 68px;
-                padding: 0 18px;
-            }
+                min-height: 68px;
 
-            .brand {
-                font-size: 18px;
-            }
-
-            .brand-mark {
-                width: 31px;
-                height: 31px;
-                border-radius: 9px;
+                padding: 0 20px;
             }
 
             .home-link {
@@ -473,34 +671,243 @@
             }
 
             main {
-                padding: 38px 16px;
                 align-items: flex-start;
+
+                padding:
+                    42px 18px 35px;
             }
 
             .login-heading {
-                margin-top: 12px;
-                margin-bottom: 23px;
+                margin-top: 10px;
+
+                margin-bottom: 22px;
             }
 
             .login-heading h1 {
-                font-size: 29px;
+                font-size: 30px;
             }
 
             .login-card {
-                padding: 23px 19px;
+                padding:
+                    26px 21px;
+
                 border-radius: 17px;
+            }
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 480px) {
+
+            body {
+                background:
+                    radial-gradient(
+                        circle at 50% 0%,
+                        rgba(25,212,123,0.08),
+                        transparent 32%
+                    ),
+                    var(--bg);
+            }
+
+            header {
+                min-height: 64px;
+
+                padding:
+                    0 15px;
+            }
+
+            .brand {
+                font-size: 18px;
+
+                gap: 8px;
+            }
+
+            .brand-mark {
+                width: 30px;
+
+                height: 30px;
+
+                flex-basis: 30px;
+
+                border-radius: 8px;
+
+                font-size: 15px;
+            }
+
+            .header-right {
+                gap: 8px;
+            }
+
+            .language {
+                padding: 3px;
+            }
+
+            .lang-btn {
+                padding:
+                    6px 8px;
+
+                font-size: 11px;
+            }
+
+            main {
+                width: 100%;
+
+                padding:
+                    30px 12px 25px;
+            }
+
+            .login-wrapper {
+                width: 100%;
+
+                max-width: 100%;
+            }
+
+            .login-heading {
+                margin-top: 5px;
+
+                margin-bottom: 20px;
+
+                padding: 0 5px;
+            }
+
+            .login-heading h1 {
+                font-size: 27px;
+
+                letter-spacing: -0.7px;
+            }
+
+            .login-heading p {
+                font-size: 13px;
+
+                max-width: 330px;
+
+                margin: 0 auto;
+            }
+
+            .login-card {
+                width: 100%;
+
+                padding:
+                    22px 16px;
+
+                border-radius: 16px;
+            }
+
+            .form-group {
+                margin-bottom: 18px;
+            }
+
+            .form-label {
+                font-size: 12px;
+
+                margin-bottom: 7px;
+            }
+
+            /*
+             * 16px prevents iPhone Safari
+             * from automatically zooming inputs.
+             */
+
+            .input {
+                height: 49px;
+
+                padding:
+                    0 13px;
+
+                font-size: 16px;
+            }
+
+            .password-row .input {
+                padding-right: 65px;
             }
 
             .form-options {
-                align-items: flex-start;
+                margin-top: 0;
+
+                margin-bottom: 20px;
+
+                gap: 8px;
+            }
+
+            .remember {
+                font-size: 11px;
             }
 
             .forgot {
-                white-space: nowrap;
+                font-size: 11px;
+            }
+
+            .btn {
+                height: 50px;
+
+                font-size: 14px;
+            }
+
+            .divider {
+                margin: 22px 0;
+            }
+
+            .register-text {
+                font-size: 12px;
+            }
+
+            .security {
+                margin-top: 19px;
+
+                font-size: 10px;
             }
 
             footer {
-                padding-bottom: 25px;
+                padding:
+                    16px 12px 20px;
+
+                font-size: 10px;
+            }
+        }
+
+        /* =====================================================
+           VERY SMALL PHONES
+        ===================================================== */
+
+        @media (max-width: 360px) {
+
+            header {
+                padding:
+                    0 11px;
+            }
+
+            .brand {
+                font-size: 17px;
+            }
+
+            .brand-mark {
+                width: 28px;
+
+                height: 28px;
+
+                flex-basis: 28px;
+            }
+
+            main {
+                padding-left: 9px;
+
+                padding-right: 9px;
+            }
+
+            .login-card {
+                padding-left: 14px;
+
+                padding-right: 14px;
+            }
+
+            .form-options {
+                flex-wrap: wrap;
+            }
+
+            .forgot {
+                margin-left: auto;
             }
         }
     </style>
@@ -510,21 +917,37 @@
 
 <div class="page">
 
-    <!-- HEADER -->
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
+
     <header>
 
         <a href="index.html" class="brand">
-            <div class="brand-mark">C</div>
-            <span>ChatNova</span>
+
+            <div class="brand-mark">
+                C
+            </div>
+
+            <span>
+                ChatNova
+            </span>
+
         </a>
+
 
         <div class="header-right">
 
-            <a href="index.html" class="home-link" data-i18n="backHome">
+            <a
+                href="index.html"
+                class="home-link"
+                data-i18n="backHome">
                 ← Back to home
             </a>
 
+
             <div class="language">
+
                 <button
                     type="button"
                     class="lang-btn active"
@@ -540,6 +963,7 @@
                     onclick="setLanguage('zh')">
                     中文
                 </button>
+
             </div>
 
         </div>
@@ -547,7 +971,10 @@
     </header>
 
 
-    <!-- MAIN -->
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
     <main>
 
         <div class="login-wrapper">
@@ -568,6 +995,7 @@
             <div class="login-card">
 
                 <!-- MESSAGE -->
+
                 <div
                     id="message"
                     class="message">
@@ -575,7 +1003,10 @@
 
 
                 <!-- LOGIN FORM -->
+
                 <form id="loginForm">
+
+                    <!-- EMAIL -->
 
                     <div class="form-group">
 
@@ -591,11 +1022,16 @@
                             class="input"
                             type="email"
                             autocomplete="email"
+                            inputmode="email"
+                            autocapitalize="none"
+                            spellcheck="false"
                             placeholder="you@example.com"
                             required>
 
                     </div>
 
+
+                    <!-- PASSWORD -->
 
                     <div class="form-group">
 
@@ -630,6 +1066,8 @@
                     </div>
 
 
+                    <!-- OPTIONS -->
+
                     <div class="form-options">
 
                         <label class="remember">
@@ -644,6 +1082,7 @@
 
                         </label>
 
+
                         <a
                             href="#"
                             class="forgot"
@@ -654,6 +1093,8 @@
 
                     </div>
 
+
+                    <!-- LOGIN BUTTON -->
 
                     <button
                         type="submit"
@@ -666,10 +1107,16 @@
                 </form>
 
 
-                <div class="divider" data-i18n="or">
+                <!-- DIVIDER -->
+
+                <div
+                    class="divider"
+                    data-i18n="or">
                     OR
                 </div>
 
+
+                <!-- REGISTER -->
 
                 <div class="register-text">
 
@@ -689,9 +1136,13 @@
                 </div>
 
 
+                <!-- SECURITY -->
+
                 <div class="security">
 
-                    <span class="security-icon">✓</span>
+                    <span class="security-icon">
+                        ✓
+                    </span>
 
                     <span data-i18n="security">
                         Secure account authentication
@@ -705,6 +1156,10 @@
 
     </main>
 
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
 
     <footer>
         © 2026 ChatNova. All rights reserved.
@@ -722,9 +1177,14 @@
     const API_BASE =
         "https://whatsapp-provider-api.b79gn827py.workers.dev";
 
-    const TOKEN_KEY = "chatnova_token";
-    const USER_KEY = "chatnova_user";
-    const LANGUAGE_KEY = "chatnova_language";
+    const TOKEN_KEY =
+        "chatnova_token";
+
+    const USER_KEY =
+        "chatnova_user";
+
+    const LANGUAGE_KEY =
+        "chatnova_language";
 
 
     /* =====================================================
@@ -734,21 +1194,51 @@
     const translations = {
 
         en: {
-            backHome: "← Back to home",
-            title: "Welcome back",
-            subtitle: "Sign in to manage your WhatsApp Business accounts.",
-            emailLabel: "Email address",
-            passwordLabel: "Password",
-            show: "Show",
-            hide: "Hide",
-            remember: "Remember me",
-            forgot: "Forgot password?",
-            signIn: "Sign in",
-            signingIn: "Signing in...",
-            or: "OR",
-            noAccount: "Don't have an account?",
-            createAccount: "Create account",
-            security: "Secure account authentication",
+
+            backHome:
+                "← Back to home",
+
+            title:
+                "Welcome back",
+
+            subtitle:
+                "Sign in to manage your WhatsApp Business accounts.",
+
+            emailLabel:
+                "Email address",
+
+            passwordLabel:
+                "Password",
+
+            show:
+                "Show",
+
+            hide:
+                "Hide",
+
+            remember:
+                "Remember me",
+
+            forgot:
+                "Forgot password?",
+
+            signIn:
+                "Sign in",
+
+            signingIn:
+                "Signing in...",
+
+            or:
+                "OR",
+
+            noAccount:
+                "Don't have an account?",
+
+            createAccount:
+                "Create account",
+
+            security:
+                "Secure account authentication",
 
             invalidLogin:
                 "Invalid email or password.",
@@ -766,22 +1256,53 @@
                 "Password recovery will be available soon."
         },
 
+
         zh: {
-            backHome: "← 返回首页",
-            title: "欢迎回来",
-            subtitle: "登录以管理您的 WhatsApp Business 账号。",
-            emailLabel: "电子邮件地址",
-            passwordLabel: "密码",
-            show: "显示",
-            hide: "隐藏",
-            remember: "记住我",
-            forgot: "忘记密码？",
-            signIn: "登录",
-            signingIn: "登录中...",
-            or: "或",
-            noAccount: "还没有账号？",
-            createAccount: "创建账号",
-            security: "安全账号认证",
+
+            backHome:
+                "← 返回首页",
+
+            title:
+                "欢迎回来",
+
+            subtitle:
+                "登录以管理您的 WhatsApp Business 账号。",
+
+            emailLabel:
+                "电子邮件地址",
+
+            passwordLabel:
+                "密码",
+
+            show:
+                "显示",
+
+            hide:
+                "隐藏",
+
+            remember:
+                "记住我",
+
+            forgot:
+                "忘记密码？",
+
+            signIn:
+                "登录",
+
+            signingIn:
+                "登录中...",
+
+            or:
+                "或",
+
+            noAccount:
+                "还没有账号？",
+
+            createAccount:
+                "创建账号",
+
+            security:
+                "安全账号认证",
 
             invalidLogin:
                 "电子邮件或密码错误。",
@@ -812,7 +1333,8 @@
 
     function setLanguage(language) {
 
-        currentLanguage = language;
+        currentLanguage =
+            language;
 
         localStorage.setItem(
             LANGUAGE_KEY,
@@ -828,6 +1350,7 @@
         const t =
             translations[currentLanguage];
 
+
         document
             .querySelectorAll("[data-i18n]")
             .forEach(element => {
@@ -836,7 +1359,9 @@
                     element.getAttribute("data-i18n");
 
                 if (t[key]) {
-                    element.textContent = t[key];
+
+                    element.textContent =
+                        t[key];
                 }
 
             });
@@ -877,7 +1402,8 @@
         const box =
             document.getElementById("message");
 
-        box.textContent = message;
+        box.textContent =
+            message;
 
         box.className =
             "message show " + type;
@@ -889,9 +1415,11 @@
         const box =
             document.getElementById("message");
 
-        box.className = "message";
+        box.className =
+            "message";
 
-        box.textContent = "";
+        box.textContent =
+            "";
     }
 
 
@@ -913,14 +1441,16 @@
 
         if (input.type === "password") {
 
-            input.type = "text";
+            input.type =
+                "text";
 
             button.textContent =
                 t.hide;
 
         } else {
 
-            input.type = "password";
+            input.type =
+                "password";
 
             button.textContent =
                 t.show;
@@ -929,7 +1459,7 @@
 
 
     /* =====================================================
-       TIMEOUT FETCH
+       FETCH WITH TIMEOUT
     ===================================================== */
 
     async function fetchWithTimeout(
@@ -941,11 +1471,13 @@
         const controller =
             new AbortController();
 
+
         const timer =
             setTimeout(
                 () => controller.abort(),
                 timeout
             );
+
 
         try {
 
@@ -954,6 +1486,7 @@
                     url,
                     {
                         ...options,
+
                         signal:
                             controller.signal
                     }
@@ -997,12 +1530,6 @@
                         .value;
 
 
-                const remember =
-                    document
-                        .getElementById("remember")
-                        .checked;
-
-
                 const button =
                     document
                         .getElementById("loginButton");
@@ -1013,29 +1540,33 @@
                 }
 
 
-                button.disabled = true;
+                button.disabled =
+                    true;
+
 
                 button.innerHTML =
                     '<span class="spinner"></span>' +
-                    translations[currentLanguage].signingIn;
+                    translations[currentLanguage]
+                        .signingIn;
 
 
                 try {
 
-                    /* -----------------------------------------
-                       STEP 1
-                       LOGIN
-                    ----------------------------------------- */
+                    /* =========================================
+                       STEP 1 — LOGIN
+                    ========================================= */
 
                     const loginResponse =
                         await fetchWithTimeout(
 
-                            API_BASE + "/api/login",
+                            API_BASE +
+                            "/api/login",
 
                             {
                                 method: "POST",
 
                                 headers: {
+
                                     "Content-Type":
                                         "application/json",
 
@@ -1043,26 +1574,35 @@
                                         "application/json"
                                 },
 
-                                body: JSON.stringify({
+                                body:
+                                    JSON.stringify({
 
-                                    email: email,
+                                        email:
+                                            email,
 
-                                    password: password
+                                        password:
+                                            password
 
-                                })
+                                    })
                             },
 
                             15000
                         );
 
 
-                    let loginData = null;
+                    let loginData =
+                        null;
+
 
                     try {
+
                         loginData =
                             await loginResponse.json();
+
                     } catch {
-                        loginData = null;
+
+                        loginData =
+                            null;
                     }
 
 
@@ -1078,10 +1618,9 @@
                     }
 
 
-                    /* -----------------------------------------
-                       STEP 2
-                       GET TOKEN
-                    ----------------------------------------- */
+                    /* =========================================
+                       STEP 2 — GET TOKEN
+                    ========================================= */
 
                     const token =
                         loginData.token;
@@ -1098,15 +1637,9 @@
                     }
 
 
-                    /* -----------------------------------------
-                       STEP 3
-                       SAVE TOKEN
-                    ----------------------------------------- */
-
-                    /*
-                     * The token is required for all authenticated
-                     * ChatNova API requests.
-                     */
+                    /* =========================================
+                       STEP 3 — SAVE TOKEN
+                    ========================================= */
 
                     localStorage.setItem(
                         TOKEN_KEY,
@@ -1114,15 +1647,15 @@
                     );
 
 
-                    /* -----------------------------------------
-                       STEP 4
-                       VERIFY /api/me
-                    ----------------------------------------- */
+                    /* =========================================
+                       STEP 4 — VERIFY TOKEN
+                    ========================================= */
 
                     const meResponse =
                         await fetchWithTimeout(
 
-                            API_BASE + "/api/me",
+                            API_BASE +
+                            "/api/me",
 
                             {
                                 method: "GET",
@@ -1133,7 +1666,8 @@
                                         "application/json",
 
                                     "Authorization":
-                                        "Bearer " + token
+                                        "Bearer " +
+                                        token
                                 }
                             },
 
@@ -1141,13 +1675,19 @@
                         );
 
 
-                    let meData = null;
+                    let meData =
+                        null;
+
 
                     try {
+
                         meData =
                             await meResponse.json();
+
                     } catch {
-                        meData = null;
+
+                        meData =
+                            null;
                     }
 
 
@@ -1156,11 +1696,6 @@
                         !meData ||
                         !meData.success
                     ) {
-
-                        /*
-                         * Token is invalid or could not
-                         * be verified.
-                         */
 
                         localStorage.removeItem(
                             TOKEN_KEY
@@ -1172,15 +1707,15 @@
                     }
 
 
-                    /* -----------------------------------------
-                       STEP 5
-                       SAVE USER DATA
-                    ----------------------------------------- */
+                    /* =========================================
+                       STEP 5 — SAVE USER
+                    ========================================= */
 
                     if (meData.customer) {
 
                         localStorage.setItem(
                             USER_KEY,
+
                             JSON.stringify(
                                 meData.customer
                             )
@@ -1190,6 +1725,7 @@
 
                         localStorage.setItem(
                             USER_KEY,
+
                             JSON.stringify(
                                 meData.user
                             )
@@ -1197,37 +1733,19 @@
                     }
 
 
-                    /* -----------------------------------------
-                       STEP 6
-                       REMEMBER ME
-                    ----------------------------------------- */
-
-                    if (!remember) {
-
-                        /*
-                         * The authentication token is still kept
-                         * for the current browser session because
-                         * ChatNova currently uses localStorage.
-                         *
-                         * This checkbox is prepared for the
-                         * future session-expiry enhancement.
-                         */
-
-                    }
-
-
-                    /* -----------------------------------------
-                       SUCCESS
-                    ----------------------------------------- */
+                    /* =========================================
+                       STEP 6 — SUCCESS
+                    ========================================= */
 
                     showMessage(
-                        translations[currentLanguage].success,
+                        translations[currentLanguage]
+                            .success,
                         "success"
                     );
 
 
                     setTimeout(
-                        () => {
+                        function() {
 
                             window.location.href =
                                 "dashboard.html";
@@ -1292,7 +1810,9 @@
                     }
 
 
-                    button.disabled = false;
+                    button.disabled =
+                        false;
+
 
                     button.textContent =
                         translations[currentLanguage]
@@ -1311,6 +1831,7 @@
 
         event.preventDefault();
 
+
         showMessage(
             translations[currentLanguage]
                 .forgotMessage,
@@ -1320,13 +1841,15 @@
 
 
     /* =====================================================
-       AUTO REDIRECT IF ALREADY LOGGED IN
+       CHECK EXISTING SESSION
     ===================================================== */
 
     async function checkExistingSession() {
 
         const token =
-            localStorage.getItem(TOKEN_KEY);
+            localStorage.getItem(
+                TOKEN_KEY
+            );
 
 
         if (!token) {
@@ -1339,7 +1862,8 @@
             const response =
                 await fetchWithTimeout(
 
-                    API_BASE + "/api/me",
+                    API_BASE +
+                    "/api/me",
 
                     {
                         method: "GET",
@@ -1350,7 +1874,8 @@
                                 "application/json",
 
                             "Authorization":
-                                "Bearer " + token
+                                "Bearer " +
+                                token
                         }
                     },
 
@@ -1385,23 +1910,19 @@
 
                     localStorage.setItem(
                         USER_KEY,
+
                         JSON.stringify(
                             data.customer
                         )
                     );
-
                 }
+
 
                 window.location.href =
                     "dashboard.html";
             }
 
         } catch (error) {
-
-            /*
-             * Do not block the login page if the API
-             * is temporarily unavailable.
-             */
 
             console.warn(
                 "Existing session check skipped:",
