@@ -787,6 +787,44 @@ button {
 }
 
 
+
+/* CHATNOVA HOW IT WORKS UPGRADE */
+.how-section {
+    position: relative;
+    background: linear-gradient(180deg, transparent, rgba(25,195,125,.018), transparent);
+}
+.how-steps { margin-bottom: 58px; }
+.how-messaging {
+    display: grid; grid-template-columns: .85fr 1.15fr; gap: 34px;
+    padding: 34px; border: 1px solid var(--border); border-radius: 20px;
+    background: linear-gradient(135deg, rgba(25,195,125,.055), rgba(255,255,255,.018));
+}
+.how-messaging-copy h3 { font-size: 30px; line-height: 1.18; margin-bottom: 14px; letter-spacing: -.7px; }
+.how-messaging-copy p, .integration-card p { color: var(--muted); font-size: 14px; line-height: 1.75; }
+.message-types { display: grid; grid-template-columns: repeat(2,1fr); gap: 11px; }
+.message-type { padding: 17px; border: 1px solid var(--border); border-radius: 13px; background: rgba(5,8,7,.58); }
+.message-type strong { display:block; font-size: 13px; margin-bottom: 7px; }
+.message-type small { color: var(--muted); font-size: 11px; line-height: 1.5; }
+.how-integrations { display:grid; grid-template-columns: repeat(2,1fr); gap: 18px; margin-top: 18px; }
+.integration-card { padding: 30px; border:1px solid var(--border); border-radius:18px; background:var(--card); }
+.integration-icon { display:inline-flex; padding:7px 10px; border-radius:8px; background:rgba(25,195,125,.1); color:var(--green); font-size:10px; font-weight:900; letter-spacing:.8px; margin-bottom:16px; }
+.integration-card h3 { font-size:20px; margin-bottom:10px; }
+.integration-tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:18px; }
+.integration-tags span { padding:6px 9px; border-radius:7px; border:1px solid var(--border); color:#b8c3be; font-size:10px; }
+.sender-types { margin-top:18px; padding:25px; border:1px solid var(--border); border-radius:18px; background:rgba(255,255,255,.012); }
+.sender-title { color:var(--green); font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:1.2px; margin-bottom:17px; }
+.sender-list { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.sender-list div { padding:16px; border-radius:12px; background:rgba(255,255,255,.018); }
+.sender-list b { display:block; font-size:13px; margin-bottom:5px; }
+.sender-list span { display:block; color:var(--muted); font-size:11px; line-height:1.5; }
+@media (max-width: 760px) {
+    .how-messaging, .how-integrations { grid-template-columns:1fr; }
+    .message-types { grid-template-columns:1fr; }
+    .sender-list { grid-template-columns:1fr; }
+    .how-messaging { padding:23px; }
+    .how-messaging-copy h3 { font-size:25px; }
+}
+
 /* =========================================
    SECTION
 ========================================= */
@@ -1580,6 +1618,176 @@ section {
         27px;
 }
 
+/* =========================================
+   CONTACT US
+========================================= */
+
+.contact-section {
+    background:
+        linear-gradient(180deg, transparent, rgba(25,195,125,.025), transparent);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    gap: 55px;
+    align-items: stretch;
+}
+
+.contact-info {
+    padding: 10px 0;
+}
+
+.contact-info h3 {
+    font-size: 30px;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    margin-bottom: 15px;
+}
+
+.contact-info > p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+    max-width: 480px;
+    margin-bottom: 28px;
+}
+
+.contact-points {
+    display: grid;
+    gap: 12px;
+}
+
+.contact-point {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 14px 16px;
+    background: rgba(12,20,17,.72);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.contact-point-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(25,195,125,.10);
+    color: var(--green);
+    font-size: 15px;
+}
+
+.contact-point strong {
+    display: block;
+    color: #e8eeeb;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.contact-point span {
+    color: var(--muted-dark);
+    font-size: 11px;
+}
+
+.contact-form-card {
+    background: #0b1210;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 25px 70px rgba(0,0,0,.25);
+}
+
+.contact-form {
+    display: grid;
+    gap: 16px;
+}
+
+.contact-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.contact-field label {
+    display: block;
+    color: #d9e1dd;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.contact-field input,
+.contact-field textarea {
+    width: 100%;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 10px;
+    background: rgba(255,255,255,.025);
+    color: #ffffff;
+    outline: none;
+    font-family: inherit;
+    font-size: 13px;
+    transition: .2s;
+}
+
+.contact-field input {
+    height: 45px;
+    padding: 0 13px;
+}
+
+.contact-field textarea {
+    min-height: 135px;
+    padding: 12px 13px;
+    resize: vertical;
+}
+
+.contact-field input:focus,
+.contact-field textarea:focus {
+    border-color: rgba(25,195,125,.45);
+    box-shadow: 0 0 0 3px rgba(25,195,125,.06);
+}
+
+.contact-field input::placeholder,
+.contact-field textarea::placeholder {
+    color: #5f6b65;
+}
+
+.contact-submit {
+    width: 100%;
+    margin-top: 2px;
+}
+
+.contact-note {
+    text-align: center;
+    color: var(--muted-dark);
+    font-size: 10px;
+    margin-top: 2px;
+}
+
+@media (max-width: 900px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+}
+
+@media (max-width: 600px) {
+    .contact-form-card {
+        padding: 20px;
+    }
+
+    .contact-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-info h3 {
+        font-size: 27px;
+    }
+}
+
 
 /* =========================================
    FOOTER
@@ -1904,6 +2112,16 @@ body:not(.zh) .zh {
             FAQ
         </a>
 
+        <a href="#contact">
+            <span class="en">Contact</span>
+            <span class="zh">联系我们</span>
+        </a>
+
+        <a href="#contact">
+            <span class="en">Contact</span>
+            <span class="zh">联系我们</span>
+        </a>
+
     </div>
 
 
@@ -2022,6 +2240,15 @@ body:not(.zh) .zh {
         onclick="closeMobileMenu()"
     >
         FAQ
+    </a>
+
+
+    <a
+        href="#contact"
+        onclick="closeMobileMenu()"
+    >
+        <span class="en">Contact</span>
+        <span class="zh">联系我们</span>
     </a>
 
 
@@ -3118,149 +3345,103 @@ body:not(.zh) .zh {
      HOW IT WORKS
 ========================================= -->
 
-<section id="how">
-
+<section id="how" class="how-section">
 <div class="container">
 
     <div class="section-header">
-
         <div class="section-kicker">
             <span class="en">How It Works</span>
             <span class="zh">使用方式</span>
         </div>
 
         <h2>
-
-            <span class="en">
-                Start managing your WhatsApp operation in four steps.
-            </span>
-
-            <span class="zh">
-                四个步骤，开始管理您的 WhatsApp 业务。
-            </span>
-
+            <span class="en">From WhatsApp connection to business automation.</span>
+            <span class="zh">从连接 WhatsApp 到业务自动化。</span>
         </h2>
 
+        <p>
+            <span class="en">
+                ChatNova brings your WhatsApp operations, customer conversations, integrations and automation into one connected workspace.
+            </span>
+            <span class="zh">
+                ChatNova 将 WhatsApp 管理、客户对话、系统集成及自动化集中到一个统一工作平台。
+            </span>
+        </p>
     </div>
 
-
-    <div class="steps">
-
-
+    <div class="steps how-steps">
         <div class="step">
-
-            <div class="step-number">
-                01
-            </div>
-
-            <h3>
-                Create Account
-            </h3>
-
-            <p>
-
-                <span class="en">
-                    Create your ChatNova customer account
-                    and choose the plan that fits your business.
-                </span>
-
-                <span class="zh">
-                    创建 ChatNova 客户账户，
-                    选择适合您的业务方案。
-                </span>
-
-            </p>
-
+            <div class="step-number">01</div>
+            <h3><span class="en">Create Your Account</span><span class="zh">创建您的账户</span></h3>
+            <p><span class="en">Create your ChatNova account and access your business workspace.</span><span class="zh">创建 ChatNova 账户，进入您的企业工作空间。</span></p>
         </div>
 
-
         <div class="step">
-
-            <div class="step-number">
-                02
-            </div>
-
-            <h3>
-                Connect WhatsApp
-            </h3>
-
-            <p>
-
-                <span class="en">
-                    Connect and manage your WhatsApp
-                    business instance through the platform.
-                </span>
-
-                <span class="zh">
-                    通过平台连接并管理您的
-                    WhatsApp Business 实例。
-                </span>
-
-            </p>
-
+            <div class="step-number">02</div>
+            <h3><span class="en">Connect WhatsApp</span><span class="zh">连接 WhatsApp</span></h3>
+            <p><span class="en">Connect your WhatsApp account and monitor its connection status from ChatNova.</span><span class="zh">连接您的 WhatsApp 账户，并在 ChatNova 中查看连接状态。</span></p>
         </div>
 
-
         <div class="step">
-
-            <div class="step-number">
-                03
-            </div>
-
-            <h3>
-                Manage Customers
-            </h3>
-
-            <p>
-
-                <span class="en">
-                    Handle conversations, contacts and
-                    customer history from one workspace.
-                </span>
-
-                <span class="zh">
-                    在统一工作区管理对话、
-                    联系人及客户记录。
-                </span>
-
-            </p>
-
+            <div class="step-number">03</div>
+            <h3><span class="en">Manage Conversations</span><span class="zh">管理客户对话</span></h3>
+            <p><span class="en">Manage conversations, contacts and customer history from one centralized workspace.</span><span class="zh">在统一工作区管理对话、联系人及客户记录。</span></p>
         </div>
 
-
         <div class="step">
+            <div class="step-number">04</div>
+            <h3><span class="en">Automate &amp; Scale</span><span class="zh">自动化与扩展</span></h3>
+            <p><span class="en">Use automation, analytics and integrations to build a more efficient communication workflow.</span><span class="zh">使用自动化、分析工具及系统集成，建立更高效的通讯工作流程。</span></p>
+        </div>
+    </div>
 
-            <div class="step-number">
-                04
-            </div>
-
-            <h3>
-                Automate & Scale
-            </h3>
-
-            <p>
-
-                <span class="en">
-                    Use automation, analytics and APIs
-                    to improve your business workflow.
-                </span>
-
-                <span class="zh">
-                    使用自动化、分析工具及 API，
-                    提升业务效率并扩大规模。
-                </span>
-
-            </p>
-
+    <div class="how-messaging">
+        <div class="how-messaging-copy">
+            <div class="section-kicker"><span class="en">WhatsApp Messaging</span><span class="zh">WhatsApp 消息</span></div>
+            <h3><span class="en">Send &amp; Receive WhatsApp Messages</span><span class="zh">发送和接收 WhatsApp 消息</span></h3>
+            <p><span class="en">Connect WhatsApp messaging to your business workflows. Handle supported message types and customer interactions from a single platform.</span><span class="zh">将 WhatsApp 消息连接到您的业务流程，在一个平台处理不同类型的消息及客户互动。</span></p>
         </div>
 
+        <div class="message-types">
+            <div class="message-type"><strong>💬 <span class="en">Text</span><span class="zh">文字</span></strong><small><span class="en">Send formatted text messages.</span><span class="zh">发送格式化文字消息。</span></small></div>
+            <div class="message-type"><strong>🖼️ <span class="en">Image &amp; Video</span><span class="zh">图片与视频</span></strong><small><span class="en">Share visual content with customers.</span><span class="zh">与客户分享图片及视频。</span></small></div>
+            <div class="message-type"><strong>📄 <span class="en">Document</span><span class="zh">文件</span></strong><small><span class="en">Send documents and files.</span><span class="zh">发送文件及文档。</span></small></div>
+            <div class="message-type"><strong>🎙️ <span class="en">Voice</span><span class="zh">语音</span></strong><small><span class="en">Send voice messages.</span><span class="zh">发送语音消息。</span></small></div>
+            <div class="message-type"><strong>👤 <span class="en">Contact</span><span class="zh">联系人</span></strong><small><span class="en">Share contact information.</span><span class="zh">分享联系人资料。</span></small></div>
+            <div class="message-type"><strong>📍 <span class="en">Location</span><span class="zh">位置</span></strong><small><span class="en">Share location data.</span><span class="zh">分享位置资料。</span></small></div>
+        </div>
+    </div>
+
+    <div class="how-integrations">
+        <div class="integration-card">
+            <div class="integration-icon">API</div>
+            <h3><span class="en">Connect Your App</span><span class="zh">连接您的应用</span></h3>
+            <p><span class="en">Use ChatNova API and webhooks to connect WhatsApp with your website, CRM or custom application and receive real-time events.</span><span class="zh">使用 ChatNova API 和 Webhooks，将 WhatsApp 连接到您的网站、CRM 或自定义应用，并接收实时事件。</span></p>
+            <div class="integration-tags"><span>API</span><span>Webhooks</span><span>Real-time Events</span></div>
+        </div>
+
+        <div class="integration-card">
+            <div class="integration-icon">AUTO</div>
+            <h3><span class="en">Automate Your Business</span><span class="zh">自动化您的业务</span></h3>
+            <p><span class="en">Build automated replies, notifications and workflows to respond faster and reduce repetitive work.</span><span class="zh">建立自动回复、通知及工作流程，更快回应客户并减少重复工作。</span></p>
+            <div class="integration-tags"><span>Auto Reply</span><span>Notifications</span><span>Workflows</span></div>
+        </div>
+    </div>
+
+    <div class="sender-types">
+        <div class="sender-title">
+            <span class="en">Supported Sender Types</span>
+            <span class="zh">支持的发送对象</span>
+        </div>
+        <div class="sender-list">
+            <div><b>Users</b><span class="en">Direct one-to-one conversations.</span><span class="zh">一对一直接对话。</span></div>
+            <div><b>Groups</b><span class="en">Communicate with multiple participants.</span><span class="zh">与多个参与者进行沟通。</span></div>
+            <div><b>Channels</b><span class="en">Broadcast updates to your audience.</span><span class="zh">向您的受众发布更新。</span></div>
+        </div>
     </div>
 
 </div>
-
 </section>
-
-
 
 <!-- ========================================
      FAQ
@@ -3484,6 +3665,127 @@ body:not(.zh) .zh {
 
 </section>
 
+
+
+<!-- ========================================
+     CONTACT US
+========================================= -->
+
+<section
+    id="contact"
+    class="contact-section"
+>
+
+<div class="container">
+
+    <div class="section-header">
+
+        <div class="section-kicker">
+            <span class="en">Contact Us</span>
+            <span class="zh">联系我们</span>
+        </div>
+
+        <h2>
+            <span class="en">Let’s talk about your WhatsApp operation.</span>
+            <span class="zh">让我们聊聊您的 WhatsApp 业务。</span>
+        </h2>
+
+        <p>
+            <span class="en">Have questions about ChatNova, WhatsApp connections, automation or API integration? Send us a message and we’ll get back to you.</span>
+            <span class="zh">如果您对 ChatNova、WhatsApp 连接、自动化或 API 集成有任何问题，欢迎联系我们。</span>
+        </p>
+
+    </div>
+
+    <div class="contact-grid">
+
+        <div class="contact-info">
+
+            <h3>
+                <span class="en">We’re here to help.</span>
+                <span class="zh">我们随时为您提供帮助。</span>
+            </h3>
+
+            <p>
+                <span class="en">Whether you are setting up your first WhatsApp account or building a larger business messaging workflow, ChatNova is designed to grow with you.</span>
+                <span class="zh">无论您是刚开始连接 WhatsApp，还是正在建立更大型的企业通讯流程，ChatNova 都可以随着您的业务一起扩展。</span>
+            </p>
+
+            <div class="contact-points">
+
+                <div class="contact-point">
+                    <div class="contact-point-icon">✉</div>
+                    <div>
+                        <strong><span class="en">Email</span><span class="zh">电子邮件</span></strong>
+                        <span>&nbsp;</span>
+                    </div>
+                </div>
+
+                <div class="contact-point">
+                    <div class="contact-point-icon">◉</div>
+                    <div>
+                        <strong><span class="en">WhatsApp</span><span class="zh">WhatsApp</span></strong>
+                        <span>&nbsp;</span>
+                    </div>
+                </div>
+
+                <div class="contact-point">
+                    <div class="contact-point-icon">◷</div>
+                    <div>
+                        <strong><span class="en">Support</span><span class="zh">客户支持</span></strong>
+                        <span><span class="en">Contact details coming soon.</span><span class="zh">联系方式即将公布。</span></span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="contact-form-card">
+
+            <form class="contact-form" onsubmit="return handleContactSubmit(event)">
+
+                <div class="contact-form-row">
+                    <div class="contact-field">
+                        <label><span class="en">Full Name</span><span class="zh">姓名</span></label>
+                        <input type="text" name="name" placeholder="" required>
+                    </div>
+
+                    <div class="contact-field">
+                        <label><span class="en">Email</span><span class="zh">电子邮件</span></label>
+                        <input type="email" name="email" placeholder="" required>
+                    </div>
+                </div>
+
+                <div class="contact-field">
+                    <label><span class="en">Company</span><span class="zh">公司</span></label>
+                    <input type="text" name="company" placeholder="">
+                </div>
+
+                <div class="contact-field">
+                    <label><span class="en">Message</span><span class="zh">留言</span></label>
+                    <textarea name="message" placeholder="" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-green contact-submit">
+                    <span class="en">Send Message</span>
+                    <span class="zh">发送留言</span>
+                </button>
+
+                <div class="contact-note">
+                    <span class="en">Contact form submission will be connected to the ChatNova backend later.</span>
+                    <span class="zh">联系表单稍后将连接到 ChatNova 后端。</span>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
 
 
 <!-- ========================================
@@ -3864,6 +4166,24 @@ function toggleFaq(button) {
 
     }
 
+}
+
+
+/* =========================================
+   CONTACT FORM
+========================================= */
+
+function handleContactSubmit(event) {
+
+    event.preventDefault();
+
+    alert(
+        language === "zh"
+            ? "感谢您的留言。联系表单后端功能即将上线。"
+            : "Thank you for your message. The contact form backend will be connected soon."
+    );
+
+    return false;
 }
 
 
