@@ -54,6 +54,10 @@ body{
     -webkit-font-smoothing:antialiased;
 }
 
+body.modal-open{
+    overflow:hidden;
+}
+
 button,
 input{
     font:inherit;
@@ -617,6 +621,35 @@ a{
     min-height:36px;
 }
 
+.btn:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+/* =========================
+   ACCOUNT ACTIONS
+========================= */
+
+.account-actions{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+    margin-top:16px;
+    padding-top:16px;
+    border-top:1px solid rgba(255,255,255,.05);
+}
+
+.btn-secondary{
+    background:rgba(255,255,255,.035);
+    color:#fff;
+    border-color:rgba(255,255,255,.1);
+}
+
+.btn-secondary:hover{
+    background:rgba(255,255,255,.06);
+    border-color:rgba(255,255,255,.16);
+}
+
 /* =========================
    QR
 ========================= */
@@ -702,6 +735,189 @@ a{
     color:var(--green);
     background:rgba(25,211,122,.09);
     border:1px solid rgba(25,211,122,.13);
+}
+
+/* =========================
+   MODALS
+========================= */
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    z-index:5000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+}
+
+.modal-overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:100%;
+    max-width:480px;
+    max-height:min(720px,calc(100vh - 40px));
+    max-height:min(720px,calc(100dvh - 40px));
+    overflow:auto;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.01)
+        ),
+        var(--panel);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:18px;
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.55),
+        0 0 0 1px rgba(25,211,122,.02);
+}
+
+.modal-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:15px;
+    padding:20px 20px 17px;
+    border-bottom:1px solid var(--border);
+}
+
+.modal-title{
+    font-size:16px;
+    font-weight:750;
+    line-height:1.35;
+}
+
+.modal-subtitle{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.5;
+    margin-top:5px;
+}
+
+.modal-close{
+    width:34px;
+    height:34px;
+    min-width:34px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.025);
+    color:var(--muted);
+    border-radius:9px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+    line-height:1;
+}
+
+.modal-close:hover{
+    color:#fff;
+    border-color:rgba(255,255,255,.16);
+}
+
+.modal-body{
+    padding:20px;
+}
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.form-group:last-child{
+    margin-bottom:0;
+}
+
+.form-label{
+    display:block;
+    color:#dfe7e3;
+    font-size:11px;
+    font-weight:650;
+    margin-bottom:7px;
+}
+
+.form-input{
+    width:100%;
+    min-height:44px;
+    border:1px solid rgba(255,255,255,.1);
+    background:#090e0c;
+    color:var(--text);
+    border-radius:10px;
+    padding:10px 12px;
+    outline:none;
+    transition:.2s;
+}
+
+.form-input::placeholder{
+    color:#59635e;
+}
+
+.form-input:focus{
+    border-color:rgba(25,211,122,.45);
+    box-shadow:0 0 0 3px rgba(25,211,122,.08);
+}
+
+.form-input:disabled,
+.form-input[readonly]{
+    opacity:.65;
+    cursor:not-allowed;
+}
+
+.form-help{
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.45;
+    margin-top:6px;
+}
+
+.modal-error,
+.modal-success{
+    display:none;
+    border-radius:9px;
+    padding:10px 11px;
+    font-size:11px;
+    line-height:1.5;
+    margin-bottom:15px;
+}
+
+.modal-error{
+    color:#ffb2b2;
+    background:rgba(255,92,92,.07);
+    border:1px solid rgba(255,92,92,.16);
+}
+
+.modal-success{
+    color:#8df0bb;
+    background:rgba(25,211,122,.07);
+    border:1px solid rgba(25,211,122,.14);
+}
+
+.modal-footer{
+    display:flex;
+    justify-content:flex-end;
+    gap:9px;
+    padding:16px 20px 20px;
+    border-top:1px solid var(--border);
+}
+
+.btn-loading{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.btn-spinner{
+    width:14px;
+    height:14px;
+    border:2px solid rgba(3,21,12,.25);
+    border-top-color:#03150c;
+    border-radius:50%;
+    animation:spin .7s linear infinite;
 }
 
 /* =========================
@@ -803,6 +1019,22 @@ a{
 
     .two-col{
         grid-template-columns:1fr;
+    }
+
+    .modal-overlay{
+        align-items:flex-end;
+        padding:
+            12px
+            max(12px,env(safe-area-inset-right))
+            calc(12px + env(safe-area-inset-bottom))
+            max(12px,env(safe-area-inset-left));
+    }
+
+    .modal{
+        max-width:100%;
+        max-height:calc(100vh - 24px);
+        max-height:calc(100dvh - 24px);
+        border-radius:18px;
     }
 }
 
@@ -983,6 +1215,36 @@ a{
     .info-value{
         font-size:11px;
         max-width:62%;
+    }
+
+    .account-actions{
+        flex-direction:column;
+    }
+
+    .account-actions .btn{
+        width:100%;
+    }
+
+    .modal-header{
+        padding:17px 16px 15px;
+    }
+
+    .modal-body{
+        padding:16px;
+    }
+
+    .modal-footer{
+        padding:14px 16px calc(16px + env(safe-area-inset-bottom));
+        flex-direction:column-reverse;
+    }
+
+    .modal-footer .btn{
+        width:100%;
+        min-height:44px;
+    }
+
+    .form-input{
+        min-height:46px;
     }
 }
 
@@ -1191,7 +1453,7 @@ a{
                 </span>
             </a>
 
-            <a href="#">
+            <a href="./whatsapp.html">
                 <span class="nav-icon">◉</span>
                 <span data-i18n="whatsapp">
                     WhatsApp
@@ -1735,6 +1997,34 @@ a{
 
                         </div>
 
+
+                        <!-- ACCOUNT ACTIONS -->
+
+                        <div class="account-actions">
+
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                onclick="openProfileModal()"
+                                data-i18n="editProfile">
+
+                                Edit Profile
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="btn btn-primary"
+                                onclick="openPasswordModal()"
+                                data-i18n="changePassword">
+
+                                Change Password
+
+                            </button>
+
+                        </div>
+
                     </div>
 
                 </div>
@@ -1889,6 +2179,386 @@ a{
                             </span>
 
                         </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 EDIT PROFILE MODAL
+            ========================= -->
+
+            <div
+                id="profileModal"
+                class="modal-overlay"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="profileModalTitle">
+
+                <div
+                    class="modal"
+                    onclick="event.stopPropagation()">
+
+                    <div class="modal-header">
+
+                        <div>
+
+                            <div
+                                id="profileModalTitle"
+                                class="modal-title"
+                                data-i18n="editProfile">
+
+                                Edit Profile
+
+                            </div>
+
+                            <div
+                                class="modal-subtitle"
+                                data-i18n="editProfileSub">
+
+                                Update your ChatNova account information.
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="modal-close"
+                            onclick="closeProfileModal()"
+                            aria-label="Close">
+
+                            ×
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="modal-body">
+
+                        <div
+                            id="profileError"
+                            class="modal-error">
+                        </div>
+
+
+                        <div
+                            id="profileSuccess"
+                            class="modal-success">
+                        </div>
+
+
+                        <form
+                            id="profileForm"
+                            onsubmit="saveProfile(event)"
+                            novalidate>
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="profileFullName"
+                                    data-i18n="fullName">
+
+                                    Full Name
+
+                                </label>
+
+                                <input
+                                    id="profileFullName"
+                                    class="form-input"
+                                    type="text"
+                                    maxlength="120"
+                                    autocomplete="name"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="profileEmail"
+                                    data-i18n="email">
+
+                                    Email
+
+                                </label>
+
+                                <input
+                                    id="profileEmail"
+                                    class="form-input"
+                                    type="email"
+                                    autocomplete="email"
+                                    readonly>
+
+                                <div
+                                    class="form-help"
+                                    data-i18n="emailReadonly">
+
+                                    Email cannot be changed here.
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="profilePhone"
+                                    data-i18n="phone">
+
+                                    Phone
+
+                                </label>
+
+                                <input
+                                    id="profilePhone"
+                                    class="form-input"
+                                    type="tel"
+                                    maxlength="30"
+                                    autocomplete="tel"
+                                    placeholder="+60...">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="profileCompany"
+                                    data-i18n="company">
+
+                                    Company
+
+                                </label>
+
+                                <input
+                                    id="profileCompany"
+                                    class="form-input"
+                                    type="text"
+                                    maxlength="160"
+                                    autocomplete="organization">
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                    <div class="modal-footer">
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            onclick="closeProfileModal()"
+                            data-i18n="cancel">
+
+                            Cancel
+
+                        </button>
+
+
+                        <button
+                            id="saveProfileButton"
+                            type="submit"
+                            form="profileForm"
+                            class="btn btn-primary"
+                            data-i18n="saveChanges">
+
+                            Save Changes
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 CHANGE PASSWORD MODAL
+            ========================= -->
+
+            <div
+                id="passwordModal"
+                class="modal-overlay"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="passwordModalTitle">
+
+                <div
+                    class="modal"
+                    onclick="event.stopPropagation()">
+
+                    <div class="modal-header">
+
+                        <div>
+
+                            <div
+                                id="passwordModalTitle"
+                                class="modal-title"
+                                data-i18n="changePassword">
+
+                                Change Password
+
+                            </div>
+
+                            <div
+                                class="modal-subtitle"
+                                data-i18n="changePasswordSub">
+
+                                Update your ChatNova account password.
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="modal-close"
+                            onclick="closePasswordModal()"
+                            aria-label="Close">
+
+                            ×
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="modal-body">
+
+                        <div
+                            id="passwordError"
+                            class="modal-error">
+                        </div>
+
+
+                        <div
+                            id="passwordSuccess"
+                            class="modal-success">
+                        </div>
+
+
+                        <form
+                            id="passwordForm"
+                            onsubmit="changePassword(event)"
+                            novalidate>
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="currentPassword"
+                                    data-i18n="currentPassword">
+
+                                    Current Password
+
+                                </label>
+
+                                <input
+                                    id="currentPassword"
+                                    class="form-input"
+                                    type="password"
+                                    minlength="8"
+                                    autocomplete="current-password"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="newPassword"
+                                    data-i18n="newPassword">
+
+                                    New Password
+
+                                </label>
+
+                                <input
+                                    id="newPassword"
+                                    class="form-input"
+                                    type="password"
+                                    minlength="8"
+                                    autocomplete="new-password"
+                                    required>
+
+                                <div
+                                    class="form-help"
+                                    data-i18n="passwordHelp">
+
+                                    Minimum 8 characters.
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label
+                                    class="form-label"
+                                    for="confirmPassword"
+                                    data-i18n="confirmPassword">
+
+                                    Confirm New Password
+
+                                </label>
+
+                                <input
+                                    id="confirmPassword"
+                                    class="form-input"
+                                    type="password"
+                                    minlength="8"
+                                    autocomplete="new-password"
+                                    required>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                    <div class="modal-footer">
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            onclick="closePasswordModal()"
+                            data-i18n="cancel">
+
+                            Cancel
+
+                        </button>
+
+
+                        <button
+                            id="changePasswordButton"
+                            type="submit"
+                            form="passwordForm"
+                            class="btn btn-primary"
+                            data-i18n="updatePassword">
+
+                            Update Password
+
+                        </button>
 
                     </div>
 
@@ -2081,9 +2751,35 @@ const translations = {
         accountInfo:"Your customer account",
 
         name:"Name",
+        fullName:"Full Name",
         email:"Email",
         company:"Company",
+        phone:"Phone",
         status:"Status",
+
+        editProfile:"Edit Profile",
+
+        editProfileSub:
+            "Update your ChatNova account information.",
+
+        emailReadonly:
+            "Email cannot be changed here.",
+
+        changePassword:"Change Password",
+
+        changePasswordSub:
+            "Update your ChatNova account password.",
+
+        currentPassword:"Current Password",
+        newPassword:"New Password",
+        confirmPassword:"Confirm New Password",
+
+        passwordHelp:
+            "Minimum 8 characters.",
+
+        cancel:"Cancel",
+        saveChanges:"Save Changes",
+        updatePassword:"Update Password",
 
         connectWhatsapp:"Connect WhatsApp",
 
@@ -2145,9 +2841,35 @@ const translations = {
         accountInfo:"您的客户账户",
 
         name:"姓名",
+        fullName:"姓名",
         email:"邮箱",
         company:"公司",
+        phone:"电话",
         status:"状态",
+
+        editProfile:"编辑资料",
+
+        editProfileSub:
+            "更新您的 ChatNova 账户资料。",
+
+        emailReadonly:
+            "邮箱暂时无法在这里修改。",
+
+        changePassword:"修改密码",
+
+        changePasswordSub:
+            "更新您的 ChatNova 账户密码。",
+
+        currentPassword:"当前密码",
+        newPassword:"新密码",
+        confirmPassword:"确认新密码",
+
+        passwordHelp:
+            "密码至少需要 8 个字符。",
+
+        cancel:"取消",
+        saveChanges:"保存修改",
+        updatePassword:"更新密码",
 
         connectWhatsapp:"连接 WhatsApp",
 
@@ -2442,6 +3164,64 @@ function handleAuthFailure(){
 
 
 /* =========================================
+   SAFE API ERROR MESSAGE
+========================================= */
+
+async function readApiResponse(response){
+
+    let data = {};
+
+
+    try{
+
+        data =
+            await response.json();
+
+    }catch(error){
+
+        data = {};
+
+    }
+
+
+    return data;
+
+}
+
+
+function getApiErrorMessage(
+    data,
+    fallback
+){
+
+    if(
+        data &&
+        typeof data.message === "string" &&
+        data.message.trim()
+    ){
+
+        return data.message.trim();
+
+    }
+
+
+    if(
+        data &&
+        typeof data.error === "string" &&
+        data.error.trim()
+    ){
+
+        return data.error.trim();
+
+    }
+
+
+    return fallback;
+
+}
+
+
+/* =========================================
    DASHBOARD
 ========================================= */
 
@@ -2516,19 +3296,10 @@ async function loadDashboard(){
             );
 
 
-        let data = {};
-
-
-        try{
-
-            data =
-                await response.json();
-
-        }catch(error){
-
-            data = {};
-
-        }
+        const data =
+            await readApiResponse(
+                response
+            );
 
 
         /*
@@ -2541,10 +3312,12 @@ async function loadDashboard(){
 
             data.authenticated === false ||
 
-            data.success === false &&
-            data.message &&
-            /auth|token|session|login/i.test(
-                String(data.message)
+            (
+                data.success === false &&
+                data.message &&
+                /auth|token|session|login/i.test(
+                    String(data.message)
+                )
             )
 
         ){
@@ -2621,6 +3394,45 @@ async function loadDashboard(){
         const status =
             customer.status ||
             "active";
+
+
+        /* =========================
+           CACHE CUSTOMER
+        ========================= */
+
+        try{
+
+            const cachedUser = {
+
+                ...customer,
+
+                full_name:
+                    fullName,
+
+                email:
+                    email,
+
+                company_name:
+                    company
+
+            };
+
+
+            setStorage(
+                USER_KEY,
+                JSON.stringify(
+                    cachedUser
+                )
+            );
+
+        }catch(error){
+
+            console.warn(
+                "ChatNova user cache failed:",
+                error
+            );
+
+        }
 
 
         /* =========================
@@ -3282,6 +4094,1707 @@ function openWhatsApp(){
 
 
 /* =========================================
+   PROFILE MODAL HELPERS
+========================================= */
+
+function showModalMessage(
+    elementId,
+    message
+){
+
+    const element =
+        document.getElementById(
+            elementId
+        );
+
+
+    if(!element){
+
+        return;
+
+    }
+
+
+    element.textContent =
+        message;
+
+
+    element.style.display =
+        message
+            ? "block"
+            : "none";
+
+}
+
+
+function clearModalMessages(
+    prefix
+){
+
+    showModalMessage(
+        prefix + "Error",
+        ""
+    );
+
+    showModalMessage(
+        prefix + "Success",
+        ""
+    );
+
+}
+
+
+function restoreBodyOverflow(){
+
+    const profileModal =
+        document.getElementById(
+            "profileModal"
+        );
+
+    const passwordModal =
+        document.getElementById(
+            "passwordModal"
+        );
+
+
+    if(
+
+        profileModal &&
+        profileModal.classList.contains("show")
+
+    ){
+
+        document.body.classList.add(
+            "modal-open"
+        );
+
+        return;
+
+    }
+
+
+    if(
+
+        passwordModal &&
+        passwordModal.classList.contains("show")
+
+    ){
+
+        document.body.classList.add(
+            "modal-open"
+        );
+
+        return;
+
+    }
+
+
+    document.body.classList.remove(
+        "modal-open"
+    );
+
+}
+
+
+/* =========================================
+   PROFILE MODAL
+========================================= */
+
+let profileLoading =
+    false;
+
+
+function openProfileModal(){
+
+    const modal =
+        document.getElementById(
+            "profileModal"
+        );
+
+
+    if(!modal){
+
+        return;
+
+    }
+
+
+    clearModalMessages(
+        "profile"
+    );
+
+
+    const cached =
+        getStorage(
+            USER_KEY,
+            null
+        );
+
+
+    if(cached){
+
+        try{
+
+            const user =
+                JSON.parse(
+                    cached
+                );
+
+
+            fillProfileForm(
+                user
+            );
+
+        }catch(error){
+
+            console.warn(
+                "Cached profile parse failed:",
+                error
+            );
+
+        }
+
+    }
+
+
+    const accountName =
+        document.getElementById(
+            "accountName"
+        );
+
+
+    const accountEmail =
+        document.getElementById(
+            "accountEmail"
+        );
+
+
+    const accountCompany =
+        document.getElementById(
+            "accountCompany"
+        );
+
+
+    const nameInput =
+        document.getElementById(
+            "profileFullName"
+        );
+
+
+    const emailInput =
+        document.getElementById(
+            "profileEmail"
+        );
+
+
+    const companyInput =
+        document.getElementById(
+            "profileCompany"
+        );
+
+
+    if(
+        nameInput &&
+        !nameInput.value &&
+        accountName
+    ){
+
+        nameInput.value =
+            accountName.textContent === "—"
+                ? ""
+                : accountName.textContent.trim();
+
+    }
+
+
+    if(
+        emailInput &&
+        accountEmail
+    ){
+
+        emailInput.value =
+            accountEmail.textContent === "—"
+                ? ""
+                : accountEmail.textContent.trim();
+
+    }
+
+
+    if(
+        companyInput &&
+        !companyInput.value &&
+        accountCompany
+    ){
+
+        companyInput.value =
+            accountCompany.textContent === "—"
+                ? ""
+                : accountCompany.textContent.trim();
+
+    }
+
+
+    modal.classList.add(
+        "show"
+    );
+
+
+    document.body.classList.add(
+        "modal-open"
+    );
+
+
+    /*
+     * Load the latest profile from the API.
+     * Cached data is shown immediately first.
+     */
+
+    loadProfile().catch(
+        error => {
+
+            console.warn(
+                "Profile loading error:",
+                error
+            );
+
+        }
+    );
+
+
+    setTimeout(
+        () => {
+
+            const input =
+                document.getElementById(
+                    "profileFullName"
+                );
+
+
+            if(input){
+
+                input.focus();
+
+            }
+
+        },
+        80
+    );
+
+}
+
+
+function fillProfileForm(
+    user
+){
+
+    if(!user){
+
+        return;
+
+    }
+
+
+    const fullName =
+        user.full_name ||
+        user.fullName ||
+        user.name ||
+        "";
+
+
+    const email =
+        user.email ||
+        "";
+
+
+    const phone =
+        user.phone ||
+        user.phone_number ||
+        user.phoneNumber ||
+        "";
+
+
+    const company =
+        user.company_name ||
+        user.companyName ||
+        user.company ||
+        "";
+
+
+    const nameInput =
+        document.getElementById(
+            "profileFullName"
+        );
+
+
+    const emailInput =
+        document.getElementById(
+            "profileEmail"
+        );
+
+
+    const phoneInput =
+        document.getElementById(
+            "profilePhone"
+        );
+
+
+    const companyInput =
+        document.getElementById(
+            "profileCompany"
+        );
+
+
+    if(nameInput){
+
+        nameInput.value =
+            fullName;
+
+    }
+
+
+    if(emailInput){
+
+        emailInput.value =
+            email;
+
+    }
+
+
+    if(phoneInput){
+
+        phoneInput.value =
+            phone;
+
+    }
+
+
+    if(companyInput){
+
+        companyInput.value =
+            company;
+
+    }
+
+}
+
+
+function closeProfileModal(){
+
+    const modal =
+        document.getElementById(
+            "profileModal"
+        );
+
+
+    if(modal){
+
+        modal.classList.remove(
+            "show"
+        );
+
+    }
+
+
+    restoreBodyOverflow();
+
+}
+
+
+async function loadProfile(){
+
+    if(profileLoading){
+
+        return;
+
+    }
+
+
+    profileLoading =
+        true;
+
+
+    try{
+
+        const token =
+            getStorage(
+                TOKEN_KEY
+            );
+
+
+        if(!token){
+
+            handleAuthFailure();
+
+            return;
+
+        }
+
+
+        const response =
+            await fetchWithTimeout(
+
+                API_BASE +
+                "/api/profile",
+
+                {
+                    method:
+                        "GET",
+
+                    headers:
+                        getAuthHeaders()
+                },
+
+                10000
+
+            );
+
+
+        const data =
+            await readApiResponse(
+                response
+            );
+
+
+        if(
+            response.status === 401
+        ){
+
+            handleAuthFailure();
+
+            return;
+
+        }
+
+
+        if(!response.ok){
+
+            console.warn(
+                "Profile API error:",
+                data
+            );
+
+            return;
+
+        }
+
+
+        const user =
+            data.customer ||
+            data.user ||
+            data.profile ||
+            data.account ||
+            data;
+
+
+        if(user){
+
+            fillProfileForm(
+                user
+            );
+
+
+            try{
+
+                setStorage(
+                    USER_KEY,
+                    JSON.stringify(
+                        user
+                    )
+                );
+
+            }catch(error){
+
+                console.warn(
+                    "Profile cache failed:",
+                    error
+                );
+
+            }
+
+        }
+
+
+    }catch(error){
+
+        console.warn(
+            "Unable to load profile:",
+            error
+        );
+
+    }finally{
+
+        profileLoading =
+            false;
+
+    }
+
+}
+
+
+/* =========================================
+   UPDATE PROFILE
+========================================= */
+
+async function saveProfile(event){
+
+    if(event){
+
+        event.preventDefault();
+
+    }
+
+
+    if(profileLoading){
+
+        return;
+
+    }
+
+
+    const nameInput =
+        document.getElementById(
+            "profileFullName"
+        );
+
+
+    const phoneInput =
+        document.getElementById(
+            "profilePhone"
+        );
+
+
+    const companyInput =
+        document.getElementById(
+            "profileCompany"
+        );
+
+
+    const button =
+        document.getElementById(
+            "saveProfileButton"
+        );
+
+
+    const fullName =
+        nameInput
+            ? nameInput.value.trim()
+            : "";
+
+
+    const phone =
+        phoneInput
+            ? phoneInput.value.trim()
+            : "";
+
+
+    const company =
+        companyInput
+            ? companyInput.value.trim()
+            : "";
+
+
+    clearModalMessages(
+        "profile"
+    );
+
+
+    if(!fullName){
+
+        showModalMessage(
+
+            "profileError",
+
+            currentLanguage === "zh"
+
+                ? "请输入姓名。"
+
+                : "Please enter your name."
+
+        );
+
+        if(nameInput){
+
+            nameInput.focus();
+
+        }
+
+        return;
+
+    }
+
+
+    if(fullName.length > 120){
+
+        showModalMessage(
+
+            "profileError",
+
+            currentLanguage === "zh"
+
+                ? "姓名不能超过 120 个字符。"
+
+                : "Name cannot exceed 120 characters."
+
+        );
+
+        return;
+
+    }
+
+
+    if(phone.length > 30){
+
+        showModalMessage(
+
+            "profileError",
+
+            currentLanguage === "zh"
+
+                ? "电话号码不能超过 30 个字符。"
+
+                : "Phone cannot exceed 30 characters."
+
+        );
+
+        return;
+
+    }
+
+
+    if(company.length > 160){
+
+        showModalMessage(
+
+            "profileError",
+
+            currentLanguage === "zh"
+
+                ? "公司名称不能超过 160 个字符。"
+
+                : "Company name cannot exceed 160 characters."
+
+        );
+
+        return;
+
+    }
+
+
+    profileLoading =
+        true;
+
+
+    if(button){
+
+        button.disabled =
+            true;
+
+        button.innerHTML = `
+
+            <span class="btn-loading">
+
+                <span class="btn-spinner"></span>
+
+                ${
+                    currentLanguage === "zh"
+                        ? "保存中..."
+                        : "Saving..."
+                }
+
+            </span>
+
+        `;
+
+    }
+
+
+    try{
+
+        const token =
+            getStorage(
+                TOKEN_KEY
+            );
+
+
+        if(!token){
+
+            handleAuthFailure();
+
+            return;
+
+        }
+
+
+        const response =
+            await fetchWithTimeout(
+
+                API_BASE +
+                "/api/profile",
+
+                {
+                    method:
+                        "PUT",
+
+                    headers:{
+                        ...getAuthHeaders(),
+
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            full_name:
+                                fullName,
+
+                            phone:
+                                phone,
+
+                            company_name:
+                                company
+
+                        })
+                },
+
+                12000
+
+            );
+
+
+        const data =
+            await readApiResponse(
+                response
+            );
+
+
+        if(
+            response.status === 401
+        ){
+
+            handleAuthFailure();
+
+            return;
+
+        }
+
+
+        if(!response.ok){
+
+            showModalMessage(
+
+                "profileError",
+
+                getApiErrorMessage(
+
+                    data,
+
+                    currentLanguage === "zh"
+
+                        ? "保存资料失败，请稍后再试。"
+
+                        : "Unable to save your profile. Please try again."
+
+                )
+
+            );
+
+            return;
+
+        }
+
+
+        const updatedUser =
+            data.customer ||
+            data.user ||
+            data.profile ||
+            data.account ||
+            data;
+
+
+        /*
+         * Cache updated profile.
+         */
+
+        if(updatedUser){
+
+            try{
+
+                setStorage(
+                    USER_KEY,
+                    JSON.stringify(
+                        updatedUser
+                    )
+                );
+
+            }catch(error){
+
+                console.warn(
+                    "Updated user cache failed:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /*
+         * Immediately update dashboard UI.
+         */
+
+        updateDashboardProfile(
+            updatedUser,
+            {
+                full_name:
+                    fullName,
+
+                phone:
+                    phone,
+
+                company_name:
+                    company
+            }
+        );
+
+
+        showModalMessage(
+
+            "profileSuccess",
+
+            currentLanguage === "zh"
+
+                ? "资料已成功更新。"
+
+                : "Your profile has been updated successfully."
+
+        );
+
+
+        /*
+         * Keep modal open briefly so the user
+         * can clearly see the successful result.
+         */
+
+        setTimeout(
+            () => {
+
+                closeProfileModal();
+
+            },
+            700
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Save profile error:",
+            error
+        );
+
+
+        showModalMessage(
+
+            "profileError",
+
+            currentLanguage === "zh"
+
+                ? "无法连接服务器，请稍后再试。"
+
+                : "Unable to connect to the server. Please try again."
+
+        );
+
+    }finally{
+
+        profileLoading =
+            false;
+
+
+        if(button){
+
+            button.disabled =
+                false;
+
+
+            button.textContent =
+                currentLanguage === "zh"
+                    ? "保存修改"
+                    : "Save Changes";
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   UPDATE DASHBOARD PROFILE UI
+========================================= */
+
+function updateDashboardProfile(
+    user,
+    fallback = {}
+){
+
+    const fullName =
+        (
+            user &&
+            (
+                user.full_name ||
+                user.fullName ||
+                user.name
+            )
+        ) ||
+        fallback.full_name ||
+        "Customer";
+
+
+    const email =
+        (
+            user &&
+            user.email
+        ) ||
+        getStorage(
+            "chatnova_profile_email",
+            null
+        ) ||
+        document.getElementById(
+            "accountEmail"
+        )?.textContent ||
+        "—";
+
+
+    const company =
+        (
+            user &&
+            (
+                user.company_name ||
+                user.companyName ||
+                user.company
+            )
+        ) ||
+        fallback.company_name ||
+        "—";
+
+
+    const welcomeName =
+        document.getElementById(
+            "welcomeName"
+        );
+
+
+    if(welcomeName){
+
+        welcomeName.textContent =
+            fullName;
+
+    }
+
+
+    const topName =
+        document.getElementById(
+            "topName"
+        );
+
+
+    if(topName){
+
+        topName.textContent =
+            fullName;
+
+    }
+
+
+    const topEmail =
+        document.getElementById(
+            "topEmail"
+        );
+
+
+    if(topEmail){
+
+        topEmail.textContent =
+            email;
+
+    }
+
+
+    const accountName =
+        document.getElementById(
+            "accountName"
+        );
+
+
+    if(accountName){
+
+        accountName.textContent =
+            fullName;
+
+    }
+
+
+    const accountEmail =
+        document.getElementById(
+            "accountEmail"
+        );
+
+
+    if(accountEmail){
+
+        accountEmail.textContent =
+            email;
+
+    }
+
+
+    const accountCompany =
+        document.getElementById(
+            "accountCompany"
+        );
+
+
+    if(accountCompany){
+
+        accountCompany.textContent =
+            company;
+
+    }
+
+
+    const firstLetter =
+        String(fullName)
+            .trim()
+            .charAt(0)
+            .toUpperCase() ||
+        "C";
+
+
+    const avatar =
+        document.getElementById(
+            "avatar"
+        );
+
+
+    if(avatar){
+
+        avatar.textContent =
+            firstLetter;
+
+    }
+
+}
+
+
+/* =========================================
+   PASSWORD MODAL
+========================================= */
+
+let passwordLoading =
+    false;
+
+
+function openPasswordModal(){
+
+    const modal =
+        document.getElementById(
+            "passwordModal"
+        );
+
+
+    if(!modal){
+
+        return;
+
+    }
+
+
+    clearModalMessages(
+        "password"
+    );
+
+
+    const form =
+        document.getElementById(
+            "passwordForm"
+        );
+
+
+    if(form){
+
+        form.reset();
+
+    }
+
+
+    modal.classList.add(
+        "show"
+    );
+
+
+    document.body.classList.add(
+        "modal-open"
+    );
+
+
+    setTimeout(
+        () => {
+
+            const input =
+                document.getElementById(
+                    "currentPassword"
+                );
+
+
+            if(input){
+
+                input.focus();
+
+            }
+
+        },
+        80
+    );
+
+}
+
+
+function closePasswordModal(){
+
+    const modal =
+        document.getElementById(
+            "passwordModal"
+        );
+
+
+    if(modal){
+
+        modal.classList.remove(
+            "show"
+        );
+
+    }
+
+
+    restoreBodyOverflow();
+
+}
+
+
+async function changePassword(event){
+
+    if(event){
+
+        event.preventDefault();
+
+    }
+
+
+    if(passwordLoading){
+
+        return;
+
+    }
+
+
+    const currentInput =
+        document.getElementById(
+            "currentPassword"
+        );
+
+
+    const newInput =
+        document.getElementById(
+            "newPassword"
+        );
+
+
+    const confirmInput =
+        document.getElementById(
+            "confirmPassword"
+        );
+
+
+    const button =
+        document.getElementById(
+            "changePasswordButton"
+        );
+
+
+    const currentPassword =
+        currentInput
+            ? currentInput.value
+            : "";
+
+
+    const newPassword =
+        newInput
+            ? newInput.value
+            : "";
+
+
+    const confirmPassword =
+        confirmInput
+            ? confirmInput.value
+            : "";
+
+
+    clearModalMessages(
+        "password"
+    );
+
+
+    if(!currentPassword){
+
+        showModalMessage(
+
+            "passwordError",
+
+            currentLanguage === "zh"
+
+                ? "请输入当前密码。"
+
+                : "Please enter your current password."
+
+        );
+
+        if(currentInput){
+
+            currentInput.focus();
+
+        }
+
+        return;
+
+    }
+
+
+    if(!newPassword){
+
+        showModalMessage(
+
+            "passwordError",
+
+            currentLanguage === "zh"
+
+                ? "请输入新密码。"
+
+                : "Please enter a new password."
+
+        );
+
+        if(newInput){
+
+            newInput.focus();
+
+        }
+
+        return;
+
+    }
+
+
+    if(newPassword.length < 8){
+
+        showModalMessage(
+
+            "passwordError",
+
+            currentLanguage === "zh"
+
+                ? "新密码至少需要 8 个字符。"
+
+                : "New password must be at least 8 characters."
+
+        );
+
+        if(newInput){
+
+            newInput.focus();
+
+        }
+
+        return;
+
+    }
+
+
+    if(confirmPassword !== newPassword){
+
+        showModalMessage(
+
+            "passwordError",
+
+            currentLanguage === "zh"
+
+                ? "两次输入的新密码不一致。"
+
+                : "The new passwords do not match."
+
+        );
+
+        if(confirmInput){
+
+            confirmInput.focus();
+
+        }
+
+        return;
+
+    }
+
+
+    if(currentPassword === newPassword){
+
+        showModalMessage(
+
+            "passwordError",
+
+            currentLanguage === "zh"
+
+                ? "新密码不能与当前密码相同。"
+
+                : "The new password must be different from the current password."
+
+        );
+
+        if(newInput){
+
+            newInput.focus();
+
+        }
+
+        return;
+
+    }
+
+
+    passwordLoading =
+        true;
+
+
+    if(button){
+
+        button.disabled =
+            true;
+
+        button.innerHTML = `
+
+            <span class="btn-loading">
+
+                <span class="btn-spinner"></span>
+
+                ${
+                    currentLanguage === "zh"
+                        ? "更新中..."
+                        : "Updating..."
+                }
+
+            </span>
+
+        `;
+
+    }
+
+
+    try{
+
+        const token =
+            getStorage(
+                TOKEN_KEY
+            );
+
+
+        if(!token){
+
+            handleAuthFailure();
+
+            return;
+
+        }
+
+
+        const response =
+            await fetchWithTimeout(
+
+                API_BASE +
+                "/api/change-password",
+
+                {
+                    method:
+                        "POST",
+
+                    headers:{
+                        ...getAuthHeaders(),
+
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            current_password:
+                                currentPassword,
+
+                            new_password:
+                                newPassword,
+
+                            confirm_password:
+                                confirmPassword
+
+                        })
+                },
+
+                12000
+
+            );
+
+
+        const data =
+            await readApiResponse(
+                response
+            );
+
+
+        if(
+            response.status === 401
+        ){
+
+            showModalMessage(
+
+                "passwordError",
+
+                getApiErrorMessage(
+
+                    data,
+
+                    currentLanguage === "zh"
+
+                        ? "当前密码不正确或登录已过期。"
+
+                        : "The current password is incorrect or the session has expired."
+
+                )
+
+            );
+
+            return;
+
+        }
+
+
+        if(!response.ok){
+
+            showModalMessage(
+
+                "passwordError",
+
+                getApiErrorMessage(
+
+                    data,
+
+                    currentLanguage === "zh"
+
+                        ? "修改密码失败，请检查输入后再试。"
+
+                        : "Unable to change your password. Please check your input and try again."
+
+                )
+
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Worker revokes all sessions after
+         * a successful password change.
+         *
+         * Therefore the local token MUST be
+         * removed and the user must login again.
+         */
+
+        showModalMessage(
+
+            "passwordSuccess",
+
+            currentLanguage === "zh"
+
+                ? "密码已更新。即将返回登录页面，请使用新密码登录。"
+
+                : "Password updated. You will be returned to the login page to sign in with your new password."
+
+        );
+
+
+        removeStorage(
+            TOKEN_KEY
+        );
+
+        removeStorage(
+            USER_KEY
+        );
+
+
+        setTimeout(
+            () => {
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+            },
+            1100
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Change password error:",
+            error
+        );
+
+
+        showModalMessage(
+
+            "passwordError",
+
+            currentLanguage === "zh"
+
+                ? "无法连接服务器，请稍后再试。"
+
+                : "Unable to connect to the server. Please try again."
+
+        );
+
+    }finally{
+
+        passwordLoading =
+            false;
+
+
+        if(button){
+
+            button.disabled =
+                false;
+
+
+            button.textContent =
+                currentLanguage === "zh"
+                    ? "更新密码"
+                    : "Update Password";
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   MODAL OVERLAY CLICK
+========================================= */
+
+document.getElementById(
+    "profileModal"
+)?.addEventListener(
+    "click",
+    event => {
+
+        if(
+            event.target ===
+            event.currentTarget
+        ){
+
+            closeProfileModal();
+
+        }
+
+    }
+);
+
+
+document.getElementById(
+    "passwordModal"
+)?.addEventListener(
+    "click",
+    event => {
+
+        if(
+            event.target ===
+            event.currentTarget
+        ){
+
+            closePasswordModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   ESC KEY
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key !==
+            "Escape"
+        ){
+
+            return;
+
+        }
+
+
+        const profileModal =
+            document.getElementById(
+                "profileModal"
+            );
+
+
+        const passwordModal =
+            document.getElementById(
+                "passwordModal"
+            );
+
+
+        if(
+            profileModal &&
+            profileModal.classList.contains("show")
+        ){
+
+            closeProfileModal();
+
+            return;
+
+        }
+
+
+        if(
+            passwordModal &&
+            passwordModal.classList.contains("show")
+        ){
+
+            closePasswordModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================
    LOGOUT
 ========================================= */
 
@@ -3300,12 +5813,6 @@ async function logout(){
 
     logoutRunning =
         true;
-
-
-    const token =
-        getStorage(
-            TOKEN_KEY
-        );
 
 
     try{
@@ -3437,8 +5944,16 @@ function closeSidebar(){
     }
 
 
-    document.body.style.overflow =
-        "";
+    if(
+        !document.querySelector(
+            ".modal-overlay.show"
+        )
+    ){
+
+        document.body.style.overflow =
+            "";
+
+    }
 
 }
 
