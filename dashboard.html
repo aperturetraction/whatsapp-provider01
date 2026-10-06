@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -188,18 +187,19 @@ a{
 }
 
 .topbar{
-    height:72px;
+    height:calc(72px + env(safe-area-inset-top));
     border-bottom:1px solid var(--border);
     display:flex;
     align-items:center;
     justify-content:space-between;
     gap:16px;
-    padding:0 32px;
+    padding:
+        env(safe-area-inset-top) 32px 0 32px;
     background:rgba(7,10,9,.7);
     backdrop-filter:blur(14px);
     -webkit-backdrop-filter:blur(14px);
     position:sticky;
-    top:0;
+    top:env(safe-area-inset-top);
     z-index:50;
 }
 
@@ -990,8 +990,9 @@ a{
     }
 
     .topbar{
+        height:calc(72px + env(safe-area-inset-top));
         padding:
-            0
+            env(safe-area-inset-top)
             max(16px,env(safe-area-inset-right))
             0
             max(16px,env(safe-area-inset-left));
@@ -1045,7 +1046,7 @@ a{
 @media(max-width:600px){
 
     .topbar{
-        height:64px;
+        height:calc(64px + env(safe-area-inset-top));
         gap:8px;
     }
 
@@ -1460,28 +1461,28 @@ a{
                 </span>
             </a>
 
-            <a href="#">
+            <a href="#" onclick="return false;" aria-disabled="true" title="Coming soon">
                 <span class="nav-icon">◌</span>
                 <span data-i18n="messages">
                     Messages
                 </span>
             </a>
 
-            <a href="#">
+            <a href="#" onclick="return false;" aria-disabled="true" title="Coming soon">
                 <span class="nav-icon">◎</span>
                 <span data-i18n="contacts">
                     Contacts
                 </span>
             </a>
 
-            <a href="#">
+            <a href="#" onclick="return false;" aria-disabled="true" title="Coming soon">
                 <span class="nav-icon">◇</span>
                 <span data-i18n="billing">
                     Billing
                 </span>
             </a>
 
-            <a href="#">
+            <a href="#" onclick="return false;" aria-disabled="true" title="Coming soon">
                 <span class="nav-icon">⚙</span>
                 <span data-i18n="settings">
                     Settings
@@ -1583,7 +1584,8 @@ a{
 
                         <div
                             id="topName"
-                            class="profile-name">
+                            class="profile-name"
+                            data-i18n="customer">
 
                             Customer
 
@@ -1651,7 +1653,7 @@ a{
 
                     <span>·</span>
 
-                    <span id="planStatus">
+                    <span id="planStatus" data-i18n="active">
                         Active
                     </span>
 
@@ -1852,9 +1854,9 @@ a{
                                             class="status-dot">
                                         </span>
 
-                                        <span id="connectionStatus">
+                                        <span id="connectionStatus" data-i18n="checking">
 
-                                            Checking connection...
+                                            Checking...
 
                                         </span>
 
@@ -1989,7 +1991,7 @@ a{
                                 id="accountStatus"
                                 class="info-value">
 
-                                <span class="badge badge-green">
+                                <span class="badge badge-green" data-i18n="active">
                                     Active
                                 </span>
 
@@ -2119,12 +2121,12 @@ a{
 
                         <div class="info-row">
 
-                            <span class="info-label">
-                                ChatNova
+                            <span class="info-label" data-i18n="provider">
+                                Provider
                             </span>
 
                             <span class="info-value green">
-                                Provider
+                                ChatNova
                             </span>
 
                         </div>
@@ -2140,47 +2142,14 @@ a{
 
                             </span>
 
-                            <span class="info-value">
+                            <span class="info-value" data-i18n="platformValue">
                                 WhatsApp Business
                             </span>
 
                         </div>
 
 
-                        <div class="info-row">
-
-                            <span
-                                class="info-label"
-                                data-i18n="backend">
-
-                                Backend
-
-                            </span>
-
-                            <span class="info-value">
-                                Cloudflare
-                            </span>
-
-                        </div>
-
-
-                        <div class="info-row">
-
-                            <span
-                                class="info-label"
-                                data-i18n="database">
-
-                                Database
-
-                            </span>
-
-                            <span class="info-value">
-                                D1
-                            </span>
-
-                        </div>
-
-                    </div>
+                                            </div>
 
                 </div>
 
@@ -2796,7 +2765,20 @@ const translations = {
 
         platform:"Platform",
         backend:"Backend",
-        database:"Database"
+        database:"Database",
+        provider:"Provider",
+        customer:"Customer",
+        active:"Active",
+        checking:"Checking...",
+        unknown:"Unknown",
+        unavailable:"Unavailable",
+        disconnected:"Disconnected",
+        waitingConnection:"Waiting for connection",
+        connected:"Connected",
+        connectionError:"Connection error",
+        noWhatsappAccount:"No WhatsApp account",
+        whatsappAccount:"WhatsApp Account",
+        platformValue:"WhatsApp Business"
 
     },
 
@@ -2886,7 +2868,20 @@ const translations = {
 
         platform:"平台",
         backend:"后端",
-        database:"数据库"
+        database:"数据库",
+        provider:"Provider",
+        customer:"客户",
+        active:"启用",
+        checking:"正在检查...",
+        unknown:"未知",
+        unavailable:"暂不可用",
+        disconnected:"未连接",
+        waitingConnection:"等待连接",
+        connected:"已连接",
+        connectionError:"连接错误",
+        noWhatsappAccount:"没有 WhatsApp 账号",
+        whatsappAccount:"WhatsApp 账号",
+        platformValue:"WhatsApp Business"
 
     }
 
@@ -2911,6 +2906,42 @@ if(
 
     currentLanguage = "en";
 
+}
+
+
+function renderDynamicTranslations(){
+
+    const customer =
+        document.getElementById("topName");
+
+    if(customer && (customer.textContent.trim() === "Customer" || customer.getAttribute("data-i18n") === "customer")){
+        customer.textContent =
+            translations[currentLanguage]?.customer ||
+            translations.en.customer;
+        customer.setAttribute("data-i18n", "customer");
+    }
+
+    const active =
+        document.getElementById("planStatus");
+
+    if(active){
+        active.textContent =
+            translations[currentLanguage]?.active ||
+            translations.en.active;
+        active.setAttribute("data-i18n", "active");
+    }
+
+    const connection =
+        document.getElementById("connectionStatus");
+
+    if(connection){
+        const key =
+            connection.getAttribute("data-i18n") || "unknown";
+        connection.textContent =
+            translations[currentLanguage]?.[key] ||
+            translations.en[key] ||
+            connection.textContent;
+    }
 }
 
 
@@ -2996,6 +3027,8 @@ function setLanguage(lang){
         );
 
     }
+
+    renderDynamicTranslations();
 
 }
 
@@ -3310,15 +3343,7 @@ async function loadDashboard(){
 
             response.status === 401 ||
 
-            data.authenticated === false ||
-
-            (
-                data.success === false &&
-                data.message &&
-                /auth|token|session|login/i.test(
-                    String(data.message)
-                )
-            )
+            data.authenticated === false
 
         ){
 
@@ -3561,25 +3586,29 @@ async function loadDashboard(){
 
         if(accountStatus){
 
-            const safeStatus =
-                String(status);
+            accountStatus.textContent = "";
 
+            const badge =
+                document.createElement("span");
 
-            accountStatus.innerHTML = `
+            badge.className =
+                "badge badge-green";
 
-                <span class="badge badge-green">
+            badge.setAttribute(
+                "data-i18n",
+                String(status).toLowerCase() === "active"
+                    ? "active"
+                    : "status"
+            );
 
-                    ${
-                        safeStatus
-                            .charAt(0)
-                            .toUpperCase()
-                        +
-                        safeStatus.slice(1)
-                    }
+            badge.textContent =
+                String(status).toLowerCase() === "active"
+                    ? (translations[currentLanguage]?.active || "Active")
+                    : String(status || "").trim() || (translations[currentLanguage]?.unknown || "Unknown");
 
-                </span>
-
-            `;
+            accountStatus.appendChild(
+                badge
+            );
 
         }
 
@@ -3657,12 +3686,17 @@ async function loadDashboard(){
             0;
 
 
+        const instances =
+            data.instances ||
+            data.whatsapp_instances ||
+            [];
+
         const whatsappAccounts =
             stats.whatsappAccounts ??
             stats.whatsapp_accounts ??
             data.whatsappAccounts ??
             data.whatsapp_accounts ??
-            0;
+            (Array.isArray(instances) ? instances.length : 0);
 
 
         const onlineAccounts =
@@ -3682,9 +3716,7 @@ async function loadDashboard(){
         if(messagesElement){
 
             messagesElement.textContent =
-                Number(
-                    messagesSent
-                ).toLocaleString();
+                (Number(messagesSent) || 0).toLocaleString();
 
         }
 
@@ -3698,9 +3730,7 @@ async function loadDashboard(){
         if(whatsappElement){
 
             whatsappElement.textContent =
-                Number(
-                    whatsappAccounts
-                ).toLocaleString();
+                (Number(whatsappAccounts) || 0).toLocaleString();
 
         }
 
@@ -3714,9 +3744,7 @@ async function loadDashboard(){
         if(onlineElement){
 
             onlineElement.textContent =
-                Number(
-                    onlineAccounts
-                ).toLocaleString();
+                (Number(onlineAccounts) || 0).toLocaleString();
 
         }
 
@@ -3724,12 +3752,6 @@ async function loadDashboard(){
         /* =========================
            WHATSAPP INSTANCE
         ========================= */
-
-        const instances =
-            data.instances ||
-            data.whatsapp_instances ||
-            [];
-
 
         if(
 
@@ -3761,7 +3783,8 @@ async function loadDashboard(){
 
                     firstInstance.phoneNumber ||
 
-                    "WhatsApp Account";
+                    translations[currentLanguage]?.whatsappAccount ||
+                    translations.en.whatsappAccount;
 
             }
 
@@ -3834,6 +3857,64 @@ let statusLoading =
     false;
 
 
+function setConnectionStatus(
+    state,
+    mode = "normal"
+){
+
+    const dot =
+        document.getElementById(
+            "connectionDot"
+        );
+
+    const statusText =
+        document.getElementById(
+            "connectionStatus"
+        );
+
+    if(!dot || !statusText){
+
+        return;
+
+    }
+
+    const normalized =
+        String(state || "").toLowerCase();
+
+    dot.className =
+        "status-dot";
+
+    let key = "disconnected";
+
+    if(normalized.includes("connected") || normalized.includes("online") || normalized === "authorized"){
+        dot.classList.add("connected");
+        key = "connected";
+    }else if(normalized.includes("scan") || normalized.includes("qr") || normalized.includes("starting") || normalized.includes("initializing")){
+        dot.classList.add("warning");
+        key = "waitingConnection";
+    }else if(normalized.includes("error") || normalized.includes("failed")){
+        dot.classList.add("error");
+        key = "connectionError";
+    }else if(mode === "checking"){
+        key = "checking";
+    }else if(mode === "unknown"){
+        key = "unknown";
+    }else if(mode === "unavailable"){
+        key = "unavailable";
+    }
+
+    statusText.textContent =
+        translations[currentLanguage]?.[key] ||
+        translations.en[key] ||
+        key;
+
+    statusText.setAttribute(
+        "data-i18n",
+        key
+    );
+}
+
+
 async function loadConnectionStatus(
     dashboardData = null
 ){
@@ -3841,13 +3922,10 @@ async function loadConnectionStatus(
     if(statusLoading){
 
         return;
-
     }
-
 
     statusLoading =
         true;
-
 
     try{
 
@@ -3856,183 +3934,48 @@ async function loadConnectionStatus(
                 TOKEN_KEY
             );
 
-
         if(!token){
-
+            setConnectionStatus("", "unknown");
             return;
-
         }
-
 
         const response =
             await fetchWithTimeout(
-
-                API_BASE +
-                "/api/status",
-
+                API_BASE + "/api/status",
                 {
-                    method:
-                        "GET",
-
-                    headers:
-                        getAuthHeaders()
+                    method:"GET",
+                    headers:getAuthHeaders()
                 },
-
                 10000
-
             );
 
-
-        if(
-            response.status === 401
-        ){
-
+        if(response.status === 401){
             handleAuthFailure();
-
             return;
-
         }
-
 
         if(!response.ok){
-
+            setConnectionStatus("", "unavailable");
             return;
-
         }
-
 
         const data =
             await response.json();
 
-
         const instance =
-            data.instance ||
-            data.whatsapp ||
-            data;
-
+            data?.instance ||
+            data?.whatsapp ||
+            data ||
+            {};
 
         const state =
             String(
-
                 instance.state ||
                 instance.status ||
                 ""
-
-            ).toLowerCase();
-
-
-        const dot =
-            document.getElementById(
-                "connectionDot"
             );
 
-
-        const statusText =
-            document.getElementById(
-                "connectionStatus"
-            );
-
-
-        if(
-
-            !dot ||
-            !statusText
-
-        ){
-
-            return;
-
-        }
-
-
-        dot.className =
-            "status-dot";
-
-
-        if(
-
-            state.includes("connected") ||
-            state.includes("online") ||
-            state === "authorized"
-
-        ){
-
-            dot.classList.add(
-                "connected"
-            );
-
-
-            statusText.textContent =
-
-                currentLanguage === "zh"
-
-                    ? "已连接"
-
-                    : "Connected";
-
-        }
-
-
-        else if(
-
-            state.includes("scan") ||
-            state.includes("qr") ||
-            state.includes("starting") ||
-            state.includes("initializing")
-
-        ){
-
-            dot.classList.add(
-                "warning"
-            );
-
-
-            statusText.textContent =
-
-                currentLanguage === "zh"
-
-                    ? "等待连接"
-
-                    : "Waiting for connection";
-
-        }
-
-
-        else if(
-
-            state.includes("error") ||
-            state.includes("failed")
-
-        ){
-
-            dot.classList.add(
-                "error"
-            );
-
-
-            statusText.textContent =
-
-                currentLanguage === "zh"
-
-                    ? "连接错误"
-
-                    : "Connection error";
-
-        }
-
-
-        else{
-
-            statusText.textContent =
-
-                currentLanguage === "zh"
-
-                    ? "未连接"
-
-                    : "Disconnected";
-
-        }
-
+        setConnectionStatus(state || "", state ? "normal" : "unknown");
 
     }catch(error){
 
@@ -4041,13 +3984,14 @@ async function loadConnectionStatus(
             error
         );
 
+        setConnectionStatus("", "unavailable");
+
     }finally{
 
         statusLoading =
             false;
 
     }
-
 }
 
 
@@ -4065,13 +4009,10 @@ async function refreshStatus(){
 
     if(statusText){
 
-        statusText.textContent =
-
-            currentLanguage === "zh"
-
-                ? "正在检查..."
-
-                : "Checking...";
+        setConnectionStatus(
+            "",
+            "checking"
+        );
 
     }
 
@@ -4200,7 +4141,13 @@ function restoreBodyOverflow(){
    PROFILE MODAL
 ========================================= */
 
-let profileLoading =
+let profileFetching =
+    false;
+
+let profileSaving =
+    false;
+
+let profileFormDirty =
     false;
 
 
@@ -4222,6 +4169,10 @@ function openProfileModal(){
     clearModalMessages(
         "profile"
     );
+
+
+    profileFormDirty =
+        false;
 
 
     const cached =
@@ -4384,10 +4335,11 @@ function openProfileModal(){
 
 
 function fillProfileForm(
-    user
+    user,
+    force = false
 ){
 
-    if(!user){
+    if(!user || (!force && profileFormDirty)){
 
         return;
 
@@ -4402,8 +4354,9 @@ function fillProfileForm(
 
 
     const email =
-        user.email ||
-        "";
+        user.email && user.email !== "—"
+            ? user.email
+            : "";
 
 
     const phone =
@@ -4502,14 +4455,14 @@ function closeProfileModal(){
 
 async function loadProfile(){
 
-    if(profileLoading){
+    if(profileFetching){
 
         return;
 
     }
 
 
-    profileLoading =
+    profileFetching =
         true;
 
 
@@ -4579,11 +4532,15 @@ async function loadProfile(){
 
 
         const user =
-            data.customer ||
-            data.user ||
-            data.profile ||
-            data.account ||
-            data;
+            data && typeof data === "object"
+                ? (
+                    data.customer ||
+                    data.user ||
+                    data.profile ||
+                    data.account ||
+                    null
+                )
+                : null;
 
 
         if(user){
@@ -4623,7 +4580,7 @@ async function loadProfile(){
 
     }finally{
 
-        profileLoading =
+        profileFetching =
             false;
 
     }
@@ -4644,7 +4601,7 @@ async function saveProfile(event){
     }
 
 
-    if(profileLoading){
+    if(profileSaving){
 
         return;
 
@@ -4742,7 +4699,7 @@ async function saveProfile(event){
     }
 
 
-    if(phone.length > 30){
+    if(phone.length > 50){
 
         showModalMessage(
 
@@ -4750,9 +4707,9 @@ async function saveProfile(event){
 
             currentLanguage === "zh"
 
-                ? "电话号码不能超过 30 个字符。"
+                ? "电话号码不能超过 50 个字符。"
 
-                : "Phone cannot exceed 30 characters."
+                : "Phone cannot exceed 50 characters."
 
         );
 
@@ -4761,7 +4718,7 @@ async function saveProfile(event){
     }
 
 
-    if(company.length > 160){
+    if(company.length > 150){
 
         showModalMessage(
 
@@ -4769,9 +4726,9 @@ async function saveProfile(event){
 
             currentLanguage === "zh"
 
-                ? "公司名称不能超过 160 个字符。"
+                ? "公司名称不能超过 150 个字符。"
 
-                : "Company name cannot exceed 160 characters."
+                : "Company name cannot exceed 150 characters."
 
         );
 
@@ -4780,7 +4737,7 @@ async function saveProfile(event){
     }
 
 
-    profileLoading =
+    profileSaving =
         true;
 
 
@@ -4904,12 +4861,66 @@ async function saveProfile(event){
         }
 
 
-        const updatedUser =
-            data.customer ||
-            data.user ||
-            data.profile ||
-            data.account ||
-            data;
+        const apiUser =
+            data && typeof data === "object"
+                ? (
+                    data.customer ||
+                    data.user ||
+                    data.profile ||
+                    data.account ||
+                    null
+                )
+                : null;
+
+        let updatedUser =
+            apiUser;
+
+        if(!updatedUser){
+
+            let cachedUser = {};
+
+            try{
+
+                const cached =
+                    getStorage(
+                        USER_KEY,
+                        null
+                    );
+
+                if(cached){
+
+                    const parsed =
+                        JSON.parse(cached);
+
+                    if(
+                        parsed &&
+                        typeof parsed === "object" &&
+                        !Array.isArray(parsed)
+                    ){
+
+                        cachedUser = parsed;
+
+                    }
+
+                }
+
+            }catch(error){
+
+                console.warn(
+                    "Existing user cache parse failed:",
+                    error
+                );
+
+            }
+
+            updatedUser = {
+                ...cachedUser,
+                full_name:fullName,
+                phone:phone,
+                company_name:company
+            };
+
+        }
 
 
         /*
@@ -5008,7 +5019,10 @@ async function saveProfile(event){
 
     }finally{
 
-        profileLoading =
+        profileSaving =
+            false;
+
+        profileFormDirty =
             false;
 
 
@@ -5698,6 +5712,28 @@ async function changePassword(event){
 
 
 /* =========================================
+   PROFILE FORM DIRTY TRACKING
+========================================= */
+
+[
+    "profileFullName",
+    "profilePhone",
+    "profileCompany"
+].forEach(
+    id => {
+
+        document.getElementById(id)?.addEventListener(
+            "input",
+            () => {
+                profileFormDirty = true;
+            }
+        );
+
+    }
+);
+
+
+/* =========================================
    MODAL OVERLAY CLICK
 ========================================= */
 
@@ -6068,6 +6104,22 @@ function initializeDashboard(){
     setTimeout(
         () => {
 
+            const loadingText =
+                document.getElementById("loadingText");
+
+            if(loadingText){
+                loadingText.textContent =
+                    currentLanguage === "zh"
+                        ? "加载超时，请检查网络后刷新。"
+                        : "Loading timed out. Please check your connection and refresh.";
+            }
+
+            showApiNotice(
+                currentLanguage === "zh"
+                    ? "无法在预期时间内取得服务器资料。请检查网络后刷新。"
+                    : "The server data did not arrive in time. Please check your connection and refresh."
+            );
+
             hideLoading();
 
         },
@@ -6078,6 +6130,9 @@ function initializeDashboard(){
     loadDashboard();
 
 }
+
+
+renderDynamicTranslations();
 
 
 /* =========================================
@@ -6169,15 +6224,7 @@ window.addEventListener(
     "pageshow",
     event => {
 
-        if(
-
-            event.persisted &&
-
-            window.matchMedia(
-                "(max-width:850px)"
-            ).matches
-
-        ){
+        if(event.persisted){
 
             hideLoading();
 
