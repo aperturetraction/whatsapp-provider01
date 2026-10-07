@@ -1,896 +1,1648 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ChatNova — WhatsApp Accounts</title>
+<link rel="stylesheet" href="style.css">
 
-    <meta charset="UTF-8">
+<style>
+:root{
+  --green:#19c37d;
+  --bg:#0b0f14;
+  --card:#11161c;
+  --muted:#8b949e;
+  --line:rgba(255,255,255,.08)
+}
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+body{
+  background:var(--bg);
+  color:#fff
+}
 
-    <title>
-        WhatsApp - Provider
-    </title>
+.page-head{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  align-items:center
+}
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+.actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap
+}
 
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:16px
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:20px
+}
+
+.cardhead{
+  display:flex;
+  justify-content:space-between;
+  gap:10px
+}
+
+.muted{
+  color:var(--muted);
+  font-size:13px
+}
+
+.pill{
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700
+}
+
+.ok{
+  background:#123c28;
+  color:#4ade80
+}
+
+.wait{
+  background:#3b2c12;
+  color:#fbbf24
+}
+
+.bad{
+  background:#40181d;
+  color:#f87171
+}
+
+.neutral{
+  background:#202630;
+  color:#cbd5e1
+}
+
+.empty{
+  text-align:center;
+  padding:55px 20px;
+  border:1px dashed var(--line);
+  border-radius:16px
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:20
+}
+
+.modal.show{
+  display:flex
+}
+
+.dialog{
+  width:100%;
+  max-width:520px;
+  max-height:90vh;
+  overflow:auto;
+  background:#11161c;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:22px
+}
+
+.field{
+  margin:14px 0
+}
+
+.field label{
+  display:block;
+  margin-bottom:7px;
+  font-size:13px;
+  font-weight:700;
+  color:#d1d5db
+}
+
+.field input{
+  box-sizing:border-box;
+  width:100%;
+  padding:12px;
+  border-radius:9px;
+  border:1px solid var(--line);
+  background:#0b0f14;
+  color:#fff
+}
+
+.note{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.5
+}
+
+.notice{
+  display:none;
+  padding:11px 13px;
+  border-radius:9px;
+  margin:12px 0;
+  font-size:13px
+}
+
+.notice.show{
+  display:block
+}
+
+.err{
+  background:#40181d;
+  color:#fecaca
+}
+
+.success{
+  background:#123c28;
+  color:#bbf7d0
+}
+
+.qr{
+  text-align:center
+}
+
+.qr img{
+  width:280px;
+  height:280px;
+  object-fit:contain;
+  background:#fff;
+  padding:10px;
+  border-radius:12px;
+  max-width:100%
+}
+
+.btn{
+  cursor:pointer
+}
+
+.row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:16px
+}
+
+.info{
+  display:grid;
+  gap:8px;
+  margin:18px 0
+}
+
+.info div{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  font-size:13px
+}
+
+.close{
+  float:right;
+  background:none;
+  border:0;
+  color:#fff;
+  font-size:22px;
+  cursor:pointer
+}
+
+@media(max-width:700px){
+  .page-head{
+    align-items:flex-start;
+    flex-direction:column
+  }
+
+  .actions{
+    width:100%
+  }
+
+  .actions button{
+    flex:1
+  }
+}
+</style>
 </head>
-
 
 <body>
 
-
 <div class="app">
 
+  <aside class="sidebar">
 
-    <!-- =========================
-         SIDEBAR
-    ========================== -->
+    <div class="logo">
+      <div class="logo-icon">C</div>
+      <span>ChatNova</span>
+    </div>
 
-    <aside class="sidebar">
+    <div class="menu-title">Customer</div>
+
+    <nav class="menu">
+
+      <a href="dashboard.html">
+        🏠 <span>Dashboard</span>
+      </a>
+
+      <a href="whatsapp.html" class="active">
+        📱 <span>WhatsApp</span>
+      </a>
+
+      <a href="chat.html">
+        💬 <span>Messages</span>
+      </a>
+
+      <a href="contacts.html">
+        👥 <span>Contacts</span>
+      </a>
+
+      <a href="billing.html">
+        💳 <span>Billing</span>
+      </a>
+
+      <a href="account.html">
+        ⚙️ <span>Account</span>
+      </a>
+
+    </nav>
+
+    <div class="menu-title">System</div>
+
+    <nav class="menu">
+
+      <a href="admin.html">
+        🛠️ <span>Admin</span>
+      </a>
+
+      <a href="#" id="logout">
+        🚪 <span>Logout</span>
+      </a>
+
+    </nav>
+
+  </aside>
 
 
-        <div class="logo">
+  <main class="main">
 
-            <div class="logo-icon">
-                W
-            </div>
+    <div class="topbar page-head">
 
-            <span>
-                WA Provider
-            </span>
+      <div>
+        <h1>WhatsApp Accounts</h1>
+        <p>Connect and manage your real WhatsApp accounts</p>
+      </div>
+
+      <div class="actions">
+
+        <span id="email" class="user">
+          Loading...
+        </span>
+
+        <button id="add" class="btn btn-green">
+          + Add WhatsApp
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="section">
+
+      <div id="notice" class="notice"></div>
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:10px;
+        margin-bottom:16px
+      ">
+
+        <div>
+
+          <h2>Your WhatsApp Accounts</h2>
+
+          <p class="muted">
+            Each account is connected through GREEN-API.
+          </p>
 
         </div>
 
+        <button id="refresh" class="btn btn-dark">
+          ↻ Refresh
+        </button>
 
-        <div class="menu-title">
-            Customer
+      </div>
+
+
+      <div id="list" class="grid">
+
+        <div class="muted">
+          Loading...
         </div>
 
+      </div>
 
-        <nav class="menu">
+    </div>
 
-
-            <a href="dashboard.html">
-
-                🏠
-
-                <span>
-                    Dashboard
-                </span>
-
-            </a>
-
-
-            <a
-                href="whatsapp.html"
-                class="active"
-            >
-
-                📱
-
-                <span>
-                    WhatsApp
-                </span>
-
-            </a>
-
-
-            <a href="chat.html">
-
-                💬
-
-                <span>
-                    Chat
-                </span>
-
-            </a>
-
-
-            <a href="billing.html">
-
-                💳
-
-                <span>
-                    Billing
-                </span>
-
-            </a>
-
-
-            <a href="account.html">
-
-                ⚙️
-
-                <span>
-                    Account
-                </span>
-
-            </a>
-
-
-        </nav>
-
-
-        <div class="menu-title">
-            System
-        </div>
-
-
-        <nav class="menu">
-
-
-            <a href="admin.html">
-
-                🛠️
-
-                <span>
-                    Admin
-                </span>
-
-            </a>
-
-
-            <a
-                href="#"
-                onclick="logout()"
-            >
-
-                🚪
-
-                <span>
-                    Logout
-                </span>
-
-            </a>
-
-
-        </nav>
-
-
-    </aside>
-
-
-
-    <!-- =========================
-         MAIN
-    ========================== -->
-
-    <main class="main">
-
-
-        <!-- TOP BAR -->
-
-        <div class="topbar">
-
-
-            <div>
-
-                <h1>
-                    WhatsApp Accounts
-                </h1>
-
-                <p>
-                    Connect and manage your WhatsApp accounts
-                </p>
-
-            </div>
-
-
-            <div
-                class="user"
-                id="userEmail"
-            >
-                demo@example.com
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =========================
-             ACCOUNT LIST
-        ========================== -->
-
-        <div class="section">
-
-
-            <div
-                style="
-                    display:flex;
-                    justify-content:space-between;
-                    align-items:center;
-                    gap:15px;
-                    margin-bottom:15px;
-                "
-            >
-
-                <h2>
-                    Your WhatsApp Accounts
-                </h2>
-
-
-                <button
-                    class="btn btn-green"
-                    onclick="showConnect()"
-                >
-                    + Add WhatsApp
-                </button>
-
-            </div>
-
-
-
-            <div class="table-container">
-
-
-                <table>
-
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Name
-                            </th>
-
-                            <th>
-                                Phone
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Instance
-                            </th>
-
-                            <th>
-                                Action
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-
-                        <!-- CONNECTED ACCOUNT -->
-
-                        <tr>
-
-                            <td>
-                                Business Main
-                            </td>
-
-                            <td>
-                                +60 XX XXX XXXX
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="status connected"
-                                >
-                                    Connected
-                                </span>
-
-                            </td>
-
-                            <td>
-                                Instance 001
-                            </td>
-
-                            <td>
-
-                                <a
-                                    href="chat.html"
-                                >
-
-                                    <button
-                                        class="btn btn-green"
-                                    >
-                                        Open Chat
-                                    </button>
-
-                                </a>
-
-                            </td>
-
-                        </tr>
-
-
-                        <!-- DISCONNECTED ACCOUNT -->
-
-                        <tr>
-
-                            <td>
-                                Marketing
-                            </td>
-
-                            <td>
-                                Not Connected
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="status disconnected"
-                                >
-                                    Disconnected
-                                </span>
-
-                            </td>
-
-                            <td>
-                                Instance 002
-                            </td>
-
-                            <td>
-
-                                <button
-                                    class="btn btn-dark"
-                                    onclick="showConnect()"
-                                >
-                                    Connect
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-
-                    </tbody>
-
-
-                </table>
-
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =========================
-             CONNECT SECTION
-        ========================== -->
-
-        <div
-            class="section"
-            id="connectSection"
-            style="display:none;"
-        >
-
-
-            <div class="connect-card">
-
-
-                <h2>
-                    Connect a New WhatsApp
-                </h2>
-
-
-                <p
-                    style="
-                        margin-top:10px;
-                        color:#6b7280;
-                    "
-                >
-
-                    Give this WhatsApp account
-                    a name before connecting.
-
-                </p>
-
-
-
-                <!-- ACCOUNT NAME -->
-
-                <div
-                    style="
-                        text-align:left;
-                        margin-top:25px;
-                    "
-                >
-
-                    <label
-                        style="
-                            display:block;
-                            margin-bottom:7px;
-                            font-weight:bold;
-                            font-size:14px;
-                        "
-                    >
-
-                        Account Name
-
-                    </label>
-
-
-                    <input
-                        type="text"
-                        id="accountName"
-                        placeholder="Example: Sales WhatsApp"
-                        style="
-                            width:100%;
-                            padding:13px;
-                            border:1px solid #d1d5db;
-                            border-radius:9px;
-                            font-size:15px;
-                        "
-                    >
-
-                </div>
-
-
-
-                <button
-                    class="btn btn-green"
-                    style="
-                        margin-top:20px;
-                        width:100%;
-                    "
-                    onclick="createInstance()"
-                >
-
-                    Create WhatsApp Instance
-
-                </button>
-
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =========================
-             QR SECTION
-        ========================== -->
-
-        <div
-            class="section"
-            id="qrSection"
-            style="display:none;"
-        >
-
-
-            <div class="connect-card">
-
-
-                <div
-                    style="
-                        display:inline-block;
-                        padding:6px 12px;
-                        background:#fff7ed;
-                        color:#9a3412;
-                        border-radius:20px;
-                        font-size:12px;
-                        margin-bottom:15px;
-                    "
-                >
-
-                    Waiting for connection
-
-                </div>
-
-
-
-                <h2>
-                    Scan QR Code
-                </h2>
-
-
-                <p
-                    style="
-                        margin-top:10px;
-                        color:#6b7280;
-                    "
-                >
-
-                    Open WhatsApp on your phone
-                    and link this device.
-
-                </p>
-
-
-
-                <!-- DEMO QR -->
-
-                <div class="qr-box"></div>
-
-
-
-                <h3>
-                    How to connect
-                </h3>
-
-
-                <div
-                    style="
-                        text-align:left;
-                        margin-top:20px;
-                        line-height:1.8;
-                        color:#4b5563;
-                    "
-                >
-
-                    <p>
-                        <strong>1.</strong>
-                        Open WhatsApp on your phone.
-                    </p>
-
-                    <p>
-                        <strong>2.</strong>
-                        Open Settings.
-                    </p>
-
-                    <p>
-                        <strong>3.</strong>
-                        Select Linked Devices.
-                    </p>
-
-                    <p>
-                        <strong>4.</strong>
-                        Tap Link a Device.
-                    </p>
-
-                    <p>
-                        <strong>5.</strong>
-                        Scan the QR Code above.
-                    </p>
-
-                </div>
-
-
-
-                <button
-                    class="btn btn-dark"
-                    style="
-                        margin-top:25px;
-                    "
-                    onclick="simulateConnected()"
-                >
-
-                    Demo: Simulate Connected
-
-                </button>
-
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =========================
-             SUCCESS SECTION
-        ========================== -->
-
-        <div
-            class="section"
-            id="successSection"
-            style="display:none;"
-        >
-
-
-            <div class="connect-card">
-
-
-                <div
-                    style="
-                        width:70px;
-                        height:70px;
-                        border-radius:50%;
-                        background:#dcfce7;
-                        color:#166534;
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        margin:0 auto 20px;
-                        font-size:32px;
-                    "
-                >
-
-                    ✓
-
-                </div>
-
-
-                <h2>
-                    WhatsApp Connected
-                </h2>
-
-
-                <p
-                    style="
-                        margin-top:10px;
-                        color:#6b7280;
-                    "
-                >
-
-                    Your WhatsApp account is now connected.
-
-                </p>
-
-
-                <div
-                    style="
-                        margin-top:20px;
-                        padding:15px;
-                        background:#f9fafb;
-                        border-radius:10px;
-                    "
-                >
-
-                    <strong id="connectedName">
-                        Business WhatsApp
-                    </strong>
-
-                    <br>
-
-                    <span
-                        style="
-                            color:#6b7280;
-                            font-size:13px;
-                        "
-                    >
-                        GREEN-API Instance
-                    </span>
-
-                </div>
-
-
-                <a
-                    href="chat.html"
-                >
-
-                    <button
-                        class="btn btn-green"
-                        style="
-                            margin-top:20px;
-                        "
-                    >
-
-                        Open WhatsApp Chat
-
-                    </button>
-
-                </a>
-
-
-            </div>
-
-
-        </div>
-
-
-    </main>
-
+  </main>
 
 </div>
 
 
+<!-- ADD ACCOUNT MODAL -->
 
-<!-- =========================
-     JAVASCRIPT
-========================== -->
+<div id="addModal" class="modal">
+
+  <div class="dialog">
+
+    <button
+      class="close"
+      data-close="addModal"
+    >
+      ×
+    </button>
+
+    <h2>Add WhatsApp Account</h2>
+
+    <p class="muted">
+      Connect an existing GREEN-API instance.
+    </p>
+
+    <div id="addNotice" class="notice"></div>
+
+    <form id="form">
+
+      <div class="field">
+
+        <label>
+          Account Name
+        </label>
+
+        <input
+          id="name"
+          maxlength="150"
+          required
+          placeholder="Sales WhatsApp"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          GREEN-API Instance ID
+        </label>
+
+        <input
+          id="instance"
+          maxlength="100"
+          required
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          GREEN-API API Token
+        </label>
+
+        <input
+          id="token"
+          type="password"
+          maxlength="300"
+          autocomplete="new-password"
+          required
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          GREEN-API URL
+        </label>
+
+        <input
+          id="url"
+          value="https://api.green-api.com"
+        >
+
+      </div>
+
+
+      <p class="note">
+        The API token is sent to ChatNova's secure Worker
+        and is not saved in browser storage.
+      </p>
+
+
+      <div class="row">
+
+        <button
+          type="button"
+          class="btn btn-dark"
+          data-close="addModal"
+        >
+          Cancel
+        </button>
+
+        <button
+          id="create"
+          class="btn btn-green"
+          type="submit"
+        >
+          Connect Account
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- QR MODAL -->
+
+<div id="qrModal" class="modal">
+
+  <div class="dialog">
+
+    <button
+      class="close"
+      data-close="qrModal"
+    >
+      ×
+    </button>
+
+    <h2 id="qrTitle">
+      Connect WhatsApp
+    </h2>
+
+    <p id="qrSub" class="muted"></p>
+
+    <div id="qrNotice" class="notice"></div>
+
+    <div class="qr" id="qr"></div>
+
+
+    <div class="info">
+
+      <div>
+
+        <span class="muted">
+          Status
+        </span>
+
+        <strong id="status">
+          Checking...
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span class="muted">
+          Instance
+        </span>
+
+        <span id="qrInstance"></span>
+
+      </div>
+
+    </div>
+
+
+    <p class="note">
+      Open WhatsApp → Settings → Linked Devices →
+      Link a Device, then scan the QR code.
+    </p>
+
+
+    <div class="row">
+
+      <button
+        id="qrRefresh"
+        class="btn btn-dark"
+      >
+        ↻ Refresh QR
+      </button>
+
+      <button
+        id="check"
+        class="btn btn-green"
+      >
+        Check Status
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
 
 <script>
 
+const API =
+  'https://whatsapp-provider-api.b79gn827py.workers.dev';
 
-/*
-    SHOW CONNECT FORM
-*/
+const KEY =
+  'chatnova_token';
 
-function showConnect() {
-
-    document.getElementById(
-        "connectSection"
-    ).style.display = "block";
-
-
-    document.getElementById(
-        "qrSection"
-    ).style.display = "none";
+let accounts = [];
+let active = null;
+let timer = null;
 
 
-    document.getElementById(
-        "successSection"
-    ).style.display = "none";
+const $ = id =>
+  document.getElementById(id);
 
 
-    window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth"
-    });
+function esc(v){
+
+  return String(v ?? '').replace(
+    /[&<>"']/g,
+    m => ({
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#039;'
+    }[m])
+  );
 
 }
 
 
+async function api(path,opt={}){
 
-/*
-    CREATE INSTANCE
+  const t =
+    localStorage.getItem(KEY);
 
-    目前只是 Demo。
+  if(!t){
 
-    真正版本：
+    location.href =
+      'login.html';
 
-    Customer
-       ↓
-    Cloudflare Worker
-       ↓
-    GREEN-API
-       ↓
-    Create Instance
-       ↓
-    Get QR Code
-*/
+    throw Error(
+      'Not authenticated'
+    );
 
-function createInstance() {
+  }
 
 
-    const name =
-        document.getElementById(
-            "accountName"
-        ).value.trim();
+  const h = {
+    Accept:'application/json',
+    ...(opt.headers || {})
+  };
 
 
-    if (name === "") {
+  if(opt.body){
 
-        alert(
-            "Please enter an account name."
-        );
+    h['Content-Type'] =
+      'application/json';
 
-        return;
+  }
+
+
+  h.Authorization =
+    'Bearer ' + t;
+
+
+  const r =
+    await fetch(
+      API + path,
+      {
+        ...opt,
+        headers:h,
+        credentials:'include'
+      }
+    );
+
+
+  let d = null;
+
+  try{
+
+    d = await r.json();
+
+  }catch{}
+
+
+  if(r.status === 401){
+
+    localStorage.removeItem(
+      KEY
+    );
+
+    localStorage.removeItem(
+      'chatnova_user'
+    );
+
+    location.href =
+      'login.html';
+
+    throw Error(
+      'Session expired'
+    );
+
+  }
+
+
+  if(!r.ok){
+
+    throw Error(
+      d?.message ||
+      `Request failed (${r.status})`
+    );
+
+  }
+
+
+  return d;
+
+}
+
+
+function msg(
+  el,
+  text,
+  type='err'
+){
+
+  el.className =
+    'notice show ' + type;
+
+  el.textContent =
+    text;
+
+}
+
+
+function hide(el){
+
+  el.className =
+    'notice';
+
+  el.textContent =
+    '';
+
+}
+
+
+function st(s){
+
+  s =
+    String(
+      s || 'unknown'
+    ).toLowerCase();
+
+
+  if([
+    'connected',
+    'authorized',
+    'online'
+  ].includes(s)){
+
+    return [
+      'Connected',
+      'ok'
+    ];
+
+  }
+
+
+  if([
+    'connecting',
+    'starting',
+    'yellowcard'
+  ].includes(s)){
+
+    return [
+      'Connecting',
+      'wait'
+    ];
+
+  }
+
+
+  if([
+    'blocked',
+    'banned',
+    'phonebanned'
+  ].includes(s)){
+
+    return [
+      'Blocked',
+      'bad'
+    ];
+
+  }
+
+
+  if([
+    'not_authorized',
+    'notauthorized',
+    'notconnected',
+    'disconnected',
+    'offline'
+  ].includes(s)){
+
+    return [
+      'Not Connected',
+      'neutral'
+    ];
+
+  }
+
+
+  if([
+    'sleep',
+    'sleepmode'
+  ].includes(s)){
+
+    return [
+      'Sleep',
+      'wait'
+    ];
+
+  }
+
+
+  return [
+    'Unknown',
+    'neutral'
+  ];
+
+}
+
+
+function render(){
+
+  if(!accounts.length){
+
+    $('list').innerHTML = `
+
+      <div
+        class="empty"
+        style="grid-column:1/-1"
+      >
+
+        <div style="font-size:42px">
+          📱
+        </div>
+
+        <h3>
+          No WhatsApp accounts yet
+        </h3>
+
+        <p class="muted">
+          Connect your first GREEN-API account.
+        </p>
+
+        <button
+          class="btn btn-green"
+          style="margin-top:15px"
+          onclick="openAdd()"
+        >
+          + Add WhatsApp Account
+        </button>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  $('list').innerHTML =
+    accounts.map(a => {
+
+      const [
+        label,
+        cl
+      ] = st(a.status);
+
+      const connected =
+        label === 'Connected';
+
+
+      return `
+
+        <div class="card">
+
+          <div class="cardhead">
+
+            <div>
+
+              <strong>
+                ${esc(
+                  a.instance_name ||
+                  a.instance_id
+                )}
+              </strong>
+
+              <div
+                class="muted"
+                style="margin-top:5px"
+              >
+                Instance:
+                ${esc(a.instance_id)}
+              </div>
+
+            </div>
+
+            <span
+              class="pill ${cl}"
+            >
+              ${label}
+            </span>
+
+          </div>
+
+
+          <div class="info">
+
+            <div>
+
+              <span class="muted">
+                Phone
+              </span>
+
+              <span>
+                ${esc(
+                  a.phone ||
+                  'Not available'
+                )}
+              </span>
+
+            </div>
+
+
+            <div>
+
+              <span class="muted">
+                Created
+              </span>
+
+              <span>
+                ${
+                  a.created_at
+                  ? new Date(
+                      a.created_at
+                    ).toLocaleDateString()
+                  : '—'
+                }
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="row">
+
+            ${
+              connected
+
+              ?
+
+              `
+              <a
+                class="btn btn-green"
+                style="
+                  padding:9px 12px;
+                  border-radius:8px;
+                  text-decoration:none
+                "
+                href="chat.html?instance=${encodeURIComponent(
+                  a.instance_id
+                )}"
+              >
+                Open Messages
+              </a>
+              `
+
+              :
+
+              `
+              <button
+                class="btn btn-green"
+                style="
+                  padding:9px 12px;
+                  border-radius:8px
+                "
+                onclick="openQR(
+                  '${encodeURIComponent(
+                    a.instance_id
+                  )}'
+                )"
+              >
+                Connect
+              </button>
+              `
+            }
+
+
+            <button
+              class="btn btn-dark"
+              style="
+                padding:9px 12px;
+                border-radius:8px
+              "
+              onclick="refreshStatus(
+                '${encodeURIComponent(
+                  a.instance_id
+                )}'
+              )"
+            >
+              Refresh
+            </button>
+
+
+            <button
+              class="btn btn-dark"
+              style="
+                padding:9px 12px;
+                border-radius:8px
+              "
+              onclick="removeAccount(
+                '${encodeURIComponent(
+                  a.instance_id
+                )}'
+              )"
+            >
+              Remove
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join('');
+
+}
+
+
+async function load(){
+
+  $('list').innerHTML =
+    '<div class="muted">Loading...</div>';
+
+
+  try{
+
+    const d =
+      await api(
+        '/api/greenapi/instances'
+      );
+
+
+    accounts =
+      Array.isArray(d?.instances)
+      ? d.instances
+      : [];
+
+
+    render();
+
+  }catch(e){
+
+    $('list').innerHTML = `
+
+      <div
+        class="empty"
+        style="grid-column:1/-1"
+      >
+
+        <h3>
+          Unable to load accounts
+        </h3>
+
+        <p class="muted">
+          ${esc(e.message)}
+        </p>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+async function me(){
+
+  try{
+
+    const d =
+      await api('/api/me');
+
+    $('email').textContent =
+      d?.customer?.email || '';
+
+  }catch{}
+
+}
+
+
+function openAdd(){
+
+  hide(
+    $('addNotice')
+  );
+
+  $('form').reset();
+
+  $('url').value =
+    'https://api.green-api.com';
+
+  $('addModal')
+    .classList
+    .add('show');
+
+}
+
+
+function close(id){
+
+  $(id)
+    .classList
+    .remove('show');
+
+
+  if(id === 'qrModal'){
+
+    active = null;
+
+
+    if(timer){
+
+      clearInterval(
+        timer
+      );
 
     }
 
 
-    /*
-        Save temporary demo name
-    */
+    timer = null;
 
-    localStorage.setItem(
-        "whatsappName",
-        name
+  }
+
+}
+
+
+async function create(e){
+
+  e.preventDefault();
+
+
+  const btn =
+    $('create');
+
+
+  btn.disabled =
+    true;
+
+
+  btn.textContent =
+    'Connecting...';
+
+
+  hide(
+    $('addNotice')
+  );
+
+
+  try{
+
+    const d =
+      await api(
+        '/api/greenapi/instance',
+        {
+          method:'POST',
+
+          body:JSON.stringify({
+
+            instanceName:
+              $('name')
+                .value
+                .trim(),
+
+            instanceId:
+              $('instance')
+                .value
+                .trim(),
+
+            apiToken:
+              $('token')
+                .value
+                .trim(),
+
+            apiUrl:
+              $('url')
+                .value
+                .trim() ||
+              'https://api.green-api.com'
+
+          })
+
+        }
+      );
+
+
+    if(!d?.success){
+
+      throw Error(
+        d?.message ||
+        'Unable to create account'
+      );
+
+    }
+
+
+    close(
+      'addModal'
     );
 
 
-    /*
-        Hide connect form
-    */
-
-    document.getElementById(
-        "connectSection"
-    ).style.display = "none";
+    await load();
 
 
-    /*
-        Show QR section
-    */
-
-    document.getElementById(
-        "qrSection"
-    ).style.display = "block";
+    const id =
+      d?.instance?.instanceId ||
+      $('instance')
+        .value
+        .trim();
 
 
-    window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth"
-    });
-
-}
-
-
-
-/*
-    DEMO CONNECTED
-
-    Later this will be replaced by:
-
-    GREEN-API Webhook
-          ↓
-    Cloudflare Worker
-          ↓
-    D1 Database
-          ↓
-    status = connected
-*/
-
-function simulateConnected() {
-
-
-    const name =
-        localStorage.getItem(
-            "whatsappName"
-        ) || "Business WhatsApp";
-
-
-    document.getElementById(
-        "qrSection"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "successSection"
-    ).style.display = "block";
-
-
-    document.getElementById(
-        "connectedName"
-    ).innerText = name;
-
-
-    window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth"
-    });
-
-}
-
-
-
-/*
-    DISPLAY USER EMAIL
-*/
-
-const email =
-    localStorage.getItem(
-        "userEmail"
+    openQR(
+      encodeURIComponent(id)
     );
 
 
-if (email) {
+  }catch(e){
 
-    document.getElementById(
-        "userEmail"
-    ).innerText = email;
+    msg(
+      $('addNotice'),
+      e.message
+    );
+
+  }finally{
+
+    btn.disabled =
+      false;
+
+    btn.textContent =
+      'Connect Account';
+
+  }
 
 }
 
 
+async function openQR(
+  encoded
+){
 
-/*
-    LOGOUT
-*/
+  active =
+    decodeURIComponent(
+      encoded
+    );
 
-function logout() {
+
+  const account =
+    accounts.find(
+      a =>
+        String(
+          a.instance_id
+        ) ===
+        String(active)
+    );
+
+
+  $('qrTitle')
+    .textContent =
+      account?.instance_name ||
+      'Connect WhatsApp';
+
+
+  $('qrSub')
+    .textContent =
+      'Scan the QR code with WhatsApp';
+
+
+  $('qrInstance')
+    .textContent =
+      active;
+
+
+  $('qr').innerHTML = `
+
+    <div
+      class="muted"
+      style="padding:40px"
+    >
+      Loading QR...
+    </div>
+
+  `;
+
+
+  $('status')
+    .textContent =
+    'Checking...';
+
+
+  hide(
+    $('qrNotice')
+  );
+
+
+  $('qrModal')
+    .classList
+    .add('show');
+
+
+  if(timer){
+
+    clearInterval(
+      timer
+    );
+
+  }
+
+
+  await qr();
+
+
+  timer =
+    setInterval(
+      check,
+      5000
+    );
+
+}
+
+
+async function qr(){
+
+  if(!active)
+    return;
+
+
+  try{
+
+    const d =
+      await api(
+        '/api/greenapi/instance/' +
+        encodeURIComponent(active) +
+        '/qr'
+      );
+
+
+    if(
+      d?.type ===
+      'alreadyLogged'
+    ){
+
+      connectedUI();
+
+      return;
+
+    }
+
+
+    if(
+      d?.success &&
+      d.qr
+    ){
+
+      let src =
+        String(d.qr);
+
+
+      if(
+        !src.startsWith(
+          'data:image'
+        )
+      ){
+
+        src =
+          'data:image/png;base64,' +
+          src;
+
+      }
+
+
+      $('qr').innerHTML = `
+
+        <img
+          src="${esc(src)}"
+          alt="WhatsApp QR code"
+        >
+
+      `;
+
+
+      $('status')
+        .textContent =
+        'Waiting for scan';
+
+
+      return;
+
+    }
+
+
+    msg(
+      $('qrNotice'),
+      d?.message ||
+      'QR is not available yet'
+    );
+
+
+  }catch(e){
+
+    msg(
+      $('qrNotice'),
+      e.message
+    );
+
+  }
+
+}
+
+
+async function check(){
+
+  if(!active)
+    return;
+
+
+  try{
+
+    const d =
+      await api(
+        '/api/greenapi/instance/' +
+        encodeURIComponent(active) +
+        '/status'
+      );
+
+
+    if(
+      String(
+        d?.status
+      ).toLowerCase() ===
+      'connected'
+    ){
+
+      connectedUI();
+
+      await load();
+
+    }else{
+
+      $('status')
+        .textContent =
+        st(d?.status)[0];
+
+    }
+
+
+  }catch(e){
+
+    console.error(e);
+
+  }
+
+}
+
+
+function connectedUI(){
+
+  if(timer){
+
+    clearInterval(
+      timer
+    );
+
+  }
+
+
+  timer = null;
+
+
+  $('qr').innerHTML = `
+
+    <div
+      style="
+        font-size:80px;
+        padding:55px
+      "
+    >
+      ✓
+    </div>
+
+  `;
+
+
+  $('status')
+    .textContent =
+    'Connected';
+
+
+  $('qrSub')
+    .textContent =
+    'WhatsApp connected successfully';
+
+}
+
+
+async function refreshStatus(id){
+
+  try{
+
+    await api(
+      '/api/greenapi/instance/' +
+      decodeURIComponent(id) +
+      '/status'
+    );
+
+
+    await load();
+
+
+    msg(
+      $('notice'),
+      'Account status refreshed',
+      'success'
+    );
+
+
+  }catch(e){
+
+    msg(
+      $('notice'),
+      e.message
+    );
+
+  }
+
+}
+
+
+async function removeAccount(id){
+
+  id =
+    decodeURIComponent(id);
+
+
+  const account =
+    accounts.find(
+      x =>
+        String(
+          x.instance_id
+        ) === id
+    );
+
+
+  if(
+    !confirm(
+      `Remove "${account?.instance_name || id}" from ChatNova?`
+    )
+  ){
+
+    return;
+
+  }
+
+
+  try{
+
+    await api(
+      '/api/greenapi/instance/' +
+      encodeURIComponent(id),
+      {
+        method:'DELETE'
+      }
+    );
+
+
+    await load();
+
+
+    msg(
+      $('notice'),
+      'WhatsApp account removed',
+      'success'
+    );
+
+
+  }catch(e){
+
+    msg(
+      $('notice'),
+      e.message
+    );
+
+  }
+
+}
+
+
+$('add').onclick =
+  openAdd;
+
+
+$('refresh').onclick =
+  load;
+
+
+$('form').onsubmit =
+  create;
+
+
+$('qrRefresh').onclick =
+  qr;
+
+
+$('check').onclick =
+  check;
+
+
+document
+  .querySelectorAll(
+    '[data-close]'
+  )
+  .forEach(
+    b =>
+      b.onclick =
+        () =>
+          close(
+            b.dataset.close
+          )
+  );
+
+
+$('logout').onclick =
+  async e => {
+
+    e.preventDefault();
+
+
+    try{
+
+      await api(
+        '/api/logout',
+        {
+          method:'POST'
+        }
+      );
+
+    }catch{}
 
 
     localStorage.removeItem(
-        "loggedIn"
+      KEY
     );
-
 
     localStorage.removeItem(
-        "userEmail"
+      'chatnova_user'
     );
 
 
-    window.location.href =
-        "index.html";
+    location.href =
+      'index.html';
 
-}
+  };
 
+
+me();
+load();
 
 </script>
 
-
 </body>
-
 </html>
