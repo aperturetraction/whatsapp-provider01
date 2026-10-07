@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070a09">
+<title>Messages · ChatNova</title>
+<style>
+:root{--bg:#070a09;--panel:#0d1210;--panel2:#111814;--border:rgba(255,255,255,.08);--text:#f3f7f5;--muted:#8d9993;--green:#19d37a;--danger:#ff5c5c}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit;color:inherit}button{cursor:pointer}
+.app{display:grid;grid-template-columns:230px 340px 1fr;height:100dvh;padding-top:env(safe-area-inset-top)}
+.side{background:rgba(10,14,12,.96);border-right:1px solid var(--border);padding:24px 14px}
+.brand{font-size:23px;font-weight:800;letter-spacing:-.7px;padding:4px 12px 22px}.brand span{color:var(--green)}
+.side a{display:block;color:var(--muted);text-decoration:none;padding:12px 13px;border-radius:11px;font-size:14px;margin-bottom:4px}
+.side a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.side a.on{color:#fff;background:rgba(25,211,122,.11);border:1px solid rgba(25,211,122,.12)}
+.badge{float:right;background:var(--green);color:#03150c;font-size:10px;font-weight:800;border-radius:9px;padding:2px 7px}
+.list{display:flex;flex-direction:column;min-height:0;border-right:1px solid var(--border);background:var(--panel)}
+.lh{padding:16px;border-bottom:1px solid var(--border)}
+.lt{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+h1{font-size:18px;letter-spacing:-.4px}
+.back{display:none;color:var(--muted);text-decoration:none;font-size:13px}
+.lang{display:flex;gap:3px;border:1px solid var(--border);border-radius:9px;padding:3px}
+.lang button{border:0;background:none;color:var(--muted);padding:5px 8px;border-radius:7px;font-size:11px}
+.lang button.on{background:rgba(25,211,122,.12);color:var(--green)}
+.in{width:100%;min-height:42px;border:1px solid rgba(255,255,255,.1);background:#090e0c;border-radius:10px;padding:9px 12px;outline:none}
+.in:focus{border-color:rgba(25,211,122,.45);box-shadow:0 0 0 3px rgba(25,211,122,.08)}
+.items{flex:1;overflow-y:auto;overscroll-behavior:contain}
+.item{display:grid;grid-template-columns:42px 1fr auto;gap:12px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid rgba(255,255,255,.05);padding:13px 16px}
+.item:hover{background:rgba(255,255,255,.03)}.item.on{background:rgba(25,211,122,.09)}
+.av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--green),#08763f);color:#03150c;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px}
+.av.g{background:linear-gradient(135deg,#5b6b64,#2c3631);color:#e8efeb}
+.nm{font-size:14px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pv{color:var(--muted);font-size:12px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .r{text-align:right;min-width:42px}.tm{color:var(--muted);font-size:10px}
+.un{display:inline-block;margin-top:5px;background:var(--green);color:#03150c;font-size:10px;font-weight:800;border-radius:9px;padding:2px 7px}
+.empty{padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;line-height:1.6}
+.thread{display:flex;flex-direction:column;min-height:0;min-width:0;background:radial-gradient(circle at top right,rgba(25,211,122,.05),transparent 35%),var(--bg)}
+.th{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border);background:rgba(7,10,9,.7)}
+.th .av{width:38px;height:38px;font-size:14px}.th .sub{color:var(--muted);font-size:11px;margin-top:2px}
+.tb{display:none;border:1px solid var(--border);background:var(--panel);border-radius:10px;width:38px;height:38px;font-size:16px}
+.msgs{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:6px;overscroll-behavior:contain}
+.more{align-self:center;border:1px solid var(--border);background:var(--panel);border-radius:10px;padding:7px 12px;font-size:12px;color:var(--muted);margin-bottom:8px}
+.m{max-width:min(70%,520px);padding:9px 12px;border-radius:14px;font-size:14px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere}
+.m.in{align-self:flex-start;background:var(--panel2);border:1px solid var(--border);border-bottom-left-radius:4px}
+.m.out{align-self:flex-end;background:rgba(25,211,122,.16);border:1px solid rgba(25,211,122,.22);border-bottom-right-radius:4px}
+.m .t{display:block;text-align:right;color:var(--muted);font-size:10px;margin-top:4px}
+.m.media{font-style:italic;color:var(--muted)}
+.comp{display:flex;gap:10px;align-items:flex-end;padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--border);background:var(--panel)}
+.comp textarea{flex:1;resize:none;max-height:120px;min-height:44px;border:1px solid rgba(255,255,255,.1);background:#090e0c;border-radius:12px;padding:11px 12px;outline:none}
+.comp textarea:focus{border-color:rgba(25,211,122,.45)}
+.send{border:0;background:var(--green);color:#03150c;font-weight:700;border-radius:12px;padding:0 18px;min-height:44px}
+.send:disabled{opacity:.5;cursor:not-allowed}
+.ph{flex:1;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;text-align:center;padding:30px}
+.toast{position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#111814;border:1px solid rgba(255,92,92,.4);padding:11px 16px;border-radius:10px;font-size:13px;z-index:90;display:none;max-width:90vw}
+@media(max-width:1000px){.app{grid-template-columns:300px 1fr}.side{display:none}.back{display:inline}}
+@media(max-width:700px){
+ .app{grid-template-columns:1fr}
+ .thread{display:none}.app.open .list{display:none}.app.open .thread{display:flex}
+ .tb{display:block}.m{max-width:85%}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <aside class="side">
+    <div class="brand">Chat<span>Nova</span></div>
+    <a href="./dashboard.html" data-i="dashboard">Dashboard</a>
+    <a href="./whatsapp.html" data-i="whatsapp">WhatsApp</a>
+    <a href="./inbox.html" class="on"><span data-i="messages">Messages</span><span class="badge" id="navUnread" style="display:none"></span></a>
+    <a href="./contacts.html" data-i="contacts">Contacts</a>
+    <a href="#" onclick="return false" data-i="billing">Billing</a>
+    <a href="#" onclick="return false" data-i="settings">Settings</a>
+  </aside>
+
+  <section class="list">
+    <div class="lh">
+      <div class="lt">
+        <div><a class="back" href="./dashboard.html" data-i="dashboard">Dashboard</a><h1 data-i="messages">Messages</h1></div>
+        <div class="lang"><button id="bEN" onclick="setLang('en')">EN</button><button id="bZH" onclick="setLang('zh')">中文</button></div>
+      </div>
+      <input id="q" class="in" type="search" data-ph="search" placeholder="Search chats">
+    </div>
+    <div class="items" id="items"></div>
+  </section>
+
+  <section class="thread" id="thread">
+    <div class="ph" id="ph" data-i="pick">Select a conversation to read and reply.</div>
+  </section>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const API="https://whatsapp-provider-api.b79gn827py.workers.dev",TK="chatnova_token",LK="chatnova_language";
+const $=id=>document.getElementById(id);
+const ls=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const lset=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+const lrm=k=>{try{localStorage.removeItem(k)}catch(e){}};
+
+const T={en:{dashboard:"Dashboard",whatsapp:"WhatsApp",messages:"Messages",contacts:"Contacts",billing:"Billing",settings:"Settings",
+ search:"Search chats",pick:"Select a conversation to read and reply.",none:"No conversations yet. Messages appear here when customers write to your connected WhatsApp number.",
+ noMatch:"No chats match your search.",send:"Send",type:"Type a message",earlier:"Load earlier messages",group:"Group chat",
+ unnamed:"Unknown",fail:"Something went wrong. Try again.",sendFail:"Message was not sent.",noMsgs:"No messages yet.",today:"Today"},
+ zh:{dashboard:"控制台",whatsapp:"WhatsApp",messages:"消息",contacts:"联系人",billing:"账单",settings:"设置",
+ search:"搜索会话",pick:"选择一个会话以查看和回复。",none:"还没有会话。客户给您已连接的 WhatsApp 号码发消息后，会显示在这里。",
+ noMatch:"没有符合搜索条件的会话。",send:"发送",type:"输入消息",earlier:"加载更早的消息",group:"群聊",
+ unnamed:"未知",fail:"出了点问题，请重试。",sendFail:"消息未发送。",noMsgs:"还没有消息。",today:"今天"}};
+let lang=ls(LK)==="zh"?"zh":"en";
+const t=k=>T[lang][k];
+
+const S={convs:[],active:null,msgs:[],hasMore:false,q:"",sending:false,busyList:false,busyMsgs:false};
+
+function toast(m){const e=$("toast");e.textContent=m;e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display="none",3200)}
+function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+
+async function api(path,opt={}){
+  const token=ls(TK);
+  if(!token){location.replace("./login.html");throw null}
+  const c=new AbortController(),tm=setTimeout(()=>c.abort(),15000);
+  try{
+    const r=await fetch(API+path,{...opt,signal:c.signal,cache:"no-store",headers:{Accept:"application/json",Authorization:"Bearer "+token,...(opt.body?{"Content-Type":"application/json"}:{})}});
+    if(r.status===401){lrm(TK);location.replace("./login.html");throw null}
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok||d.success===false)throw new Error(d.message||t("fail"));
+    return d;
+  }finally{clearTimeout(tm)}
+}
+
+function setLang(l){
+  lang=l==="zh"?"zh":"en";lset(LK,lang);document.documentElement.lang=lang==="zh"?"zh-CN":"en";
+  document.querySelectorAll("[data-i]").forEach(e=>e.textContent=t(e.dataset.i));
+  document.querySelectorAll("[data-ph]").forEach(e=>e.placeholder=t(e.dataset.ph));
+  $("bEN").classList.toggle("on",lang==="en");$("bZH").classList.toggle("on",lang==="zh");
+  renderList();if(S.active)renderThread(false);
+}
+
+const title=c=>c.name||(c.isGroup?t("group"):c.phone?"+"+c.phone:t("unnamed"));
+function fmtTime(iso,list){
+  if(!iso)return"";const d=new Date(iso);if(isNaN(d))return"";
+  const same=d.toDateString()===new Date().toDateString();
+  if(same||!list)return d.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+  return d.toLocaleDateString([],{month:"short",day:"numeric"});
+}
+
+/* ---------- conversation list ---------- */
+async function loadList(){
+  if(S.busyList)return;S.busyList=true;
+  try{
+    const d=await api("/api/conversations?limit=100&q="+encodeURIComponent(S.q));
+    S.convs=d.conversations;
+    if(S.active){const f=S.convs.find(c=>c.id===S.active.id);if(f){f.unread=0;S.active.unread=0}}
+    renderList();
+    const n=d.unreadTotal,b=$("navUnread");b.style.display=n?"inline-block":"none";b.textContent=n>99?"99+":n;
+    document.title=(n?"("+n+") ":"")+"Messages · ChatNova";
+  }catch(e){if(e)console.warn(e.message)}finally{S.busyList=false}
+}
+
+function renderList(){
+  const box=$("items");box.textContent="";
+  if(!S.convs.length){box.appendChild(el("div","empty",S.q?t("noMatch"):t("none")));return}
+  for(const c of S.convs){
+    const b=el("button","item"+(S.active&&S.active.id===c.id?" on":""));
+    b.appendChild(el("div","av"+(c.isGroup?" g":""),(title(c)).replace(/^\+/,"").charAt(0).toUpperCase()));
+    const mid=el("div");mid.appendChild(el("div","nm",title(c)));mid.appendChild(el("div","pv",c.lastMessageText||""));b.appendChild(mid);
+    const r=el("div","r");r.appendChild(el("div","tm",fmtTime(c.lastMessageAt,true)));
+    if(c.unread>0)r.appendChild(el("span","un",c.unread>99?"99+":c.unread));
+    b.appendChild(r);b.onclick=()=>openConv(c);box.appendChild(b);
+  }
+}
+
+let qt;$("q").addEventListener("input",e=>{clearTimeout(qt);qt=setTimeout(()=>{S.q=e.target.value.trim();loadList()},300)});
+
+/* ---------- thread ---------- */
+function buildThread(c){
+  const th=$("thread");th.textContent="";
+  const head=el("div","th");
+  const back=el("button","tb","←");back.onclick=()=>{$("app").classList.remove("open");S.active=null;th.textContent="";th.appendChild(ph());renderList()};
+  head.appendChild(back);
+  head.appendChild(el("div","av"+(c.isGroup?" g":""),title(c).replace(/^\+/,"").charAt(0).toUpperCase()));
+  const info=el("div");info.appendChild(el("div","nm",title(c)));if(c.phone&&c.name)info.appendChild(el("div","sub","+"+c.phone));head.appendChild(info);
+  const msgs=el("div","msgs");msgs.id="msgs";
+  const comp=el("div","comp");
+  const ta=el("textarea");ta.id="txt";ta.rows=1;ta.placeholder=t("type");ta.maxLength=4096;
+  ta.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}});
+  ta.addEventListener("input",()=>{ta.style.height="auto";ta.style.height=Math.min(ta.scrollHeight,120)+"px"});
+  const sb=el("button","send",t("send"));sb.id="sendBtn";sb.onclick=send;
+  comp.append(ta,sb);th.append(head,msgs,comp);
+}
+const ph=()=>{const d=el("div","ph",t("pick"));d.id="ph";return d};
+
+async function openConv(c){
+  S.active=c;S.msgs=[];S.hasMore=false;
+  $("app").classList.add("open");buildThread(c);renderList();
+  await loadMsgs("initial");
+  $("txt")&&$("txt").focus&&window.matchMedia("(min-width:701px)").matches&&$("txt").focus();
+  markRead(c);
+}
+
+async function markRead(c){
+  if(!c.unread)return;c.unread=0;renderList();
+  try{await api("/api/conversations/"+c.id+"/read",{method:"POST"})}catch(e){}
+}
+
+async function loadMsgs(mode){
+  const c=S.active;if(!c||S.busyMsgs)return;S.busyMsgs=true;
+  try{
+    const lastId=S.msgs.length?S.msgs[S.msgs.length-1].id:0,firstId=S.msgs.length?S.msgs[0].id:0;
+    let url="/api/conversations/"+c.id+"/messages?limit=50";
+    if(mode==="new"&&lastId)url+="&after="+lastId;else if(mode==="older")url+="&before="+firstId;
+    const d=await api(url);
+    if(!S.active||S.active.id!==c.id)return;
+    if(mode==="older"){S.msgs=d.messages.concat(S.msgs);S.hasMore=d.hasMore;renderThread("keep")}
+    else if(mode==="initial"){S.msgs=d.messages;S.hasMore=d.hasMore;renderThread(true)}
+    else if(d.messages.length){
+      const stick=nearBottom();S.msgs=S.msgs.concat(d.messages);renderThread(stick);
+      if(d.messages.some(m=>m.direction==="incoming")&&!document.hidden){c.unread=1;markRead(c)}
+    }
+  }catch(e){if(e)toast(e.message)}finally{S.busyMsgs=false}
+}
+
+function nearBottom(){const m=$("msgs");return !m||m.scrollHeight-m.scrollTop-m.clientHeight<120}
+
+function renderThread(scroll){
+  const box=$("msgs");if(!box)return;
+  const prevH=box.scrollHeight,prevTop=box.scrollTop;
+  box.textContent="";
+  if(S.hasMore){const b=el("button","more",t("earlier"));b.onclick=()=>loadMsgs("older");box.appendChild(b)}
+  if(!S.msgs.length)box.appendChild(el("div","empty",t("noMsgs")));
+  for(const m of S.msgs){
+    const media=!m.body;
+    const d=el("div","m "+(m.direction==="outgoing"?"out":"in")+(media?" media":""),media?"["+(m.type||"message")+"]":m.body);
+    d.appendChild(el("span","t",fmtTime(m.createdAt,false)));box.appendChild(d);
+  }
+  if(scroll==="keep")box.scrollTop=box.scrollHeight-prevH+prevTop;
+  else if(scroll)box.scrollTop=box.scrollHeight;
+  else box.scrollTop=prevTop;
+}
+
+async function send(){
+  const c=S.active,ta=$("txt");if(!c||!ta||S.sending)return;
+  const text=ta.value.trim();if(!text)return;
+  S.sending=true;$("sendBtn").disabled=true;
+  try{
+    await api("/api/greenapi/send-message",{method:"POST",body:JSON.stringify({instanceId:c.instanceId,chatId:c.chatId,message:text})});
+    ta.value="";ta.style.height="auto";
+    S.busyMsgs=false;await loadMsgs("new");loadList();
+  }catch(e){if(e)toast(e.message||t("sendFail"))}
+  finally{S.sending=false;const b=$("sendBtn");if(b)b.disabled=false}
+}
+
+/* ---------- start ---------- */
+setLang(lang);
+if(!ls(TK))location.replace("./login.html");
+else{
+  loadList();
+  setInterval(()=>{if(document.hidden)return;loadList();if(S.active)loadMsgs("new")},5000);
+  document.addEventListener("visibilitychange",()=>{if(!document.hidden){loadList();if(S.active)loadMsgs("new")}});
+}
+</script>
+</body>
+</html>
