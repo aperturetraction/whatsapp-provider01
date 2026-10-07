@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070a09">
+<title>Contacts · ChatNova</title>
+<style>
+:root{--bg:#070a09;--panel:#0d1210;--border:rgba(255,255,255,.08);--text:#f3f7f5;--muted:#8d9993;--green:#19d37a;--danger:#ff5c5c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,"Segoe UI",Arial,sans-serif;background:radial-gradient(circle at top right,rgba(25,211,122,.07),transparent 30%),var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit;color:inherit}button{cursor:pointer}
+.side{position:fixed;inset:0 auto 0 0;width:250px;background:rgba(10,14,12,.96);border-right:1px solid var(--border);padding:24px 16px}
+.brand{font-size:23px;font-weight:800;letter-spacing:-.7px;padding:4px 12px 24px}.brand span{color:var(--green)}
+.side a{display:block;color:var(--muted);text-decoration:none;padding:12px 13px;border-radius:11px;font-size:14px;margin-bottom:4px}
+.side a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.side a.on{color:#fff;background:rgba(25,211,122,.11);border:1px solid rgba(25,211,122,.12)}
+.main{margin-left:250px;padding:calc(28px + env(safe-area-inset-top)) 32px 40px;max-width:1100px}
+.head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+h1{font-size:26px;letter-spacing:-.8px}.sub{color:var(--muted);font-size:13px;margin-top:5px}
+.lang{display:flex;gap:3px;border:1px solid var(--border);border-radius:9px;padding:3px}
+.lang button{border:0;background:none;color:var(--muted);padding:6px 9px;border-radius:7px;font-size:11px}
+.lang button.on{background:rgba(25,211,122,.12);color:var(--green)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.in{width:100%;min-height:44px;border:1px solid rgba(255,255,255,.1);background:#090e0c;border-radius:10px;padding:10px 12px;outline:none}
+.in:focus{border-color:rgba(25,211,122,.45);box-shadow:0 0 0 3px rgba(25,211,122,.08)}
+.bar .in{flex:1;min-width:200px;width:auto}
+.btn{border:1px solid var(--border);background:rgba(255,255,255,.03);border-radius:10px;padding:10px 14px;font-size:13px;min-height:44px;white-space:nowrap}
+.btn:hover{border-color:rgba(255,255,255,.16)}.btn:disabled{opacity:.55;cursor:not-allowed}
+.pri{background:var(--green);border-color:var(--green);color:#03150c;font-weight:700}.pri:hover{background:#22e083}
+.sm{min-height:36px;padding:7px 11px;font-size:12px}.dng:hover{color:var(--danger);border-color:rgba(255,92,92,.4)}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.row{display:grid;grid-template-columns:40px 1.4fr 1.2fr auto;gap:14px;align-items:center;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.05)}
+.row:last-child{border-bottom:0}
+.av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--green),#08763f);color:#03150c;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+.nm{font-size:14px;font-weight:600;overflow-wrap:anywhere}.ph{color:var(--muted);font-size:12px;margin-top:2px}
+.tags{display:flex;gap:5px;flex-wrap:wrap}.tag{font-size:10px;font-weight:700;padding:4px 8px;border-radius:7px;color:var(--green);background:rgba(25,211,122,.09);border:1px solid rgba(25,211,122,.13)}
+.acts{display:flex;gap:7px}
+.empty{padding:48px 20px;text-align:center;color:var(--muted);font-size:14px;line-height:1.6}
+.more{display:block;margin:16px auto 0}
+.ov{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(10px)}
+.ov.show{display:flex}
+.modal{width:100%;max-width:480px;max-height:calc(100dvh - 40px);overflow:auto;background:var(--panel);border:1px solid rgba(255,255,255,.1);border-radius:18px}
+.mh{padding:20px;border-bottom:1px solid var(--border);font-size:16px;font-weight:750}
+.mb{padding:20px}.fg{margin-bottom:14px}
+label{display:block;font-size:11px;font-weight:650;color:#dfe7e3;margin-bottom:6px}
+textarea.in{min-height:80px;resize:vertical}
+.help{color:var(--muted);font-size:10px;margin-top:5px}
+.mf{display:flex;justify-content:flex-end;gap:9px;padding:16px 20px 20px;border-top:1px solid var(--border)}
+.err{display:none;color:#ffb2b2;background:rgba(255,92,92,.07);border:1px solid rgba(255,92,92,.16);border-radius:9px;padding:10px 11px;font-size:12px;margin-bottom:14px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#111814;border:1px solid rgba(25,211,122,.3);color:var(--text);padding:11px 16px;border-radius:10px;font-size:13px;z-index:90;display:none;max-width:90vw}
+.toast.bad{border-color:rgba(255,92,92,.4)}
+@media(max-width:850px){
+ .side{position:static;width:auto;display:flex;gap:6px;overflow-x:auto;padding:calc(12px + env(safe-area-inset-top)) 12px 10px;border-right:0;border-bottom:1px solid var(--border)}
+ .brand{display:none}.side a{white-space:nowrap;margin:0}
+ .main{margin-left:0;padding:20px 16px 40px}
+ .row{grid-template-columns:40px 1fr auto;padding:14px}.row .tags{grid-column:2/4}
+ .mf{flex-direction:column-reverse}.mf .btn{width:100%}
+}
+</style>
+</head>
+<body>
+
+<aside class="side">
+  <div class="brand">Chat<span>Nova</span></div>
+  <a href="./dashboard.html" data-i="dashboard">Dashboard</a>
+  <a href="./whatsapp.html" data-i="whatsapp">WhatsApp</a>
+  <a href="#" onclick="return false" data-i="messages">Messages</a>
+  <a href="./contacts.html" class="on" data-i="contacts">Contacts</a>
+  <a href="#" onclick="return false" data-i="billing">Billing</a>
+  <a href="#" onclick="return false" data-i="settings">Settings</a>
+</aside>
+
+<main class="main">
+  <div class="head">
+    <div>
+      <h1 data-i="contacts">Contacts</h1>
+      <div class="sub" id="count"></div>
+    </div>
+    <div class="lang"><button id="bEN" onclick="setLang('en')">EN</button><button id="bZH" onclick="setLang('zh')">中文</button></div>
+  </div>
+
+  <div class="bar">
+    <input id="q" class="in" type="search" data-ph="search" placeholder="Search name, phone, email or tag">
+    <button class="btn" onclick="$('file').click()" data-i="importCsv">Import CSV</button>
+    <button class="btn pri" onclick="openForm()" data-i="addContact">Add contact</button>
+    <input id="file" type="file" accept=".csv,text/csv" hidden>
+  </div>
+
+  <div class="card" id="list"></div>
+  <button class="btn more" id="more" style="display:none" onclick="load(false)" data-i="loadMore">Load more</button>
+</main>
+
+<div class="ov" id="ov">
+  <div class="modal">
+    <div class="mh" id="mTitle"></div>
+    <div class="mb">
+      <div class="err" id="err"></div>
+      <div class="fg"><label data-i="name">Name</label><input id="fName" class="in" maxlength="120" autocomplete="off"></div>
+      <div class="fg"><label data-i="phone">Phone</label><input id="fPhone" class="in" type="tel" maxlength="30" placeholder="+60123456789"><div class="help" data-i="phoneHelp">Include the country code.</div></div>
+      <div class="fg"><label data-i="email">Email</label><input id="fEmail" class="in" type="email" maxlength="150"></div>
+      <div class="fg"><label data-i="tags">Tags</label><input id="fTags" class="in" placeholder="vip, lead"><div class="help" data-i="tagsHelp">Separate tags with commas.</div></div>
+      <div class="fg"><label data-i="notes">Notes</label><textarea id="fNotes" class="in" maxlength="1000"></textarea></div>
+    </div>
+    <div class="mf">
+      <button class="btn" onclick="closeForm()" data-i="cancel">Cancel</button>
+      <button class="btn pri" id="save" onclick="save()" data-i="save">Save contact</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const API="https://whatsapp-provider-api.b79gn827py.workers.dev",TK="chatnova_token",LK="chatnova_language",PAGE=50;
+const $=id=>document.getElementById(id);
+const ls=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const lset=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+const lrm=k=>{try{localStorage.removeItem(k)}catch(e){}};
+
+const T={en:{dashboard:"Dashboard",whatsapp:"WhatsApp",messages:"Messages",contacts:"Contacts",billing:"Billing",settings:"Settings",
+ importCsv:"Import CSV",addContact:"Add contact",loadMore:"Load more",name:"Name",phone:"Phone",email:"Email",tags:"Tags",notes:"Notes",
+ phoneHelp:"Include the country code.",tagsHelp:"Separate tags with commas.",cancel:"Cancel",save:"Save contact",
+ search:"Search name, phone, email or tag",edit:"Edit",del:"Delete",newTitle:"Add contact",editTitle:"Edit contact",
+ empty:"No contacts yet. Add one, or import a CSV with a phone column.",noMatch:"No contacts match your search.",
+ count:n=>n+" contacts",confirmDel:"Delete this contact?",saved:"Contact saved",deleted:"Contact deleted",
+ imported:(a,b)=>"Imported "+a+", skipped "+b,saving:"Saving...",importing:"Importing...",unnamed:"No name",
+ noPhoneCol:"No valid rows found. The CSV needs a phone column.",fail:"Something went wrong. Try again."},
+ zh:{dashboard:"控制台",whatsapp:"WhatsApp",messages:"消息",contacts:"联系人",billing:"账单",settings:"设置",
+ importCsv:"导入 CSV",addContact:"添加联系人",loadMore:"加载更多",name:"姓名",phone:"电话",email:"邮箱",tags:"标签",notes:"备注",
+ phoneHelp:"请包含国家区号。",tagsHelp:"用逗号分隔多个标签。",cancel:"取消",save:"保存联系人",
+ search:"搜索姓名、电话、邮箱或标签",edit:"编辑",del:"删除",newTitle:"添加联系人",editTitle:"编辑联系人",
+ empty:"还没有联系人。请添加，或导入包含电话列的 CSV 文件。",noMatch:"没有符合搜索条件的联系人。",
+ count:n=>"共 "+n+" 位联系人",confirmDel:"确定删除该联系人吗？",saved:"联系人已保存",deleted:"联系人已删除",
+ imported:(a,b)=>"已导入 "+a+" 条，跳过 "+b+" 条",saving:"保存中...",importing:"导入中...",unnamed:"未命名",
+ noPhoneCol:"没有找到有效的行。CSV 需要包含电话列。",fail:"出了点问题，请重试。"}};
+
+let lang=ls(LK)==="zh"?"zh":"en";
+const t=k=>T[lang][k];
+let S={q:"",offset:0,total:0,items:[],editId:null,busy:false};
+
+function setLang(l){
+  lang=l==="zh"?"zh":"en";lset(LK,lang);document.documentElement.lang=lang==="zh"?"zh-CN":"en";
+  document.querySelectorAll("[data-i]").forEach(e=>e.textContent=t(e.dataset.i));
+  document.querySelectorAll("[data-ph]").forEach(e=>e.placeholder=t(e.dataset.ph));
+  $("bEN").classList.toggle("on",lang==="en");$("bZH").classList.toggle("on",lang==="zh");
+  $("mTitle").textContent=S.editId?t("editTitle"):t("newTitle");
+  render();
+}
+
+function toast(msg,bad){const e=$("toast");e.textContent=msg;e.className="toast"+(bad?" bad":"");e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display="none",3200)}
+
+async function api(path,opt={}){
+  const token=ls(TK);
+  if(!token){location.replace("./login.html");throw null}
+  const c=new AbortController(),tm=setTimeout(()=>c.abort(),15000);
+  try{
+    const r=await fetch(API+path,{...opt,signal:c.signal,cache:"no-store",headers:{Accept:"application/json",Authorization:"Bearer "+token,...(opt.body?{"Content-Type":"application/json"}:{})}});
+    if(r.status===401){lrm(TK);location.replace("./login.html");throw null}
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok||d.success===false)throw new Error(d.message||t("fail"));
+    return d;
+  }finally{clearTimeout(tm)}
+}
+const fail=e=>{if(e)toast(e.name==="AbortError"?t("fail"):e.message,true)};
+
+function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+
+function render(){
+  const box=$("list");box.textContent="";
+  $("count").textContent=S.total?t("count")(S.total):"";
+  if(!S.items.length){box.appendChild(el("div","empty",S.q?t("noMatch"):t("empty")));$("more").style.display="none";return}
+  for(const c of S.items){
+    const r=el("div","row");
+    r.appendChild(el("div","av",(c.name||c.phone||"?").trim().charAt(0).toUpperCase()));
+    const mid=el("div");mid.appendChild(el("div","nm",c.name||t("unnamed")));mid.appendChild(el("div","ph","+"+c.phone));
+    r.appendChild(mid);
+    const tg=el("div","tags");c.tags.forEach(x=>tg.appendChild(el("span","tag",x)));r.appendChild(tg);
+    const a=el("div","acts");
+    const eb=el("button","btn sm",t("edit"));eb.onclick=()=>openForm(c);
+    const db=el("button","btn sm dng",t("del"));db.onclick=()=>remove(c);
+    a.append(eb,db);r.appendChild(a);box.appendChild(r);
+  }
+  $("more").style.display=S.items.length<S.total?"block":"none";
+}
+
+async function load(reset){
+  if(S.busy)return;S.busy=true;
+  if(reset){S.offset=0;S.items=[]}
+  try{
+    const d=await api("/api/contacts?limit="+PAGE+"&offset="+S.offset+"&q="+encodeURIComponent(S.q));
+    S.total=d.total;S.items=S.items.concat(d.contacts);S.offset=S.items.length;render();
+  }catch(e){fail(e)}finally{S.busy=false}
+}
+
+let qt;$("q").addEventListener("input",e=>{clearTimeout(qt);qt=setTimeout(()=>{S.q=e.target.value.trim();load(true)},300)});
+
+function openForm(c){
+  S.editId=c?c.id:null;$("mTitle").textContent=c?t("editTitle"):t("newTitle");
+  $("fName").value=c?c.name||"":"";$("fPhone").value=c?"+"+c.phone:"";$("fEmail").value=c?c.email||"":"";
+  $("fTags").value=c?c.tags.join(", "):"";$("fNotes").value=c?c.notes||"":"";
+  $("err").style.display="none";$("ov").classList.add("show");setTimeout(()=>$("fName").focus(),60);
+}
+function closeForm(){$("ov").classList.remove("show")}
+$("ov").addEventListener("click",e=>{if(e.target===e.currentTarget)closeForm()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeForm()});
+
+async function save(){
+  const b=$("save");b.disabled=true;b.textContent=t("saving");$("err").style.display="none";
+  try{
+    await api(S.editId?"/api/contacts/"+S.editId:"/api/contacts",{method:S.editId?"PUT":"POST",body:JSON.stringify({
+      name:$("fName").value,phone:$("fPhone").value,email:$("fEmail").value,tags:$("fTags").value,notes:$("fNotes").value})});
+    closeForm();toast(t("saved"));load(true);
+  }catch(e){if(e){$("err").textContent=e.message;$("err").style.display="block"}}
+  finally{b.disabled=false;b.textContent=t("save")}
+}
+
+async function remove(c){
+  if(!confirm(t("confirmDel")))return;
+  try{await api("/api/contacts/"+c.id,{method:"DELETE"});toast(t("deleted"));load(true)}catch(e){fail(e)}
+}
+
+/* ---------- CSV IMPORT ---------- */
+function parseCSV(s){
+  s=s.replace(/^\uFEFF/,"");const rows=[];let r=[],f="",q=false;
+  const push=()=>{r.push(f);f="";if(r.some(x=>x.trim()))rows.push(r);r=[]};
+  for(let i=0;i<s.length;i++){const c=s[i];
+    if(q){if(c==='"'){if(s[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+    else if(c==='"')q=true;
+    else if(c===","){r.push(f);f=""}
+    else if(c==="\n"||c==="\r"){if(c==="\r"&&s[i+1]==="\n")i++;push()}
+    else f+=c}
+  if(f||r.length)push();return rows;
+}
+
+$("file").addEventListener("change",async e=>{
+  const file=e.target.files[0];e.target.value="";if(!file)return;
+  try{
+    const rows=parseCSV(await file.text());if(!rows.length)return toast(t("noPhoneCol"),true);
+    const head=rows[0].map(h=>h.trim().toLowerCase());
+    const find=(...k)=>head.findIndex(h=>k.some(x=>h.includes(x)));
+    let ip=find("phone","mobile","number","whatsapp","电话"),hasHead=ip>-1,body=hasHead?rows.slice(1):rows;
+    const idx=hasHead?{p:ip,n:find("name","姓名"),e:find("email","邮箱"),t:find("tag","标签"),o:find("note","备注")}:{p:0,n:1,e:2,t:3,o:4};
+    const g=(r,i)=>i>-1&&r[i]!=null?r[i].trim():"";
+    const list=body.map(r=>({phone:g(r,idx.p),name:g(r,idx.n),email:g(r,idx.e),tags:g(r,idx.t),notes:g(r,idx.o)})).filter(x=>x.phone);
+    if(!list.length)return toast(t("noPhoneCol"),true);
+    toast(t("importing"));let ok=0,skip=0;
+    for(let i=0;i<list.length;i+=500){const d=await api("/api/contacts/import",{method:"POST",body:JSON.stringify({contacts:list.slice(i,i+500)})});ok+=d.imported;skip+=d.skipped}
+    toast(t("imported")(ok,skip));load(true);
+  }catch(err){fail(err)}
+});
+
+setLang(lang);
+if(!ls(TK))location.replace("./login.html");else load(true);
+</script>
+</body>
+</html>
