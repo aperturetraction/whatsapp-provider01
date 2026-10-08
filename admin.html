@@ -1,823 +1,172 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Admin - WhatsApp Provider</title>
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ChatNova Admin</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root{--cn-border:#e0e5ed;--cn-muted:#687386;--cn-bg:#f5f7fa}
+    body{background:var(--cn-bg);min-height:100vh}.admin-shell{max-width:1440px;margin:auto;padding:22px}
+    .admin-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}
+    .admin-top h1{margin:0}.admin-top p{margin:5px 0;color:var(--cn-muted)}
+    .admin-nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+    .admin-nav button,.action{border:1px solid var(--cn-border);background:#fff;border-radius:8px;padding:9px 13px;cursor:pointer}
+    .admin-nav button.active{background:#172536;color:#fff}
+    .panel{background:#fff;border:1px solid var(--cn-border);border-radius:12px;padding:18px;margin:14px 0}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+    .metric{background:#fff;border:1px solid var(--cn-border);border-radius:10px;padding:16px}.metric small{color:var(--cn-muted)}.metric strong{display:block;font-size:26px;margin-top:8px}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.filters input,.filters select,.panel input,.panel select,.panel textarea{padding:9px;border:1px solid #ccd3dd;border-radius:7px;max-width:100%}
+    .table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:750px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--cn-border);vertical-align:top}th{font-size:13px;color:var(--cn-muted)}
+    .muted{color:var(--cn-muted)}.notice{white-space:pre-wrap;margin:10px 0;color:#9b2828}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .chat-layout{display:grid;grid-template-columns:minmax(220px,340px) 1fr;min-height:520px;gap:12px}.chat-list{border:1px solid var(--cn-border);border-radius:9px;overflow:auto}.chat-item{display:block;width:100%;text-align:left;padding:12px;border:0;border-bottom:1px solid var(--cn-border);background:#fff;cursor:pointer}.chat-item.selected{background:#eff6ff}.thread{border:1px solid var(--cn-border);border-radius:9px;display:flex;flex-direction:column;min-height:520px}.thread-head{padding:12px;border-bottom:1px solid var(--cn-border)}.thread-messages{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px;max-height:420px}.bubble{max-width:78%;padding:10px 12px;border-radius:10px;background:#f0f2f5;white-space:pre-wrap;overflow-wrap:anywhere}.bubble.admin{align-self:flex-end;background:#def4e7}.bubble small{display:block;margin-top:4px;color:var(--cn-muted)}.thread-compose{display:flex;gap:8px;padding:12px;border-top:1px solid var(--cn-border)}.thread-compose textarea{flex:1;resize:vertical}
+    .modal{position:fixed;inset:0;background:#0008;display:none;place-items:center;padding:16px;z-index:20}.modal.show{display:grid}.modal-card{background:#fff;border-radius:12px;padding:20px;width:min(520px,100%);max-height:90vh;overflow:auto}.field{display:grid;gap:6px;margin:12px 0}.field input,.field select,.field textarea{width:100%;box-sizing:border-box}
+    [hidden]{display:none!important}
+    @media(max-width:720px){.admin-shell{padding:12px}.chat-layout{grid-template-columns:1fr}.chat-list{max-height:220px}.admin-top{align-items:flex-start}.thread{min-height:450px}}
+  </style>
 </head>
-
 <body>
-
-<div class="app">
-
-    <!-- SIDEBAR -->
-
-    <aside class="sidebar">
-
-        <div class="logo">
-            WhatsApp Provider
-        </div>
-
-
-        <nav class="menu">
-
-            <a href="dashboard.html">
-                Dashboard
-            </a>
-
-            <a href="whatsapp.html">
-                WhatsApp
-            </a>
-
-            <a href="chat.html">
-                Chat
-            </a>
-
-            <a href="billing.html">
-                Billing
-            </a>
-
-            <a href="account.html">
-                Account
-            </a>
-
-            <a
-                href="admin.html"
-                class="active"
-            >
-                Admin
-            </a>
-
-        </nav>
-
-
-        <button
-            class="btn btn-dark"
-            onclick="logout()"
-        >
-            Logout
-        </button>
-
-    </aside>
-
-
-
-    <!-- MAIN -->
-
-    <main class="main">
-
-
-        <!-- TOPBAR -->
-
-        <div class="topbar">
-
-            <div>
-
-                <h2>
-                    Admin Dashboard
-                </h2>
-
-                <p>
-                    Manage your WhatsApp Provider
-                </p>
-
-            </div>
-
-
-            <div class="user">
-
-                <span>
-                    Administrator
-                </span>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- WARNING -->
-
-        <div class="admin-warning">
-
-            ⚠️
-
-            <strong>
-                Administrator Area
-            </strong>
-
-            <p>
-                This area is restricted to authorized
-                administrators.
-            </p>
-
-        </div>
-
-
-
-        <!-- STATISTICS -->
-
-        <section class="section">
-
-            <h3>
-                System Overview
-            </h3>
-
-
-            <div class="grid">
-
-
-                <div class="card">
-
-                    <p class="stat-label">
-                        Total Customers
-                    </p>
-
-                    <div class="stat-number">
-                        128
-                    </div>
-
-                </div>
-
-
-                <div class="card">
-
-                    <p class="stat-label">
-                        WhatsApp Instances
-                    </p>
-
-                    <div class="stat-number">
-                        246
-                    </div>
-
-                </div>
-
-
-                <div class="card">
-
-                    <p class="stat-label">
-                        Connected
-                    </p>
-
-                    <div class="stat-number">
-                        219
-                    </div>
-
-                </div>
-
-
-                <div class="card">
-
-                    <p class="stat-label">
-                        Monthly Revenue
-                    </p>
-
-                    <div class="stat-number">
-                        RM12,840
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- CUSTOMERS -->
-
-        <section class="section">
-
-            <h3>
-                Customers
-            </h3>
-
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Customer
-                            </th>
-
-                            <th>
-                                Email
-                            </th>
-
-                            <th>
-                                Plan
-                            </th>
-
-                            <th>
-                                Instances
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Action
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-
-                        <tr>
-
-                            <td>
-                                John Trading
-                            </td>
-
-                            <td>
-                                john@example.com
-                            </td>
-
-                            <td>
-                                Pro
-                            </td>
-
-                            <td>
-                                3
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="status connected"
-                                >
-                                    Active
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                <button
-                                    class="btn btn-dark"
-                                    onclick="viewCustomer('John Trading')"
-                                >
-                                    View
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                ABC Marketing
-                            </td>
-
-                            <td>
-                                admin@abc.com
-                            </td>
-
-                            <td>
-                                Business
-                            </td>
-
-                            <td>
-                                8
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="status connected"
-                                >
-                                    Active
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                <button
-                                    class="btn btn-dark"
-                                    onclick="viewCustomer('ABC Marketing')"
-                                >
-                                    View
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                Demo Customer
-                            </td>
-
-                            <td>
-                                demo@example.com
-                            </td>
-
-                            <td>
-                                Starter
-                            </td>
-
-                            <td>
-                                1
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="status disconnected"
-                                >
-                                    Suspended
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                <button
-                                    class="btn btn-green"
-                                    onclick="activateCustomer('Demo Customer')"
-                                >
-                                    Activate
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- WHATSAPP INSTANCES -->
-
-        <section class="section">
-
-            <h3>
-                WhatsApp Instances
-            </h3>
-
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Instance
-                            </th>
-
-                            <th>
-                                Customer
-                            </th>
-
-                            <th>
-                                Phone
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Action
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-
-                        <tr>
-
-                            <td>
-                                Business Main
-                            </td>
-
-                            <td>
-                                John Trading
-                            </td>
-
-                            <td>
-                                +60 12 345 6789
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="status connected"
-                                >
-                                    Connected
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                <button
-                                    class="btn btn-dark"
-                                    onclick="instanceAction('Business Main')"
-                                >
-                                    Manage
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                Marketing
-                            </td>
-
-                            <td>
-                                ABC Marketing
-                            </td>
-
-                            <td>
-                                +60 11 2222 3333
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="status disconnected"
-                                >
-                                    Disconnected
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                <button
-                                    class="btn btn-dark"
-                                    onclick="instanceAction('Marketing')"
-                                >
-                                    Manage
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- PAYMENTS -->
-
-        <section class="section">
-
-            <h3>
-                Recent Payments
-            </h3>
-
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Date
-                            </th>
-
-                            <th>
-                                Customer
-                            </th>
-
-                            <th>
-                                Plan
-                            </th>
-
-                            <th>
-                                Amount
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-                        <tr>
-
-                            <td>
-                                01 Oct 2026
-                            </td>
-
-                            <td>
-                                John Trading
-                            </td>
-
-                            <td>
-                                Pro
-                            </td>
-
-                            <td>
-                                RM99
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="status connected"
-                                >
-                                    Paid
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                01 Oct 2026
-                            </td>
-
-                            <td>
-                                ABC Marketing
-                            </td>
-
-                            <td>
-                                Business
-                            </td>
-
-                            <td>
-                                RM199
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="status connected"
-                                >
-                                    Paid
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- SYSTEM -->
-
-        <section class="section">
-
-            <h3>
-                System
-            </h3>
-
-
-            <div class="grid">
-
-
-                <div class="card">
-
-                    <p class="stat-label">
-                        GREEN-API
-                    </p>
-
-                    <h3>
-                        Demo Mode
-                    </h3>
-
-                    <span
-                        class="status disconnected"
-                    >
-                        Not Connected
-                    </span>
-
-                </div>
-
-
-                <div class="card">
-
-                    <p class="stat-label">
-                        Database
-                    </p>
-
-                    <h3>
-                        Demo Mode
-                    </h3>
-
-                    <span
-                        class="status disconnected"
-                    >
-                        D1 Not Connected
-                    </span>
-
-                </div>
-
-
-                <div class="card">
-
-                    <p class="stat-label">
-                        Payments
-                    </p>
-
-                    <h3>
-                        Demo Mode
-                    </h3>
-
-                    <span
-                        class="status disconnected"
-                    >
-                        Gateway Not Connected
-                    </span>
-
-                </div>
-
-
-                <div class="card">
-
-                    <p class="stat-label">
-                        API
-                    </p>
-
-                    <h3>
-                        Frontend Only
-                    </h3>
-
-                    <span
-                        class="status disconnected"
-                    >
-                        Worker Not Connected
-                    </span>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-    </main>
-
-</div>
-
-
-
+<main class="admin-shell">
+  <header class="admin-top">
+    <div><div class="brand-name">ChatNova <span>Admin</span></div><h1>Administration</h1><p id="identity" class="muted">Checking secure Admin session…</p></div>
+    <button class="action" id="logout">Log out</button>
+  </header>
+  <nav class="admin-nav" aria-label="Admin sections">
+    <button data-section="overview" class="active">Overview</button>
+    <button data-section="members">Members</button>
+    <button data-section="internal-chat">Internal Chat</button>
+    <button data-section="admins" id="adminsTab" hidden>Admins</button>
+    <button data-section="audit">Audit logs</button>
+  </nav>
+  <div id="notice" class="notice" role="alert"></div>
+  <section id="overview" class="section">
+    <div id="metrics" class="cards"></div>
+    <div class="panel"><h2>Recent registrations</h2><div class="table-wrap"><table><thead><tr><th>Member</th><th>Plan</th><th>Status</th><th>Registered</th></tr></thead><tbody id="recentMembers"></tbody></table></div></div>
+    <div class="panel"><h2>Recent status changes</h2><div class="table-wrap"><table><thead><tr><th>Action</th><th>Member</th><th>Admin</th><th>Reason</th><th>Time</th></tr></thead><tbody id="recentChanges"></tbody></table></div></div>
+  </section>
+  <section id="members" class="section" hidden>
+    <div class="panel"><h2>Members</h2>
+      <div class="filters">
+        <input id="memberSearch" placeholder="Search name or email" maxlength="120">
+        <select id="memberStatus"><option value="">All access states</option><option>active</option><option>suspended</option><option>expired</option></select>
+        <select id="memberAccess"><option value="">All access types</option><option value="legacy">Legacy</option><option value="admin_granted">Admin granted</option><option value="paid">Paid</option><option value="none">No access</option></select>
+        <input id="memberPlan" placeholder="Plan filter" maxlength="80">
+        <select id="memberSort"><option value="registration">Registration date</option><option value="expiry">Expiry date</option></select>
+        <button class="action" id="memberSearchButton">Search</button>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>Member</th><th>Plan</th><th>Access</th><th>Expires</th><th>WhatsApp accounts</th><th>Last activity</th><th>Action</th></tr></thead><tbody id="memberRows"></tbody></table></div>
+      <div class="toolbar"><button class="action" id="prevPage">Previous</button><span id="pageInfo" class="muted"></span><button class="action" id="nextPage">Next</button></div>
+    </div>
+    <div id="memberDetail" class="panel" hidden></div>
+  </section>
+  <section id="internal-chat" class="section" hidden>
+    <div class="panel"><h2>Member Internal Chat</h2><p class="muted">Private ChatNova support messages. Separate from WhatsApp.</p>
+      <div class="filters"><input id="chatSearch" placeholder="Search Member" maxlength="120"><label><input id="chatUnread" type="checkbox"> Unread only</label><button id="chatSearchButton" class="action">Search</button></div>
+      <div class="chat-layout"><div id="chatList" class="chat-list"></div><div class="thread">
+        <div id="threadHead" class="thread-head muted">Select a conversation</div>
+        <div id="threadMessages" class="thread-messages"></div>
+        <form id="chatForm" class="thread-compose" hidden><textarea id="chatText" rows="2" maxlength="4000" placeholder="Reply to Member"></textarea><button class="action" type="submit">Send</button></form>
+        <div class="toolbar" style="padding:0 12px 12px"><button id="markUnread" class="action" hidden>Mark unread</button></div>
+      </div></div>
+    </div>
+  </section>
+  <section id="admins" class="section" hidden>
+    <div class="panel"><div class="toolbar"><h2 style="flex:1">Admin accounts</h2><button id="newAdmin" class="action">Create Admin</button></div>
+      <p class="muted">Super Admins can manage Admin accounts. Role and status changes revoke existing sessions.</p>
+      <div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Created</th><th>Last login</th><th>Permissions</th><th>Action</th></tr></thead><tbody id="adminRows"></tbody></table></div>
+    </div>
+  </section>
+  <section id="audit" class="section" hidden>
+    <div class="panel"><h2>Admin audit logs</h2><div class="table-wrap"><table><thead><tr><th>Time</th><th>Admin</th><th>Action</th><th>Member</th><th>Reason</th><th>Details</th></tr></thead><tbody id="auditRows"></tbody></table></div></div>
+  </section>
+</main>
+<dialog id="accessDialog">
+  <form method="dialog" id="accessForm" class="modal-card">
+    <h2 id="accessTitle">Grant access</h2>
+    <label class="field">Duration<select id="accessDuration"><option value="7">7 days</option><option value="30">30 days</option><option value="90">90 days</option><option value="180">180 days</option><option value="365">365 days</option><option value="custom">Custom expiry</option><option value="unlimited">Unlimited</option></select></label>
+    <label class="field" id="expiryField" hidden>Expiry date<input id="customExpiry" type="date"></label>
+    <label class="field">Reason / note<textarea id="accessReason" rows="3" maxlength="1000"></textarea></label>
+    <div class="toolbar"><button class="action" value="cancel">Cancel</button><button id="accessSubmit" class="action" value="default">Save</button></div>
+  </form>
+</dialog>
+<dialog id="adminDialog">
+  <form method="dialog" id="adminForm" class="modal-card">
+    <h2>Create Admin</h2>
+    <label class="field">Name<input id="newAdminName" maxlength="120" required></label>
+    <label class="field">Email<input id="newAdminEmail" type="email" maxlength="254" required></label>
+    <label class="field">Role<select id="newAdminRole"><option value="admin">Admin</option><option value="support">Support Admin</option><option value="viewer">Viewer</option><option value="super_admin">Super Admin</option></select></label>
+    <label class="field">Temporary password (12+ characters)<input id="newAdminPassword" type="password" minlength="12" maxlength="200" autocomplete="new-password" required></label>
+    <div class="toolbar"><button class="action" value="cancel">Cancel</button><button class="action" value="default">Create</button></div>
+  </form>
+</dialog>
 <script>
-
-
-/* =========================
-   VIEW CUSTOMER
-========================= */
-
-function viewCustomer(name) {
-
-    alert(
-        "Customer: " +
-        name +
-        "\n\n" +
-        "Customer management will be connected to D1 later."
-    );
-
+const API="https://whatsapp-provider-api.b79gn827py.workers.dev",TOKEN_KEY="chatnova_admin_session";
+const $=id=>document.getElementById(id),token=()=>sessionStorage.getItem(TOKEN_KEY),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let me=null,offset=0,total=0,activeMember=null,activeChat=null,lastChatId=0,pollTimer=null,searchTimer=null;
+function notice(text){$("notice").textContent=text||""}
+async function api(path,options={}){const response=await fetch(API+path,{...options,cache:"no-store",headers:{Accept:"application/json",Authorization:"Bearer "+token(),...(options.body?{"Content-Type":"application/json"}:{})}});const data=await response.json().catch(()=>({}));if(response.status===401){sessionStorage.removeItem(TOKEN_KEY);location.replace("./admin-login.html");throw Error("Admin session expired.")}if(!response.ok||data.success===false)throw Error(data.message||"Request failed");return data}
+const date=v=>v?new Date(v).toLocaleString():"—";
+function section(name,adminId){document.querySelectorAll(".section").forEach(x=>x.hidden=x.id!==name);document.querySelectorAll(".admin-nav button").forEach(x=>x.classList.toggle("active",x.dataset.section===name));notice();if(name==="members")loadMembers();if(name==="internal-chat")loadChats();if(name==="admins")loadAdmins();if(name==="audit")loadAudit(adminId)}
+document.querySelectorAll(".admin-nav button").forEach(b=>b.addEventListener("click",()=>section(b.dataset.section)));
+$("logout").onclick=async()=>{try{await api("/api/admin/logout",{method:"POST",body:"{}"})}catch{}sessionStorage.removeItem(TOKEN_KEY);location.replace("./admin-login.html")};
+async function loadOverview(){const d=await api("/api/admin/dashboard");const values=[["Total Members",d.stats.totalMembers],["Active Members",d.stats.activeMembers],["Suspended Members",d.stats.suspendedMembers],["Expired Members",d.stats.expiredMembers],["Free / legacy",d.stats.freeGrantedMembers],["Paid Members",d.stats.paidMembers],["Connected WhatsApp accounts",d.stats.whatsappConnectedAccounts],["Internal Chat unread",d.stats.internalChatUnread]];$("metrics").replaceChildren(...values.map(([label,value])=>{const card=document.createElement("div");card.className="metric";card.innerHTML="<small>"+esc(label)+"</small><strong>"+esc(value)+"</strong>";return card}));$("recentMembers").innerHTML=(d.recentMembers||[]).map(m=>"<tr><td>"+esc(m.full_name||m.email)+"<br><span class=muted>"+esc(m.email)+"</span></td><td>"+esc(m.plan)+"</td><td>"+esc(m.status)+"</td><td>"+esc(date(m.created_at))+"</td></tr>").join("")||"<tr><td colspan=4>No registrations yet.</td></tr>";$("recentChanges").innerHTML=(d.recentChanges||[]).map(x=>"<tr><td>"+esc(x.action)+"</td><td>"+esc(x.member_email||"—")+"</td><td>"+esc(x.admin_name||"—")+"</td><td>"+esc(x.reason||"—")+"</td><td>"+esc(date(x.created_at))+"</td></tr>").join("")||"<tr><td colspan=5>No changes yet.</td></tr>"}
+function memberQuery(){const p=new URLSearchParams({limit:"25",offset:String(offset)});if($("memberSearch").value.trim())p.set("q",$("memberSearch").value.trim());if($("memberStatus").value)p.set("status",$("memberStatus").value);if($("memberPlan").value.trim())p.set("plan",$("memberPlan").value.trim());if($("memberAccess").value)p.set("accessType",$("memberAccess").value);p.set("sort",$("memberSort").value);return p}
+async function loadMembers(){try{const d=await api("/api/admin/members?"+memberQuery());total=d.total;$("memberRows").innerHTML=(d.members||[]).map(m=>"<tr><td>"+esc(m.full_name||"")+"<br><span class=muted>"+esc(m.email)+"</span></td><td>"+esc(m.plan||"—")+"</td><td>"+esc(m.access)+" · "+esc(m.access_type||"none")+"<br><span class=muted>"+esc(m.account_status)+"</span></td><td>"+esc(date(m.expires_at))+"</td><td>"+esc(m.connected_accounts||0)+"</td><td>"+esc(date(m.last_activity))+"</td><td><button class=action data-view=\""+esc(m.id)+"\">Details</button></td></tr>").join("")||"<tr><td colspan=7>No Members found.</td></tr>";$("pageInfo").textContent=total?`${offset+1}-${Math.min(offset+25,total)} of ${total}`:"0 Members";$("prevPage").disabled=offset===0;$("nextPage").disabled=offset+25>=total;$("memberRows").querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>showMember(Number(b.dataset.view)))}catch(e){notice(e.message)}}
+async function showMember(id){
+  try{
+    const d=await api("/api/admin/members/"+id),m=d.member;activeMember=id;
+    const box=$("memberDetail"),actions=[];
+    if(me.permissions.includes("access.grant"))actions.push(["grant","Grant free access"]);
+    if(me.permissions.includes("access.extend"))actions.push(["extend","Extend access"]);
+    if(me.permissions.includes("access.revoke"))actions.push(["revoke","Revoke access"]);
+    if(me.permissions.includes("members.suspend"))actions.push(["suspend","Suspend Member"]);
+    if(me.permissions.includes("members.reactivate"))actions.push(["reactivate","Reactivate"]);
+    box.hidden=false;
+    box.innerHTML="<h2>"+esc(m.full_name||m.email)+"</h2><p>"+esc(m.email)+" · "+esc(m.plan||"—")+" · "+esc(m.access)+"</p><p>Account: "+esc(m.account_status)+" · Access: "+esc(m.access_type||"none")+" until "+esc(date(m.expires_at))+"</p>"+
+      (me.permissions.includes("members.edit")?"<p>Connected accounts: "+esc(m.connected_accounts||0)+" · Last activity: "+esc(date(m.last_activity))+"</p>":"")+
+      (actions.length?"<div class=toolbar>"+actions.map(([action,label])=>"<button class=action data-action=\""+action+"\">"+label+"</button>").join("")+"</div>":"")+
+      (d.accessHistory?"<h3>Access history</h3><div class=table-wrap><table><thead><tr><th>Action</th><th>By</th><th>Reason</th><th>Time</th></tr></thead><tbody>"+d.accessHistory.map(h=>"<tr><td>"+esc(h.action)+"</td><td>"+esc(h.admin_name||"—")+"</td><td>"+esc(h.reason||"—")+"</td><td>"+esc(date(h.created_at))+"</td></tr>").join("")+"</tbody></table></div>":"");
+    box.querySelectorAll("[data-action]").forEach(b=>b.onclick=()=>memberAction(b.dataset.action,id));
+  }catch(e){notice(e.message)}
 }
-
-
-
-/* =========================
-   ACTIVATE CUSTOMER
-========================= */
-
-function activateCustomer(name) {
-
-    const confirmAction =
-        confirm(
-            "Activate " +
-            name +
-            "?"
-        );
-
-
-    if (!confirmAction) {
-
-        return;
-
-    }
-
-
-    alert(
-        "Demo only.\n\n" +
-        name +
-        " would be activated here."
-    );
-
+function memberAction(action,id){if(action==="grant"||action==="extend"){showAccessDialog(action,id);return}const reason=prompt("Optional reason / note:")||"";if(action==="suspend"&&!confirm("Suspend this Member's ChatNova access? No data will be deleted."))return;if(action==="revoke"&&!confirm("Revoke this access entitlement? No Member data will be deleted."))return;api("/api/admin/members/"+id+"/"+({suspend:"suspend",reactivate:"reactivate",revoke:"revoke-access"}[action]),{method:"POST",body:JSON.stringify({reason})}).then(()=>{notice("Member access updated.");loadMembers();showMember(id);loadOverview()}).catch(e=>notice(e.message))}
+function showAccessDialog(action,id){$("accessTitle").textContent=action==="grant"?"Grant free access":"Extend access";$("accessDuration").value=action==="grant"?"30":"custom";$("customExpiry").value="";$("expiryField").hidden=$("accessDuration").value!=="custom";$("accessReason").value="";const dialog=$("accessDialog");dialog.showModal();$("accessDuration").onchange=()=>{$("expiryField").hidden=$("accessDuration").value!=="custom"};$("accessForm").onsubmit=async e=>{if(e.submitter?.value==="cancel")return;e.preventDefault();const duration=$("accessDuration").value,payload={reason:$("accessReason").value};if(duration==="unlimited")payload.unlimited=true;else if(duration==="custom"){if(!$("customExpiry").value){notice("Choose an expiry date.");return}payload.expiresAt=new Date($("customExpiry").value+"T23:59:59").toISOString()}else if(action==="grant")payload.days=Number(duration);else payload.expiresAt=new Date(Date.now()+Number(duration)*86400000).toISOString();try{await api("/api/admin/members/"+id+"/"+(action==="grant"?"grant-access":"extend-access"),{method:"POST",body:JSON.stringify(payload)});dialog.close();await showMember(id);loadMembers();loadOverview();notice("Access saved.")}catch(err){notice(err.message)}}}
+$("memberSearchButton").onclick=()=>{offset=0;loadMembers()};["memberStatus","memberAccess","memberSort"].forEach(id=>$(id).onchange=()=>{offset=0;loadMembers()});$("memberPlan").onkeydown=e=>{if(e.key==="Enter")loadMembers()};$("memberSearch").onkeydown=e=>{if(e.key==="Enter"){offset=0;loadMembers()}};$("prevPage").onclick=()=>{offset=Math.max(0,offset-25);loadMembers()};$("nextPage").onclick=()=>{offset+=25;loadMembers()};
+async function loadChats(){try{const p=new URLSearchParams({limit:"100",q:$("chatSearch").value.trim(),unread:String($("chatUnread").checked)});const d=await api("/api/admin/internal-chats?"+p);$("chatList").innerHTML=(d.conversations||[]).map(c=>"<button class=\"chat-item"+(activeChat===c.id?" selected":"")+"\" data-chat=\""+esc(c.id)+"\"><strong>"+esc(c.full_name||c.email)+"</strong><br><span class=muted>"+esc(c.email)+"</span><br>"+esc(c.last_message_preview||"")+" · "+esc(date(c.last_message_at))+" · unread "+esc(c.unread_for_admin)+"</button>").join("")||"<p class=muted style=padding:12px>No Internal Chat conversations.</p>";$("chatList").querySelectorAll("[data-chat]").forEach(b=>b.onclick=()=>openChat(Number(b.dataset.chat)));if(activeChat)await pollChat()}catch(e){notice(e.message)}}
+async function openChat(id){activeChat=id;lastChatId=0;$("threadMessages").replaceChildren();$("chatForm").hidden=!me.permissions.includes("internalchat.reply");$("markUnread").hidden=!me.permissions.includes("internalchat.manage");await pollChat();await loadChats()}
+async function pollChat(){if(!activeChat)return;try{const d=await api("/api/admin/internal-chats/"+activeChat+"/messages?after="+lastChatId);$("threadHead").textContent="Member conversation · #"+d.conversation.id;const box=$("threadMessages");for(const m of d.messages||[]){if(m.id<=lastChatId)continue;lastChatId=m.id;const bubble=document.createElement("div");bubble.className="bubble "+(m.senderType==="admin"?"admin":"");bubble.append(document.createTextNode(m.body));const small=document.createElement("small");small.textContent=(m.senderType==="admin"?"Admin":"Member")+" · "+date(m.createdAt);bubble.appendChild(small);box.appendChild(bubble)}box.scrollTop=box.scrollHeight}catch(e){notice(e.message)}}
+$("chatSearchButton").onclick=loadChats;$("chatUnread").onchange=loadChats;$("chatSearch").onkeydown=e=>{if(e.key==="Enter")loadChats()};$("chatForm").onsubmit=async e=>{e.preventDefault();const text=$("chatText").value.trim();if(!text)return;try{await api("/api/admin/internal-chats/"+activeChat+"/messages",{method:"POST",body:JSON.stringify({message:text,clientMessageId:crypto.randomUUID().replaceAll("-","")})});$("chatText").value="";await pollChat();await loadChats()}catch(err){notice(err.message)}};$("markUnread").onclick=async()=>{try{await api("/api/admin/internal-chats/"+activeChat+"/unread",{method:"POST",body:"{}"});activeChat=null;$("threadMessages").replaceChildren();$("threadHead").textContent="Select a conversation";$("chatForm").hidden=true;$("markUnread").hidden=true;await loadChats()}catch(e){notice(e.message)}};
+async function loadAdmins(){
+  if(!me.permissions.includes("admin.view"))return;
+  try{
+    const d=await api("/api/admin/users");
+    $("adminRows").innerHTML=(d.admins||[]).map(a=>{
+      const canManage=me.permissions.includes("admin.edit")&&(me.role==="super_admin"||a.role!=="super_admin")&&a.id!==me.id;
+      const roleOptions=(me.role==="super_admin"?'<option value="super_admin" '+(a.role==="super_admin"?"selected":"")+'>Super Admin</option>':"")+
+        '<option value="admin" '+(a.role==="admin"?"selected":"")+'>Admin</option><option value="support" '+(a.role==="support"?"selected":"")+'>Support</option><option value="viewer" '+(a.role==="viewer"?"selected":"")+'>Viewer</option>';
+      const controls=canManage?
+        '<select data-role="'+esc(a.id)+'">'+roleOptions+'</select> <select data-status="'+esc(a.id)+'"><option value="active" '+(a.status==="active"?"selected":"")+'>Active</option><option value="suspended" '+(a.status==="suspended"?"selected":"")+'>Suspended</option></select> <button class=action data-save="'+esc(a.id)+'">Save</button> <button class=action data-revoke="'+esc(a.id)+'">Revoke sessions</button>':
+        me.permissions.includes("admin.edit")&&(me.role==="super_admin"||a.role!=="super_admin")&&a.id===me.id?
+          '<button class=action data-revoke="'+esc(a.id)+'">Revoke sessions</button>':"—";
+      const activity=me.permissions.includes("audit.view")?'<button class=action data-activity="'+esc(a.id)+'">View activity</button>':"";
+      return "<tr><td>"+esc(a.fullName)+"</td><td>"+esc(a.email)+"</td><td>"+esc(a.role)+"</td><td>"+esc(a.status)+"</td><td>"+esc(date(a.createdAt))+"</td><td>"+esc(date(a.lastLoginAt||a.lastActivity))+"</td><td>"+esc((a.permissions||[]).join(", "))+"</td><td>"+controls+" "+activity+"</td></tr>";
+    }).join("")||"<tr><td colspan=8>No Admins found.</td></tr>";
+    $("adminRows").querySelectorAll("[data-save]").forEach(b=>b.onclick=async()=>{
+      const id=b.dataset.save,role=$("adminRows").querySelector('[data-role="'+id+'"]'),status=$("adminRows").querySelector('[data-status="'+id+'"]'),target=d.admins.find(a=>String(a.id)===id);
+      try{await api("/api/admin/users/"+id,{method:"PUT",body:JSON.stringify({role:role.value===aCurrentRole(target)?undefined:role.value,status:status.value===target.status?undefined:status.value})});notice("Admin updated.");loadAdmins()}catch(e){notice(e.message)}
+    });
+    $("adminRows").querySelectorAll("[data-revoke]").forEach(b=>b.onclick=async()=>{
+      try{await api("/api/admin/users/"+b.dataset.revoke+"/revoke-sessions",{method:"POST",body:"{}"});notice("Admin sessions revoked.");if(Number(b.dataset.revoke)===me.id){sessionStorage.removeItem(TOKEN_KEY);location.replace("./admin-login.html")}else loadAdmins()}catch(e){notice(e.message)}
+    });
+    $("adminRows").querySelectorAll("[data-activity]").forEach(b=>b.onclick=()=>section("audit",Number(b.dataset.activity)));
+  }catch(e){notice(e.message)}
 }
-
-
-
-/* =========================
-   INSTANCE
-========================= */
-
-function instanceAction(name) {
-
-    alert(
-        "Instance: " +
-        name +
-        "\n\n" +
-        "GREEN-API instance management will be connected later."
-    );
-
-}
-
-
-
-/* =========================
-   LOGOUT
-========================= */
-
-function logout() {
-
-    localStorage.removeItem(
-        "loggedIn"
-    );
-
-    localStorage.removeItem(
-        "userEmail"
-    );
-
-    window.location.href =
-        "index.html";
-
-}
-
-
+function aCurrentRole(admin){return admin.role}
+$("newAdmin").onclick=()=>{if(!me.permissions.includes("admin.create"))return;const d=$("adminDialog");d.showModal();$("adminForm").onsubmit=async e=>{if(e.submitter?.value==="cancel")return;e.preventDefault();try{await api("/api/admin/users",{method:"POST",body:JSON.stringify({fullName:$("newAdminName").value.trim(),email:$("newAdminEmail").value.trim(),role:$("newAdminRole").value,password:$("newAdminPassword").value})});d.close();$("adminForm").reset();loadAdmins();notice("Admin account created.")}catch(err){notice(err.message)}}};
+async function loadAudit(adminId){if(!me.permissions.includes("audit.view")){notice("Your Admin role cannot view audit logs.");return}try{const query=new URLSearchParams({limit:"100"});if(adminId)query.set("adminId",String(adminId));const d=await api("/api/admin/audit-logs?"+query);$("auditRows").innerHTML=(d.logs||[]).map(x=>"<tr><td>"+esc(date(x.created_at))+"</td><td>"+esc(x.admin_name||"—")+"</td><td>"+esc(x.action)+"</td><td>"+esc(x.member_email||"")+"</td><td>"+esc(x.reason||"")+"</td><td><details><summary>View</summary><pre>"+esc((x.old_value||"")+" → "+(x.new_value||""))+"</pre></details></td></tr>").join("")||"<tr><td colspan=6>No audit records.</td></tr>"}catch(e){notice(e.message)}}
+async function start(){if(!token()){location.replace("./admin-login.html");return}try{const d=await api("/api/admin/me");me=d.admin;$("identity").textContent=me.fullName+" · "+me.role;$("adminsTab").hidden=!me.permissions.includes("admin.view");$("newAdmin").hidden=!me.permissions.includes("admin.create");$("adminDialog").querySelector('[value="super_admin"]').hidden=me.role!=="super_admin";document.querySelector('[data-section="members"]').hidden=!me.permissions.includes("members.view");document.querySelector('[data-section="internal-chat"]').hidden=!me.permissions.includes("internalchat.view");document.querySelector('[data-section="audit"]').hidden=!me.permissions.includes("audit.view");await loadOverview();await loadMembers();pollTimer=setInterval(()=>{if(document.hidden)return;if(!$("internal-chat").hidden){loadChats()}else loadOverview()},5000)}catch(e){notice(e.message)}}
+window.addEventListener("pagehide",()=>{if(pollTimer)clearInterval(pollTimer);pollTimer=null});
+start();
 </script>
-
 </body>
-
 </html>

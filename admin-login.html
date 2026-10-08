@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ChatNova Admin Sign In</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body{min-height:100vh;display:grid;place-items:center;background:#f5f7fa}
+    .login-card{width:min(430px,calc(100% - 32px));padding:32px}
+    .login-card h1{margin:0 0 8px}.login-card p{color:#687386}
+    .field{display:grid;gap:7px;margin:18px 0}.field input{min-height:44px;padding:10px;border:1px solid #ccd3dd;border-radius:8px}
+    .error{color:#a62323;min-height:24px}
+  </style>
+</head>
+<body>
+  <main class="card login-card">
+    <div class="brand-name">ChatNova <span>Admin</span></div>
+    <h1>Admin sign in</h1>
+    <p>Use your separate ChatNova Admin account.</p>
+    <form id="loginForm">
+      <label class="field">Email<input id="email" type="email" autocomplete="username" required maxlength="254"></label>
+      <label class="field">Password<input id="password" type="password" autocomplete="current-password" required maxlength="200"></label>
+      <div id="error" class="error" role="alert"></div>
+      <button id="submit" class="btn btn-primary" type="submit">Sign in</button>
+    </form>
+  </main>
+  <script>
+    const API="https://whatsapp-provider-api.b79gn827py.workers.dev";
+    const KEY="chatnova_admin_session";
+    if(sessionStorage.getItem(KEY)) location.replace("./admin.html");
+    document.getElementById("loginForm").addEventListener("submit",async event=>{
+      event.preventDefault();
+      const button=document.getElementById("submit"),error=document.getElementById("error");
+      button.disabled=true;error.textContent="";
+      try{
+        const response=await fetch(API+"/api/admin/login",{method:"POST",cache:"no-store",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({email:document.getElementById("email").value.trim(),password:document.getElementById("password").value})});
+        const data=await response.json().catch(()=>({}));
+        if(!response.ok||!data.success||typeof data.token!=="string")throw new Error(data.message||"Admin sign in failed.");
+        sessionStorage.setItem(KEY,data.token);
+        location.replace("./admin.html");
+      }catch(e){error.textContent=e.message||"Unable to sign in."}
+      finally{button.disabled=false}
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ChatNova Support</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body{background:#f5f7fa;min-height:100vh}.support-shell{max-width:1050px;margin:28px auto;padding:0 16px}
+    .support-card{background:#fff;border:1px solid #e0e5ed;border-radius:12px;overflow:hidden}
+    .support-head{padding:20px;border-bottom:1px solid #e0e5ed}.support-head h1{margin:0 0 6px}.support-head p{margin:0;color:#687386}
+    #messages{height:min(65vh,620px);min-height:320px;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:10px}
+    .bubble{max-width:82%;padding:10px 13px;border-radius:12px;background:#f0f2f5;white-space:pre-wrap;overflow-wrap:anywhere}
+    .bubble.admin{align-self:flex-start;background:#e8f0ff}.bubble.member{align-self:flex-end;background:#def4e7}
+    .bubble small{display:block;color:#687386;margin-top:5px}.composer{display:flex;gap:10px;padding:14px;border-top:1px solid #e0e5ed}
+    .composer textarea{flex:1;resize:vertical;min-height:44px;padding:10px;border:1px solid #ccd3dd;border-radius:8px}
+    .notice{padding:0 18px;color:#a62323;min-height:20px}
+  </style>
+</head>
+<body>
+<main class="support-shell">
+  <div class="toolbar" style="justify-content:space-between;margin-bottom:12px"><a href="./dashboard.html">← Dashboard</a><a href="./inbox.html">ChatNova Inbox</a></div>
+  <section class="support-card">
+    <header class="support-head"><h1>ChatNova Support</h1><p>Message the ChatNova team. This chat is private and separate from WhatsApp.</p></header>
+    <div id="messages" aria-live="polite"></div>
+    <div id="notice" class="notice" role="alert"></div>
+    <form id="composer" class="composer"><textarea id="text" maxlength="4000" placeholder="Write a message…" required></textarea><button id="send" class="btn btn-primary" type="submit">Send</button></form>
+  </section>
+</main>
+<script>
+const API="https://whatsapp-provider-api.b79gn827py.workers.dev",TOKEN_KEY="chatnova_token";
+const $=id=>document.getElementById(id);
+let lastId=0,timer=null,loading=false;
+function token(){return localStorage.getItem(TOKEN_KEY)}
+async function api(path,options={}){const t=token();if(!t){location.replace("./login.html");throw Error("Sign in to use ChatNova Support.")}const response=await fetch(API+path,{...options,cache:"no-store",headers:{Accept:"application/json",Authorization:"Bearer "+t,...(options.body?{"Content-Type":"application/json"}:{})}});const data=await response.json().catch(()=>({}));if(response.status===401){localStorage.removeItem(TOKEN_KEY);location.replace("./login.html");throw Error("Your session has expired.")}if(!response.ok||data.success===false)throw Error(data.message||"Unable to contact ChatNova Support.");return data}
+function appendMessage(m){if(Number(m.id)<=lastId)return;lastId=Number(m.id);const div=document.createElement("div");div.className="bubble "+(m.senderType==="admin"?"admin":"member");div.append(document.createTextNode(m.body));const meta=document.createElement("small");meta.textContent=(m.senderType==="admin"?"ChatNova Support":"You")+" · "+new Date(m.createdAt).toLocaleString();div.appendChild(meta);$("messages").appendChild(div)}
+async function poll(){if(loading||document.hidden)return;loading=true;try{const d=await api("/api/internal-chat/messages?after="+lastId);for(const m of d.messages||[])appendMessage(m);if((d.messages||[]).length)$("messages").scrollTop=$("messages").scrollHeight;await api("/api/internal-chat/read",{method:"POST",body:"{}"});$("notice").textContent=""}catch(e){$("notice").textContent=e.message}finally{loading=false}}
+$("composer").addEventListener("submit",async event=>{event.preventDefault();const text=$("text").value.trim();if(!text)return;const button=$("send");button.disabled=true;try{await api("/api/internal-chat/messages",{method:"POST",body:JSON.stringify({message:text,clientMessageId:crypto.randomUUID().replaceAll("-","")})});$("text").value="";await poll()}catch(e){$("notice").textContent=e.message}finally{button.disabled=false}});
+async function start(){if(!token()){location.replace("./login.html");return}await poll();timer=setInterval(poll,5000)}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)poll()});window.addEventListener("pagehide",()=>{if(timer)clearInterval(timer);timer=null});start();
+</script>
+</body>
+</html>
