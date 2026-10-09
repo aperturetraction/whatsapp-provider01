@@ -6,17 +6,38 @@
   <title>Business Settings · ChatNova</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .settings-card{max-width:900px;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:24px}
+    :root{--bg:#070a09;--panel:#0d1210;--border:rgba(255,255,255,.08);--text:#f3f7f5;--muted:#8d9993;--green:#19d37a}
+    html,body{min-height:100%;background:radial-gradient(circle at top right,rgba(25,211,122,.07),transparent 30%),var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    .sidebar{background:rgba(10,14,12,.96);border-right:1px solid var(--border);padding:24px 16px}
+    .logo{font-size:23px;letter-spacing:-.7px;margin:4px 12px 28px}
+    .menu{display:flex;flex-direction:column;gap:5px}
+    .menu a{color:var(--muted);padding:12px 13px;border:1px solid transparent;border-radius:11px;margin:0;transition:.2s}
+    .menu a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+    .menu a.active{color:#fff;background:rgba(25,211,122,.11);border-color:rgba(25,211,122,.12)}
+    .main{width:calc(100% - 250px);margin-left:250px;padding:0;min-height:100vh;min-width:0}
+    .topbar{min-height:calc(72px + env(safe-area-inset-top));margin:0;padding:env(safe-area-inset-top) 32px 0;border-bottom:1px solid var(--border);background:rgba(7,10,9,.7);backdrop-filter:blur(14px);position:sticky;top:env(safe-area-inset-top);z-index:50}
+    .topbar h1{font-size:18px;font-weight:700}.topbar p{color:var(--muted);font-size:12px;margin-top:3px}
+    .topbar>div:first-child{min-width:0}.topbar .user{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:transparent;border:0;color:var(--muted);padding:8px 0}
+    .section{margin:0;padding:28px 32px}
+    .settings-card{max-width:900px;background:linear-gradient(145deg,rgba(17,24,20,.96),rgba(13,18,16,.96));border:1px solid var(--border);border-radius:15px;padding:24px;box-shadow:0 16px 40px rgba(0,0,0,.15)}
     .settings-form{display:grid;gap:18px}
-    .settings-form label{display:grid;gap:8px;font-weight:600}
-    .settings-form select,.settings-form textarea{width:100%;padding:11px 12px;border:1px solid #d1d5db;border-radius:9px;background:#fff;color:#111827;font:inherit}
-    .settings-form textarea{min-height:340px;resize:vertical;font:13px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace}
-    .settings-note{color:#6b7280;font-size:13px;line-height:1.55}
-    .settings-alert{display:none;padding:12px;border-radius:9px;background:#fee2e2;color:#991b1b}
-    .settings-alert.show{display:block}.settings-alert.ok{background:#dcfce7;color:#166534}
-    .lang-switch{display:flex;gap:6px}.lang-switch button{padding:7px 10px;border:1px solid #d1d5db;border-radius:8px;background:#fff;cursor:pointer}
-    .lang-switch button.active{border-color:#19c37d;color:#087443}
-    @media(max-width:700px){.main{padding:20px 14px}.settings-card{padding:17px}}
+    .settings-form label{display:grid;gap:8px;color:#dbe4df;font-size:13px;font-weight:600}
+    .settings-form select,.settings-form textarea{width:100%;min-width:0;padding:11px 12px;border:1px solid rgba(255,255,255,.11);border-radius:9px;background:#0a0f0c;color:var(--text);font:inherit;outline:none}
+    .settings-form select:focus,.settings-form textarea:focus{border-color:rgba(25,211,122,.65);box-shadow:0 0 0 3px rgba(25,211,122,.09)}
+    .settings-form textarea{min-height:340px;resize:vertical;font:13px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}
+    .settings-note{color:var(--muted);font-size:12px;line-height:1.6}
+    .settings-alert{display:none;margin:20px 32px 0;padding:12px 14px;border:1px solid rgba(255,92,92,.2);border-radius:10px;background:rgba(255,92,92,.1);color:#ffc1c1;font-size:13px}
+    .settings-alert.show{display:block}.settings-alert.ok{border-color:rgba(25,211,122,.2);background:rgba(25,211,122,.1);color:#a8f0c9}
+    .lang-switch{display:flex;gap:3px;padding:3px;border:1px solid var(--border);border-radius:9px;background:rgba(255,255,255,.025)}
+    .lang-switch button{min-height:28px;padding:6px 9px;border:0;border-radius:7px;background:transparent;color:var(--muted);font-size:11px;cursor:pointer}
+    .lang-switch button.active{background:rgba(25,211,122,.12);color:var(--green)}
+    .btn{transition:filter .18s,transform .18s}.btn:hover{filter:brightness(1.08)}.btn:disabled{opacity:.55;cursor:wait}
+    .page-heading{display:flex;align-items:center;gap:12px;min-width:0}
+    .mobile-menu-btn{display:none;width:40px;height:40px;min-width:40px;border:1px solid var(--border);background:var(--panel);color:#fff;border-radius:10px}
+    .nav-backdrop{display:none;position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.58);backdrop-filter:blur(2px)}
+    .nav-backdrop.open{display:block}
+    @media(max-width:950px){.main{width:100%;margin:0}.sidebar{width:min(280px,82vw);padding:calc(18px + env(safe-area-inset-top)) 16px calc(18px + env(safe-area-inset-bottom));transform:translate3d(-105%,0,0);transition:transform .25s ease;box-shadow:30px 0 80px rgba(0,0,0,.45);z-index:100}.sidebar.open{transform:translate3d(0,0,0)}.mobile-menu-btn{display:flex;align-items:center;justify-content:center}}
+    @media(max-width:650px){.topbar{padding-left:16px;padding-right:16px;gap:10px;flex-wrap:wrap}.topbar h1{font-size:16px}.topbar .user{display:none}.section{padding:20px 14px}.settings-card{padding:17px}.settings-alert{margin:16px 14px 0}.lang-switch{flex-shrink:0}}
   </style>
 </head>
 <body>
@@ -36,9 +57,10 @@
     </nav>
     <button id="logout" class="btn btn-dark" data-i="logout">Logout</button>
   </aside>
+  <div id="navBackdrop" class="nav-backdrop" aria-hidden="true"></div>
   <main class="main">
     <div class="topbar">
-      <div><h1 data-i="title">Business settings</h1><p data-i="subtitle">Manage settings scoped to your business.</p></div>
+      <div class="page-heading"><button id="menuToggle" class="mobile-menu-btn" type="button" aria-label="Open navigation">☰</button><div><h1 data-i="title">Business settings</h1><p data-i="subtitle">Manage settings scoped to your business.</p></div></div>
       <div class="lang-switch"><button id="langEn" type="button">EN</button><button id="langZh" type="button">中文</button></div>
       <span id="userEmail" class="user">Loading…</span>
     </div>
@@ -77,6 +99,10 @@ async function load(){try{const [me,result]=await Promise.all([api("/api/me"),ap
 $("settingsForm").addEventListener("submit",async event=>{event.preventDefault();let settings;try{settings=JSON.parse($("settingsJson").value);if(!settings||typeof settings!=="object"||Array.isArray(settings))throw Error()}catch{show(t("invalidJson"));return}const button=$("save");button.disabled=true;try{const result=await api("/api/business/settings",{method:"PUT",body:JSON.stringify({settings,timezone:$("timezone").value})});$("settingsJson").value=JSON.stringify(result.settings,null,2);show(t("saved"),true)}catch(error){show(error.message||t("error"))}finally{button.disabled=false}});
 $("langEn").addEventListener("click",()=>setLang("en"));$("langZh").addEventListener("click",()=>setLang("zh"));
 $("logout").addEventListener("click",async()=>{try{await api("/api/logout",{method:"POST"})}catch{}rm(TOKEN);rm("chatnova_user");location.replace("login.html")});
+const menuToggle=$("menuToggle"),navBackdrop=$("navBackdrop"),sidebar=document.querySelector(".sidebar");
+function closeNav(){sidebar.classList.remove("open");navBackdrop.classList.remove("open");navBackdrop.setAttribute("aria-hidden","true");menuToggle.setAttribute("aria-expanded","false")}
+menuToggle.addEventListener("click",()=>{sidebar.classList.toggle("open");const open=sidebar.classList.contains("open");navBackdrop.classList.toggle("open",open);navBackdrop.setAttribute("aria-hidden",String(!open));menuToggle.setAttribute("aria-expanded",String(open))});
+navBackdrop.addEventListener("click",closeNav);
 populateTimezones();setLang(lang);load();
 </script>
 </body>

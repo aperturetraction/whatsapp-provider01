@@ -6,31 +6,49 @@
   <title>Workflows · ChatNova</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .wf-layout{display:grid;grid-template-columns:minmax(250px,340px) minmax(0,1fr);gap:20px}
-    .wf-card,.wf-editor{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:20px}
+    :root{--bg:#070a09;--panel:#0d1210;--border:rgba(255,255,255,.08);--text:#f3f7f5;--muted:#8d9993;--green:#19d37a}
+    html,body{min-height:100%;background:radial-gradient(circle at top right,rgba(25,211,122,.07),transparent 30%),var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    .sidebar{background:rgba(10,14,12,.96);border-right:1px solid var(--border);padding:24px 16px}
+    .logo{font-size:23px;letter-spacing:-.7px;margin:4px 12px 28px}
+    .menu{display:flex;flex-direction:column;gap:5px}
+    .menu a{color:var(--muted);padding:12px 13px;border:1px solid transparent;border-radius:11px;margin:0;transition:.2s}
+    .menu a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+    .menu a.active{color:#fff;background:rgba(25,211,122,.11);border-color:rgba(25,211,122,.12)}
+    .main{width:calc(100% - 250px);margin-left:250px;padding:0;min-height:100vh;min-width:0}
+    .topbar{min-height:calc(72px + env(safe-area-inset-top));margin:0;padding:env(safe-area-inset-top) 32px 0;border-bottom:1px solid var(--border);background:rgba(7,10,9,.7);backdrop-filter:blur(14px);position:sticky;top:env(safe-area-inset-top);z-index:50}
+    .topbar h1{font-size:18px;font-weight:700}.topbar p{color:var(--muted);font-size:12px;margin-top:3px}
+    .topbar>div:first-child{min-width:0}.topbar .user{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:transparent;border:0;color:var(--muted);padding:8px 0}
+    .wf-layout{display:grid;grid-template-columns:minmax(250px,340px) minmax(0,1fr);gap:18px;padding:28px 32px}
+    .wf-card,.wf-editor{min-width:0;background:linear-gradient(145deg,rgba(17,24,20,.96),rgba(13,18,16,.96));border:1px solid var(--border);border-radius:15px;padding:20px;box-shadow:0 16px 40px rgba(0,0,0,.15)}
     .wf-list{display:grid;gap:10px;align-content:start}
-    .wf-item{border:1px solid #e5e7eb;border-radius:10px;padding:14px;cursor:pointer}
-    .wf-item.selected{border-color:#19c37d;box-shadow:0 0 0 2px rgba(25,195,125,.12)}
-    .wf-item strong{display:block;margin-bottom:5px;overflow-wrap:anywhere}
-    .wf-muted,.wf-note{color:#6b7280;font-size:13px;line-height:1.5}
-    .wf-form{display:grid;gap:15px}
-    .wf-form label{display:grid;gap:7px;font-size:14px;font-weight:600}
-    .wf-form input,.wf-form select,.wf-form textarea,.action-row input,.action-row select,.action-row textarea{width:100%;padding:10px 11px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#111827;font:inherit}
+    .wf-item{width:100%;text-align:left;color:var(--text);background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:11px;padding:14px;cursor:pointer;transition:.2s}
+    .wf-item:hover{border-color:rgba(25,211,122,.28);background:rgba(25,211,122,.045)}
+    .wf-item.selected{border-color:rgba(25,211,122,.48);box-shadow:0 0 0 2px rgba(25,211,122,.09)}
+    .wf-item strong{display:block;margin-bottom:6px;overflow-wrap:anywhere;font-size:14px}
+    .wf-muted,.wf-note{color:var(--muted);font-size:12px;line-height:1.55}
+    .wf-form{display:grid;gap:17px}.wf-form h2{font-size:16px;font-weight:700}
+    .wf-form label{display:grid;gap:7px;color:#dbe4df;font-size:13px;font-weight:600}
+    .wf-form input,.wf-form select,.wf-form textarea,.action-row input,.action-row select,.action-row textarea{width:100%;min-width:0;padding:10px 11px;border:1px solid rgba(255,255,255,.11);border-radius:9px;background:#0a0f0c;color:var(--text);font:inherit;outline:none}
+    .wf-form input:focus,.wf-form select:focus,.wf-form textarea:focus,.action-row input:focus,.action-row select:focus,.action-row textarea:focus{border-color:rgba(25,211,122,.65);box-shadow:0 0 0 3px rgba(25,211,122,.09)}
     .wf-form textarea,.action-row textarea{min-height:76px;resize:vertical}
-    .wf-inline{display:flex;align-items:center;gap:9px}
-    .wf-inline input{width:auto}
+    .wf-inline{display:flex!important;align-items:center;gap:9px}.wf-inline input{width:auto}
     .wf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-    .action-list{display:grid;gap:10px}
-    .action-row{display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:start;gap:10px;padding:12px;border:1px solid #e5e7eb;border-radius:10px}
-    .action-row .action-detail{display:grid;gap:8px}
-    .wf-toolbar{display:flex;gap:10px;flex-wrap:wrap}
-    .wf-notice{display:none;margin:0 0 16px;padding:11px 13px;border-radius:9px;background:#fee2e2;color:#991b1b}
-    .wf-notice.show{display:block}.wf-notice.ok{background:#dcfce7;color:#166534}
-    .wf-empty{padding:22px;color:#6b7280;text-align:center}
-    .lang-switch{display:flex;gap:6px}.lang-switch button{padding:7px 10px;border:1px solid #d1d5db;border-radius:8px;background:#fff;cursor:pointer}
-    .lang-switch button.active{border-color:#19c37d;color:#087443}
-    @media(max-width:950px){.wf-layout{grid-template-columns:1fr}.wf-list{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}}
-    @media(max-width:650px){.wf-grid{grid-template-columns:1fr}.action-row{grid-template-columns:1fr}.main{padding:20px 14px}}
+    .action-list{display:grid;gap:9px}
+    .action-row{display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:start;gap:10px;padding:12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:11px}
+    .action-row .action-detail{display:grid;gap:8px}.wf-toolbar{display:flex;gap:10px;flex-wrap:wrap}.wf-toolbar>strong{font-size:14px}
+    .wf-notice{display:none;margin:0 0 16px;padding:12px 14px;border:1px solid rgba(255,92,92,.2);border-radius:10px;background:rgba(255,92,92,.1);color:#ffc1c1;font-size:13px}
+    .wf-notice.show{display:block}.wf-notice.ok{border-color:rgba(25,211,122,.2);background:rgba(25,211,122,.1);color:#a8f0c9}
+    .wf-empty{padding:24px 16px;color:var(--muted);text-align:center;font-size:13px}
+    .lang-switch{display:flex;gap:3px;padding:3px;border:1px solid var(--border);border-radius:9px;background:rgba(255,255,255,.025)}
+    .lang-switch button{min-height:28px;padding:6px 9px;border:0;border-radius:7px;background:transparent;color:var(--muted);font-size:11px;cursor:pointer}
+    .lang-switch button.active{background:rgba(25,211,122,.12);color:var(--green)}
+    .btn{transition:filter .18s,transform .18s}.btn:hover{filter:brightness(1.08)}.btn:disabled{opacity:.55;cursor:wait}
+    .page-heading{display:flex;align-items:center;gap:12px;min-width:0}
+    .mobile-menu-btn{display:none;width:40px;height:40px;min-width:40px;border:1px solid var(--border);background:var(--panel);color:#fff;border-radius:10px}
+    .nav-backdrop{display:none;position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.58);backdrop-filter:blur(2px)}
+    .nav-backdrop.open{display:block}
+    @media(max-width:950px){.main{width:100%;margin:0}.sidebar{width:min(280px,82vw);padding:calc(18px + env(safe-area-inset-top)) 16px calc(18px + env(safe-area-inset-bottom));transform:translate3d(-105%,0,0);transition:transform .25s ease;box-shadow:30px 0 80px rgba(0,0,0,.45);z-index:100}.sidebar.open{transform:translate3d(0,0,0)}.mobile-menu-btn{display:flex;align-items:center;justify-content:center}.wf-layout{grid-template-columns:1fr}.wf-list{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}}
+    @media(max-width:650px){.topbar{padding-left:16px;padding-right:16px;gap:10px;flex-wrap:wrap}.topbar h1{font-size:16px}.topbar .user{display:none}.wf-layout{padding:20px 14px}.wf-grid{grid-template-columns:1fr}.action-row{grid-template-columns:1fr}.wf-card,.wf-editor{padding:16px}.lang-switch{flex-shrink:0}}
   </style>
 </head>
 <body>
@@ -50,9 +68,10 @@
     </nav>
     <button id="logout" class="btn btn-dark" data-i="logout">Logout</button>
   </aside>
+  <div id="navBackdrop" class="nav-backdrop" aria-hidden="true"></div>
   <main class="main">
     <div class="topbar">
-      <div><h1 data-i="title">Automation workflows</h1><p data-i="subtitle">Configure tenant-specific message and contact automation.</p></div>
+      <div class="page-heading"><button id="menuToggle" class="mobile-menu-btn" type="button" aria-label="Open navigation">☰</button><div><h1 data-i="title">Automation workflows</h1><p data-i="subtitle">Configure tenant-specific message and contact automation.</p></div></div>
       <div class="lang-switch"><button id="langEn" type="button">EN</button><button id="langZh" type="button">中文</button></div>
       <span id="userEmail" class="user">Loading…</span>
     </div>
@@ -147,6 +166,10 @@ $("addAction").addEventListener("click",addAction);
 $("workflowForm").addEventListener("submit",async event=>{event.preventDefault();if(!actions.length){notice(t("invalidAction"));return}if(actions.some(action=>action.type==="send_message"&&!action.text.trim()||action.type==="schedule_followup"&&(!action.text.trim()||action.delaySeconds<60)||action.type==="add_tag"&&!action.tag.trim())){notice(t("invalidAction"));return}const button=$("saveWorkflow");button.disabled=true;try{const body={name:$("name").value.trim(),triggerType:$("trigger").value,triggerConfig:collectConfig(),actions,enabled:$("enabled").checked,maxAttempts:Number($("maxAttempts").value)};if(editing===null){await api("/api/workflows",{method:"POST",body:JSON.stringify(body)});notice(t("created"),true)}else{await api(`/api/workflows/${editing}`,{method:"PUT",body:JSON.stringify(body)});notice(t("saved"),true)}await load();resetForm()}catch(error){notice(error.message||t("error"))}finally{button.disabled=false}});
 $("langEn").addEventListener("click",()=>setLang("en"));$("langZh").addEventListener("click",()=>setLang("zh"));
 $("logout").addEventListener("click",async()=>{try{await api("/api/logout",{method:"POST"})}catch{}rm(TOKEN);rm("chatnova_user");location.replace("login.html")});
+const menuToggle=$("menuToggle"),navBackdrop=$("navBackdrop"),sidebar=document.querySelector(".sidebar");
+function closeNav(){sidebar.classList.remove("open");navBackdrop.classList.remove("open");navBackdrop.setAttribute("aria-hidden","true");menuToggle.setAttribute("aria-expanded","false")}
+menuToggle.addEventListener("click",()=>{sidebar.classList.toggle("open");const open=sidebar.classList.contains("open");navBackdrop.classList.toggle("open",open);navBackdrop.setAttribute("aria-hidden",String(!open));menuToggle.setAttribute("aria-expanded",String(open))});
+navBackdrop.addEventListener("click",closeNav);
 setLang(lang);load();
 </script>
 </body>
