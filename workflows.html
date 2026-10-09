@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Workflows · ChatNova</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .wf-layout{display:grid;grid-template-columns:minmax(250px,340px) minmax(0,1fr);gap:20px}
+    .wf-card,.wf-editor{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:20px}
+    .wf-list{display:grid;gap:10px;align-content:start}
+    .wf-item{border:1px solid #e5e7eb;border-radius:10px;padding:14px;cursor:pointer}
+    .wf-item.selected{border-color:#19c37d;box-shadow:0 0 0 2px rgba(25,195,125,.12)}
+    .wf-item strong{display:block;margin-bottom:5px;overflow-wrap:anywhere}
+    .wf-muted,.wf-note{color:#6b7280;font-size:13px;line-height:1.5}
+    .wf-form{display:grid;gap:15px}
+    .wf-form label{display:grid;gap:7px;font-size:14px;font-weight:600}
+    .wf-form input,.wf-form select,.wf-form textarea,.action-row input,.action-row select,.action-row textarea{width:100%;padding:10px 11px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#111827;font:inherit}
+    .wf-form textarea,.action-row textarea{min-height:76px;resize:vertical}
+    .wf-inline{display:flex;align-items:center;gap:9px}
+    .wf-inline input{width:auto}
+    .wf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .action-list{display:grid;gap:10px}
+    .action-row{display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:start;gap:10px;padding:12px;border:1px solid #e5e7eb;border-radius:10px}
+    .action-row .action-detail{display:grid;gap:8px}
+    .wf-toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    .wf-notice{display:none;margin:0 0 16px;padding:11px 13px;border-radius:9px;background:#fee2e2;color:#991b1b}
+    .wf-notice.show{display:block}.wf-notice.ok{background:#dcfce7;color:#166534}
+    .wf-empty{padding:22px;color:#6b7280;text-align:center}
+    .lang-switch{display:flex;gap:6px}.lang-switch button{padding:7px 10px;border:1px solid #d1d5db;border-radius:8px;background:#fff;cursor:pointer}
+    .lang-switch button.active{border-color:#19c37d;color:#087443}
+    @media(max-width:950px){.wf-layout{grid-template-columns:1fr}.wf-list{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}}
+    @media(max-width:650px){.wf-grid{grid-template-columns:1fr}.action-row{grid-template-columns:1fr}.main{padding:20px 14px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo">ChatNova</div>
+    <nav class="menu">
+      <a href="dashboard.html" data-i="dashboard">Dashboard</a>
+      <a href="whatsapp.html" data-i="whatsapp">WhatsApp</a>
+      <a href="inbox.html" data-i="messages">Messages</a>
+      <a href="contacts.html" data-i="contacts">Contacts</a>
+      <a href="billing.html" data-i="billing">Billing</a>
+      <a href="ai-settings.html" data-i="aiSettings">AI Settings</a>
+      <a href="workflows.html" class="active" data-i="workflows">Workflows</a>
+      <a href="business-settings.html" data-i="businessSettings">Business Settings</a>
+      <a href="account.html" data-i="account">Account</a>
+    </nav>
+    <button id="logout" class="btn btn-dark" data-i="logout">Logout</button>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div><h1 data-i="title">Automation workflows</h1><p data-i="subtitle">Configure tenant-specific message and contact automation.</p></div>
+      <div class="lang-switch"><button id="langEn" type="button">EN</button><button id="langZh" type="button">中文</button></div>
+      <span id="userEmail" class="user">Loading…</span>
+    </div>
+    <div id="notice" class="wf-notice" role="status" aria-live="polite"></div>
+    <div class="wf-layout">
+      <section class="wf-card">
+        <div class="wf-toolbar" style="justify-content:space-between;align-items:center;margin-bottom:14px">
+          <strong data-i="yourWorkflows">Your workflows</strong>
+          <button id="newWorkflow" class="btn btn-green" type="button" data-i="new">New</button>
+        </div>
+        <div id="workflowList" class="wf-list"><div class="wf-empty" data-i="loading">Loading workflows…</div></div>
+      </section>
+      <section class="wf-editor">
+        <form id="workflowForm" class="wf-form">
+          <h2 id="formTitle" data-i="newWorkflow">New workflow</h2>
+          <div class="wf-grid">
+            <label><span data-i="name">Name</span><input id="name" maxlength="120" required></label>
+            <label><span data-i="trigger">Trigger</span>
+              <select id="trigger">
+                <option value="message_received" data-i="messageReceived">Incoming message</option>
+                <option value="contact_created" data-i="contactCreated">New contact</option>
+                <option value="scheduled" data-i="scheduled">Scheduled</option>
+              </select>
+            </label>
+          </div>
+          <div id="messageConditions" class="wf-grid">
+            <label><span data-i="sourceFilter">Attribution source (optional)</span>
+              <select id="sourceFilter">
+                <option value="" data-i="anySource">Any source</option>
+                <option value="paid_ads">Paid Ads</option>
+                <option value="organic">Organic</option>
+                <option value="referral">Referral</option>
+                <option value="website">Website</option>
+                <option value="direct">Direct</option>
+                <option value="unknown">Unknown</option>
+              </select>
+            </label>
+            <label><span data-i="contains">Only when message contains (optional)</span><input id="contains" maxlength="200"></label>
+          </div>
+          <div id="scheduleCondition" style="display:none">
+            <label><span data-i="interval">Run interval (minutes)</span><input id="interval" type="number" min="1" max="10080" value="60"></label>
+          </div>
+          <label class="wf-inline"><input id="enabled" type="checkbox"><span data-i="enabled">Workflow enabled</span></label>
+          <label><span data-i="maxAttempts">Maximum attempts (1–10)</span><input id="maxAttempts" type="number" min="1" max="10" value="5" required></label>
+          <div>
+            <div class="wf-toolbar" style="justify-content:space-between;align-items:center;margin-bottom:8px">
+              <strong data-i="actions">Actions</strong>
+              <select id="actionType" aria-label="Action type">
+                <option value="send_message" data-i="sendMessage">Send message</option>
+                <option value="schedule_followup" data-i="followup">Schedule follow-up</option>
+                <option value="add_tag" data-i="addTag">Add customer tag</option>
+                <option value="handoff" data-i="handoff">Human handoff</option>
+              </select>
+              <button id="addAction" class="btn" type="button" data-i="addAction">Add action</button>
+            </div>
+            <div id="actionList" class="action-list"></div>
+            <p class="wf-note" data-i="actionNote">Follow-ups are cancelled when the customer replies or a human handoff begins. Ambiguous message delivery is marked uncertain to avoid duplicate sends.</p>
+          </div>
+          <div class="wf-toolbar">
+            <button id="saveWorkflow" class="btn btn-green" type="submit" data-i="save">Save workflow</button>
+            <button id="resetForm" class="btn btn-dark" type="button" data-i="reset">Clear form</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+</div>
+<script>
+const API="https://whatsapp-provider-api.b79gn827py.workers.dev",TOKEN="chatnova_token",LANG="chatnova_language";
+const $=id=>document.getElementById(id),ls=key=>{try{return localStorage.getItem(key)}catch{return null}},rm=key=>{try{localStorage.removeItem(key)}catch{}};
+const TEXT={
+ en:{dashboard:"Dashboard",whatsapp:"WhatsApp",messages:"Messages",contacts:"Contacts",billing:"Billing",aiSettings:"AI Settings",workflows:"Workflows",businessSettings:"Business Settings",account:"Account",logout:"Logout",title:"Automation workflows",subtitle:"Configure tenant-specific message and contact automation.",yourWorkflows:"Your workflows",new:"New",loading:"Loading workflows…",newWorkflow:"New workflow",name:"Name",trigger:"Trigger",messageReceived:"Incoming message",contactCreated:"New contact",scheduled:"Scheduled",sourceFilter:"Attribution source (optional)",anySource:"Any source",contains:"Only when message contains (optional)",interval:"Run interval (minutes)",enabled:"Workflow enabled",maxAttempts:"Maximum attempts (1–10)",actions:"Actions",sendMessage:"Send message",followup:"Schedule follow-up",addTag:"Add customer tag",handoff:"Human handoff",addAction:"Add action",actionNote:"Follow-ups are cancelled when the customer replies or a human handoff begins. Ambiguous message delivery is marked uncertain to avoid duplicate sends.",save:"Save workflow",reset:"Clear form",source:"Source",state:"State",on:"Enabled",off:"Disabled",edit:"Edit",empty:"No workflows yet. Create one to automate a supported trigger.",messageText:"Message text",followupDelay:"Delay seconds",tagName:"Tag name",remove:"Remove",error:"Something went wrong. Try again.",saved:"Workflow saved.",created:"Workflow created.",invalidAction:"Complete the action fields before adding it.",loadingError:"Could not load workflows.",attempts:"attempts",conditionSource:"Source",scheduledInterval:"Every {n} min"},
+ zh:{dashboard:"控制台",whatsapp:"WhatsApp",messages:"消息",contacts:"联系人",billing:"账单",aiSettings:"AI 设置",workflows:"自动化流程",businessSettings:"商家设置",account:"账户",logout:"退出登录",title:"自动化流程",subtitle:"为当前商家配置消息与联系人自动化。",yourWorkflows:"您的流程",new:"新建",loading:"正在加载流程…",newWorkflow:"新建流程",name:"名称",trigger:"触发条件",messageReceived:"收到新消息",contactCreated:"新联系人",scheduled:"定时执行",sourceFilter:"获客来源（可选）",anySource:"所有来源",contains:"仅匹配包含以下内容的消息（可选）",interval:"执行间隔（分钟）",enabled:"启用流程",maxAttempts:"最大尝试次数（1–10）",actions:"执行动作",sendMessage:"发送消息",followup:"安排后续跟进",addTag:"添加客户标签",handoff:"转交人工",addAction:"添加动作",actionNote:"客户回复或开始人工接管后会取消后续跟进。发送结果不确定时会标记为待核实，避免重复发送。",save:"保存流程",reset:"清空表单",source:"来源",state:"状态",on:"已启用",off:"已停用",edit:"编辑",empty:"还没有流程。创建一个流程以自动处理支持的触发条件。",messageText:"消息内容",followupDelay:"延迟秒数",tagName:"标签名称",remove:"移除",error:"操作失败，请重试。",saved:"流程已保存。",created:"流程已创建。",invalidAction:"请填写完整的动作内容。",loadingError:"无法加载流程。",attempts:"次",conditionSource:"来源",scheduledInterval:"每 {n} 分钟"}
+};
+let lang=ls(LANG)==="zh"?"zh":"en",items=[],editing=null,actions=[];
+const t=key=>TEXT[lang][key]||key;
+function setLang(value){lang=value==="zh"?"zh":"en";try{localStorage.setItem(LANG,lang)}catch{}document.documentElement.lang=lang==="zh"?"zh-CN":"en";document.querySelectorAll("[data-i]").forEach(node=>node.textContent=t(node.dataset.i));$("langEn").classList.toggle("active",lang==="en");$("langZh").classList.toggle("active",lang==="zh");renderList();renderActions()}
+function notice(message,ok=false){const node=$("notice");node.textContent=message;node.className="wf-notice show"+(ok?" ok":"")}
+async function api(path,options={}){const token=ls(TOKEN);if(!token){location.replace("login.html");throw Error("Sign in required")}const response=await fetch(API+path,{...options,credentials:"include",headers:{Accept:"application/json",Authorization:`Bearer ${token}`,...(options.body?{"Content-Type":"application/json"}:{})}});const data=await response.json().catch(()=>({}));if(response.status===401){rm(TOKEN);location.replace("login.html");throw Error("Session expired")}if(!response.ok||data.success===false)throw Error(data.message||`Request failed (${response.status})`);return data}
+function escapeHtml(value){return String(value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]))}
+function renderList(){const list=$("workflowList");if(!items.length){list.innerHTML=`<div class="wf-empty">${t("empty")}</div>`;return}list.innerHTML=items.map(item=>`<button type="button" class="wf-item${editing===item.id?" selected":""}" data-id="${item.id}"><strong>${escapeHtml(item.name)}</strong><span class="wf-muted">${escapeHtml(t(item.triggerType==="message_received"?"messageReceived":item.triggerType==="contact_created"?"contactCreated":"scheduled"))} · ${item.enabled?t("on"):t("off")} · ${item.actions.length} ${t("actions").toLowerCase()}</span></button>`).join("");list.querySelectorAll("[data-id]").forEach(button=>button.addEventListener("click",()=>editWorkflow(Number(button.dataset.id))))}
+function resetForm(){editing=null;actions=[];$("workflowForm").reset();$("maxAttempts").value="5";$("interval").value="60";$("formTitle").textContent=t("newWorkflow");$("saveWorkflow").textContent=t("save");$("messageConditions").style.display="grid";$("scheduleCondition").style.display="none";renderActions();renderList()}
+function editWorkflow(id){const item=items.find(value=>value.id===id);if(!item)return;editing=id;$("name").value=item.name;$("trigger").value=item.triggerType;$("enabled").checked=item.enabled;$("maxAttempts").value=item.maxAttempts;$("sourceFilter").value=item.triggerConfig.attributionSource||"";$("contains").value=item.triggerConfig.textContains||"";$("interval").value=item.triggerConfig.intervalMinutes||60;$("messageConditions").style.display=item.triggerType==="scheduled"?"none":"grid";$("scheduleCondition").style.display=item.triggerType==="scheduled"?"block":"none";actions=item.actions.map(action=>({...action}));$("formTitle").textContent=item.name;$("saveWorkflow").textContent=t("save");renderActions();renderList()}
+function renderActions(){const list=$("actionList");list.innerHTML=actions.map((action,index)=>{const label=action.type==="send_message"?"sendMessage":action.type==="schedule_followup"?"followup":action.type==="add_tag"?"addTag":"handoff";let detail="";if(action.type==="send_message")detail=`<textarea data-field="text" maxlength="4000" aria-label="${t("messageText")}">${escapeHtml(action.text)}</textarea>`;if(action.type==="schedule_followup")detail=`<textarea data-field="text" maxlength="4000" aria-label="${t("messageText")}">${escapeHtml(action.text)}</textarea><input data-field="delaySeconds" type="number" min="60" max="259200" value="${Number(action.delaySeconds)||3600}" aria-label="${t("followupDelay")}">`;if(action.type==="add_tag")detail=`<input data-field="tag" maxlength="64" value="${escapeHtml(action.tag)}" aria-label="${t("tagName")}">`;return `<div class="action-row" data-index="${index}"><strong>${t(label)}</strong><div class="action-detail">${detail||`<span class="wf-muted">${t("handoff")}</span>`}</div><button type="button" class="btn remove-action">${t("remove")}</button></div>`}).join("");list.querySelectorAll(".action-row").forEach(row=>{const index=Number(row.dataset.index);row.querySelectorAll("[data-field]").forEach(input=>input.addEventListener("input",()=>{const field=input.dataset.field;actions[index][field]=field==="delaySeconds"?Number(input.value):input.value}));row.querySelector(".remove-action").addEventListener("click",()=>{actions.splice(index,1);renderActions()})})}
+function addAction(){const type=$("actionType").value;if(type==="send_message")actions.push({type,text:""});else if(type==="schedule_followup")actions.push({type,text:"",delaySeconds:3600});else if(type==="add_tag")actions.push({type,tag:""});else actions.push({type});renderActions()}
+function collectConfig(){if($("trigger").value==="scheduled")return{intervalMinutes:Number($("interval").value)};const config={};if($("trigger").value==="message_received"&&$("sourceFilter").value)config.attributionSource=$("sourceFilter").value;if($("trigger").value==="message_received"&&$("contains").value.trim())config.textContains=$("contains").value.trim();return config}
+async function load(){try{const [me,result]=await Promise.all([api("/api/me"),api("/api/workflows")]);$("userEmail").textContent=me.customer?.email||"";items=result.workflows||[];renderList()}catch(error){notice(error.message||t("loadingError"))}}
+$("trigger").addEventListener("change",()=>{$("messageConditions").style.display=$("trigger").value==="scheduled"?"none":"grid";$("scheduleCondition").style.display=$("trigger").value==="scheduled"?"block":"none"});
+$("newWorkflow").addEventListener("click",()=>{resetForm();$("name").focus()});
+$("resetForm").addEventListener("click",resetForm);
+$("addAction").addEventListener("click",addAction);
+$("workflowForm").addEventListener("submit",async event=>{event.preventDefault();if(!actions.length){notice(t("invalidAction"));return}if(actions.some(action=>action.type==="send_message"&&!action.text.trim()||action.type==="schedule_followup"&&(!action.text.trim()||action.delaySeconds<60)||action.type==="add_tag"&&!action.tag.trim())){notice(t("invalidAction"));return}const button=$("saveWorkflow");button.disabled=true;try{const body={name:$("name").value.trim(),triggerType:$("trigger").value,triggerConfig:collectConfig(),actions,enabled:$("enabled").checked,maxAttempts:Number($("maxAttempts").value)};if(editing===null){await api("/api/workflows",{method:"POST",body:JSON.stringify(body)});notice(t("created"),true)}else{await api(`/api/workflows/${editing}`,{method:"PUT",body:JSON.stringify(body)});notice(t("saved"),true)}await load();resetForm()}catch(error){notice(error.message||t("error"))}finally{button.disabled=false}});
+$("langEn").addEventListener("click",()=>setLang("en"));$("langZh").addEventListener("click",()=>setLang("zh"));
+$("logout").addEventListener("click",async()=>{try{await api("/api/logout",{method:"POST"})}catch{}rm(TOKEN);rm("chatnova_user");location.replace("login.html")});
+setLang(lang);load();
+</script>
+</body>
+</html>

@@ -140,6 +140,11 @@ body{
   color:#fff
 }
 
+#billingAcknowledged{
+  width:auto;
+  padding:0;
+}
+
 .note{
   font-size:12px;
   color:var(--muted);
@@ -255,7 +260,7 @@ body{
         📱 <span>WhatsApp</span>
       </a>
 
-      <a href="chat.html">
+      <a href="inbox.html">
         💬 <span>Messages</span>
       </a>
 
@@ -306,7 +311,7 @@ body{
         </span>
 
         <button id="add" class="btn btn-green">
-          Contact Support to Connect
+          Create WhatsApp Account
         </button>
 
       </div>
@@ -358,7 +363,7 @@ body{
 </div>
 
 
-<!-- SUPPORT SETUP MODAL -->
+<!-- CREATE WHATSAPP INSTANCE MODAL -->
 
 <div id="addModal" class="modal">
 
@@ -371,19 +376,32 @@ body{
       ×
     </button>
 
-    <h2>Connect WhatsApp</h2>
+    <h2>Create WhatsApp Account</h2>
 
     <p class="muted">
-      WhatsApp connections are set up by ChatNova Support. Open an Internal Chat conversation to request setup.
+      This provisions a dedicated instance under ChatNova's GREEN-API Partner account. Partner instances incur daily provider charges while active; contact ChatNova Support for customer billing terms.
     </p>
+
+    <div id="createNotice" class="notice"></div>
+
+    <div class="field">
+      <label for="connectionName">Account name (optional)</label>
+      <input id="connectionName" maxlength="100" autocomplete="off" placeholder="e.g. Sales">
+    </div>
+    <div class="field">
+      <label>
+        <input id="billingAcknowledged" type="checkbox">
+        I understand this creates a billable Partner instance.
+      </label>
+    </div>
 
     <div class="row">
       <button type="button" class="btn btn-dark" data-close="addModal">
         Close
       </button>
-      <a class="btn btn-green" href="./internal-chat.html" style="text-decoration:none">
-        Open Internal Chat
-      </a>
+      <button id="createConnection" type="button" class="btn btn-green">
+        Create instance
+      </button>
     </div>
 
   </div>
@@ -581,11 +599,12 @@ async function api(path,opt={}){
 
 
   if(!r.ok){
-
-    throw Error(
-      d?.message ||
-      `Request failed (${r.status})`
+    const error = Error(
+      d?.message || `Request failed (${r.status})`
     );
+    error.status = r.status;
+    error.response = d;
+    throw error;
 
   }
 
@@ -729,16 +748,8 @@ function render(){
         </h3>
 
         <p class="muted">
-          WhatsApp accounts are configured by ChatNova Support.
+          Create a dedicated GREEN-API instance to connect WhatsApp.
         </p>
-
-        <button
-          class="btn btn-green"
-          style="margin-top:15px"
-          onclick="location.href='./internal-chat.html'"
-        >
-          Contact Support
-        </button>
 
       </div>
 
@@ -964,12 +975,63 @@ async function me(){
 
 
 function openAdd(){
+  hide($('createNotice'));
   $('addModal')
     .classList
     .add('show');
 
 }
 
+async function createAccount(){
+  const button = $('createConnection');
+  button.disabled = true;
+  hide($('createNotice'));
+
+  try{
+    if(!$('billingAcknowledged').checked){
+      throw Error('Confirm the Partner instance billing notice before creating an account');
+    }
+    let idempotencyKey = sessionStorage.getItem('chatnova_whatsapp_create_key');
+    if(!idempotencyKey){
+      if(!crypto.randomUUID) throw Error('Secure request IDs are not supported by this browser');
+      idempotencyKey = crypto.randomUUID();
+      sessionStorage.setItem('chatnova_whatsapp_create_key', idempotencyKey);
+    }
+
+    const d = await api('/api/whatsapp/connections', {
+      method:'POST',
+      headers:{'Idempotency-Key':idempotencyKey},
+      body:JSON.stringify({
+        name:$('connectionName').value.trim(),
+        billingAcknowledged:true
+      })
+    });
+
+    if(d?.pending){
+      msg($('createNotice'), d.message || 'Instance creation is being confirmed. Retry safely using this same request.', 'success');
+      return;
+    }
+    if(!d?.success || !d?.connection?.id){
+      throw Error(d?.message || 'WhatsApp instance could not be created');
+    }
+
+    sessionStorage.removeItem('chatnova_whatsapp_create_key');
+    close('addModal');
+    await load();
+    msg($('notice'), 'WhatsApp instance created. Scan the QR code to connect.', 'success');
+    await openQR(encodeURIComponent(d.connection.id));
+  }catch(e){
+    if(
+      e.response?.message?.includes('submit a new request') ||
+      e.response?.message?.includes('rejected the instance setup')
+    ){
+      sessionStorage.removeItem('chatnova_whatsapp_create_key');
+    }
+    msg($('createNotice'), e.message || 'Unable to create WhatsApp instance');
+  }finally{
+    button.disabled = false;
+  }
+}
 
 function close(id){
 
@@ -1341,6 +1403,9 @@ async function removeAccount(id){
 
 $('add').onclick =
   openAdd;
+
+$('createConnection').onclick =
+  createAccount;
 
 
 $('refresh').onclick =

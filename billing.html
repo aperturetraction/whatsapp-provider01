@@ -59,12 +59,8 @@
                 Billing
             </a>
 
-            <a href="#">
+            <a href="account.html">
                 Account
-            </a>
-
-            <a href="#">
-                Admin
             </a>
 
         </nav>
@@ -133,6 +129,10 @@
                     <h2 id="accessStatus">Loading…</h2>
 
                     <p id="accessPeriod">Checking your account access</p>
+                    <p id="planStatus">Plan: checking…</p>
+                    <p id="subscriptionStatus">Subscription: checking…</p>
+                    <p id="usageSummary">Usage: checking…</p>
+                    <p id="billingNotice" role="status">Online payments are not available. No payment will be taken.</p>
 
                 </div>
 
@@ -154,8 +154,9 @@
         <section class="section">
 
             <h3>
-                Choose a Plan
+                Plans (online payments unavailable)
             </h3>
+            <p>Displayed prices are informational only. You cannot change plans or make payments here.</p>
 
 
             <div class="pricing-grid">
@@ -204,9 +205,9 @@
 
                     <button
                         class="btn btn-dark"
-                        onclick="selectPlan('Starter', 49)"
+                        disabled
                     >
-                        Choose Starter
+                        Payments unavailable
                     </button>
 
                 </div>
@@ -256,9 +257,9 @@
 
                     <button
                         class="btn btn-green"
-                        onclick="selectPlan('Pro', 99)"
+                        disabled
                     >
-                        Current Plan
+                        See current plan above
                     </button>
 
                 </div>
@@ -308,9 +309,9 @@
 
                     <button
                         class="btn btn-dark"
-                        onclick="selectPlan('Business', 199)"
+                        disabled
                     >
-                        Choose Business
+                        Payments unavailable
                     </button>
 
                 </div>
@@ -360,88 +361,8 @@
                     </thead>
 
 
-                    <tbody>
-
-                        <tr>
-
-                            <td>
-                                01 Oct 2026
-                            </td>
-
-                            <td>
-                                Pro
-                            </td>
-
-                            <td>
-                                RM99
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="status connected"
-                                >
-                                    Paid
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                01 Sep 2026
-                            </td>
-
-                            <td>
-                                Pro
-                            </td>
-
-                            <td>
-                                RM99
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="status connected"
-                                >
-                                    Paid
-                                </span>
-
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                01 Aug 2026
-                            </td>
-
-                            <td>
-                                Pro
-                            </td>
-
-                            <td>
-                                RM99
-                            </td>
-
-                            <td>
-
-                                <span
-                                    class="status connected"
-                                >
-                                    Paid
-                                </span>
-
-                            </td>
-
-                        </tr>
-
+                                        <tbody id="paymentHistory">
+                        <tr><td colspan="4">No verified payment records are available.</td></tr>
                     </tbody>
 
                 </table>
@@ -483,9 +404,9 @@
 
                 <button
                     class="btn btn-green"
-                    onclick="addPaymentMethod()"
+                    disabled
                 >
-                    Add Payment Method
+                    Unavailable
                 </button>
 
             </div>
@@ -519,77 +440,6 @@ if (email) {
 
 
 
-/* =========================
-   SELECT PLAN
-========================= */
-
-function selectPlan(
-    plan,
-    price
-) {
-
-    const confirmed =
-        confirm(
-            "Choose " +
-            plan +
-            " plan for RM" +
-            price +
-            " / month?"
-        );
-
-
-    if (!confirmed) {
-
-        return;
-
-    }
-
-
-    alert(
-        "Demo only.\n\n" +
-        "Selected Plan: " +
-        plan +
-        "\n" +
-        "Price: RM" +
-        price +
-        " / month"
-    );
-
-
-    /*
-        FUTURE PAYMENT FLOW:
-
-        Customer
-           ↓
-        Billing Page
-           ↓
-        Payment Gateway
-           ↓
-        Payment Success
-           ↓
-        Cloudflare Worker
-           ↓
-        D1 Database
-           ↓
-        Update Subscription
-    */
-
-}
-
-
-
-/* =========================
-   PAYMENT METHOD
-========================= */
-
-function addPaymentMethod() {
-
-    alert(
-        "Payment gateway will be connected here."
-    );
-
-}
-
 async function loadChatNovaAccess() {
     const token = localStorage.getItem("chatnova_token");
     if (!token) {
@@ -599,7 +449,7 @@ async function loadChatNovaAccess() {
 
     try {
         const response = await fetch(
-            "https://whatsapp-provider-api.b79gn827py.workers.dev/api/me",
+            "https://whatsapp-provider-api.b79gn827py.workers.dev/api/billing/summary",
             { headers: { Authorization: `Bearer ${token}` } }
         );
         const result = await response.json();
@@ -609,7 +459,7 @@ async function loadChatNovaAccess() {
         }
         if (!response.ok || !result.success) throw new Error("Unable to load account access");
 
-        const access = result.access || {};
+        const access = result.customer?.access || {};
         const status = String(access.status || "expired");
         const statusText = status === "active" ? "Active" :
             status === "suspended" ? "Suspended" : "Expired";
@@ -621,6 +471,19 @@ async function loadChatNovaAccess() {
             ? `Access ends ${new Date(access.expiresAt).toLocaleDateString()}`
             : status === "active" ? "No expiration date" : "Contact ChatNova Support for assistance";
         document.getElementById("userEmail").textContent = result.customer?.email || "User";
+        document.getElementById("planStatus").textContent =
+            `Plan: ${result.customer?.plan || "Unassigned"}`;
+        document.getElementById("subscriptionStatus").textContent =
+            result.customer?.subscription
+                ? `Subscription: ${result.customer.subscription.status || "unknown"}`
+                : "Subscription: no recorded subscription";
+        const usage = result.usage || {};
+        document.getElementById("usageSummary").textContent =
+            `Usage: ${Number(usage.whatsappInstances || 0)} WhatsApp accounts, ${Number(usage.messages || 0)} messages, ${Number(usage.contacts || 0)} contacts`;
+        if (!result.billingConfigured) {
+            document.getElementById("billingNotice").textContent =
+                "Online payments are not connected. Plan buttons do not change your subscription and no payment will be taken.";
+        }
 
         const unread = Number(result.internalChatUnread || 0);
         const badge = document.getElementById("internalChatUnreadBadge");
@@ -632,6 +495,9 @@ async function loadChatNovaAccess() {
         document.getElementById("accessStatus").textContent = "Unavailable";
         document.getElementById("accessStatusLabel").textContent = "Unavailable";
         document.getElementById("accessPeriod").textContent = "Unable to check access right now";
+        document.getElementById("planStatus").textContent = "Plan: unavailable";
+        document.getElementById("subscriptionStatus").textContent = "Subscription: unavailable";
+        document.getElementById("usageSummary").textContent = "Usage: unavailable";
         console.error("ChatNova access status unavailable");
     }
 }
@@ -643,19 +509,22 @@ loadChatNovaAccess();
    LOGOUT
 ========================= */
 
-function logout() {
-
-    localStorage.removeItem(
-        "loggedIn"
-    );
-
-    localStorage.removeItem(
-        "userEmail"
-    );
-
-    window.location.href =
-        "index.html";
-
+async function logout() {
+    const token = localStorage.getItem("chatnova_token");
+    try {
+        await fetch("https://whatsapp-provider-api.b79gn827py.workers.dev/api/logout", {
+            method: "POST",
+            credentials: "include",
+            headers: token ? { Authorization: `Bearer ${token}` } : {}
+        });
+    } catch {
+        console.warn("Server logout could not be confirmed.");
+    } finally {
+        for (const key of ["chatnova_token", "chatnova_user", "loggedIn", "userEmail"]) {
+            localStorage.removeItem(key);
+        }
+        window.location.replace("login.html");
+    }
 }
 
 

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Business Settings · ChatNova</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .settings-card{max-width:900px;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:24px}
+    .settings-form{display:grid;gap:18px}
+    .settings-form label{display:grid;gap:8px;font-weight:600}
+    .settings-form select,.settings-form textarea{width:100%;padding:11px 12px;border:1px solid #d1d5db;border-radius:9px;background:#fff;color:#111827;font:inherit}
+    .settings-form textarea{min-height:340px;resize:vertical;font:13px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace}
+    .settings-note{color:#6b7280;font-size:13px;line-height:1.55}
+    .settings-alert{display:none;padding:12px;border-radius:9px;background:#fee2e2;color:#991b1b}
+    .settings-alert.show{display:block}.settings-alert.ok{background:#dcfce7;color:#166534}
+    .lang-switch{display:flex;gap:6px}.lang-switch button{padding:7px 10px;border:1px solid #d1d5db;border-radius:8px;background:#fff;cursor:pointer}
+    .lang-switch button.active{border-color:#19c37d;color:#087443}
+    @media(max-width:700px){.main{padding:20px 14px}.settings-card{padding:17px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo">ChatNova</div>
+    <nav class="menu">
+      <a href="dashboard.html" data-i="dashboard">Dashboard</a>
+      <a href="whatsapp.html" data-i="whatsapp">WhatsApp</a>
+      <a href="inbox.html" data-i="messages">Messages</a>
+      <a href="contacts.html" data-i="contacts">Contacts</a>
+      <a href="billing.html" data-i="billing">Billing</a>
+      <a href="ai-settings.html" data-i="aiSettings">AI Settings</a>
+      <a href="workflows.html" data-i="workflows">Workflows</a>
+      <a href="business-settings.html" class="active" data-i="businessSettings">Business Settings</a>
+      <a href="account.html" data-i="account">Account</a>
+    </nav>
+    <button id="logout" class="btn btn-dark" data-i="logout">Logout</button>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div><h1 data-i="title">Business settings</h1><p data-i="subtitle">Manage settings scoped to your business.</p></div>
+      <div class="lang-switch"><button id="langEn" type="button">EN</button><button id="langZh" type="button">中文</button></div>
+      <span id="userEmail" class="user">Loading…</span>
+    </div>
+    <section class="section">
+      <div id="notice" class="settings-alert" role="status" aria-live="polite"></div>
+      <div class="settings-card">
+        <form id="settingsForm" class="settings-form">
+          <label><span data-i="timezone">Business timezone</span>
+            <select id="timezone" required></select>
+          </label>
+          <p class="settings-note" data-i="timezoneNote">Used as the business default for future scheduled workflows. Existing schedule intervals stay based on elapsed minutes.</p>
+          <label><span data-i="settingsJson">Business configuration (JSON)</span>
+            <textarea id="settingsJson" spellcheck="false" required>{}</textarea>
+          </label>
+          <p class="settings-note" data-i="jsonNote">This configuration is private to this business account. Store non-secret preferences here; never put API keys, passwords, or provider credentials in this field.</p>
+          <button id="save" class="btn btn-green" type="submit" data-i="save">Save business settings</button>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+const API="https://whatsapp-provider-api.b79gn827py.workers.dev",TOKEN="chatnova_token",LANG="chatnova_language";
+const $=id=>document.getElementById(id),ls=key=>{try{return localStorage.getItem(key)}catch{return null}},rm=key=>{try{localStorage.removeItem(key)}catch{}};
+const TEXT={
+ en:{dashboard:"Dashboard",whatsapp:"WhatsApp",messages:"Messages",contacts:"Contacts",billing:"Billing",aiSettings:"AI Settings",workflows:"Workflows",businessSettings:"Business Settings",account:"Account",logout:"Logout",title:"Business settings",subtitle:"Manage settings scoped to your business.",timezone:"Business timezone",timezoneNote:"Used as the business default for future scheduled workflows. Existing schedule intervals stay based on elapsed minutes.",settingsJson:"Business configuration (JSON)",jsonNote:"This configuration is private to this business account. Store non-secret preferences here; never put API keys, passwords, or provider credentials in this field.",save:"Save business settings",saved:"Business settings saved.",invalidJson:"Enter a valid JSON object.",error:"Something went wrong. Try again.",loadingError:"Could not load business settings."},
+ zh:{dashboard:"控制台",whatsapp:"WhatsApp",messages:"消息",contacts:"联系人",billing:"账单",aiSettings:"AI 设置",workflows:"自动化流程",businessSettings:"商家设置",account:"账户",logout:"退出登录",title:"商家设置",subtitle:"管理仅适用于当前商家的设置。",timezone:"商家时区",timezoneNote:"作为未来定时工作流的商家默认时区。现有间隔任务仍按经过的分钟数执行。",settingsJson:"商家配置（JSON）",jsonNote:"此配置仅属于当前商家。请仅保存非敏感偏好；不要在此填写 API 密钥、密码或服务商凭据。",save:"保存商家设置",saved:"商家设置已保存。",invalidJson:"请输入有效的 JSON 对象。",error:"操作失败，请重试。",loadingError:"无法加载商家设置。"}
+};
+let lang=ls(LANG)==="zh"?"zh":"en";
+const t=key=>TEXT[lang][key]||key;
+function setLang(value){lang=value==="zh"?"zh":"en";try{localStorage.setItem(LANG,lang)}catch{}document.documentElement.lang=lang==="zh"?"zh-CN":"en";document.querySelectorAll("[data-i]").forEach(node=>node.textContent=t(node.dataset.i));$("langEn").classList.toggle("active",lang==="en");$("langZh").classList.toggle("active",lang==="zh")}
+function show(message,ok=false){const node=$("notice");node.textContent=message;node.className="settings-alert show"+(ok?" ok":"")}
+async function api(path,options={}){const token=ls(TOKEN);if(!token){location.replace("login.html");throw Error("Sign in required")}const response=await fetch(API+path,{...options,credentials:"include",headers:{Accept:"application/json",Authorization:`Bearer ${token}`,...(options.body?{"Content-Type":"application/json"}:{})}});const data=await response.json().catch(()=>({}));if(response.status===401){rm(TOKEN);location.replace("login.html");throw Error("Session expired")}if(!response.ok||data.success===false)throw Error(data.message||`Request failed (${response.status})`);return data}
+function populateTimezones(){const common=["UTC","Asia/Kuala_Lumpur","Asia/Singapore","Asia/Jakarta","Asia/Bangkok","Asia/Manila","Asia/Tokyo","Asia/Seoul","Asia/Dubai","Europe/London","Europe/Paris","America/New_York","America/Chicago","America/Los_Angeles","Australia/Sydney"];const supported=typeof Intl.supportedValuesOf==="function"?Intl.supportedValuesOf("timeZone"):common;const values=[...new Set([...common,...supported])].sort((a,b)=>a.localeCompare(b));$("timezone").innerHTML=values.map(zone=>`<option value="${zone}">${zone.replaceAll("_"," ")}</option>`).join("")}
+async function load(){try{const [me,result]=await Promise.all([api("/api/me"),api("/api/business/settings")]);$("userEmail").textContent=me.customer?.email||"";$("timezone").value=result.timezone||"UTC";$("settingsJson").value=JSON.stringify(result.settings||{},null,2)}catch(error){show(error.message||t("loadingError"))}}
+$("settingsForm").addEventListener("submit",async event=>{event.preventDefault();let settings;try{settings=JSON.parse($("settingsJson").value);if(!settings||typeof settings!=="object"||Array.isArray(settings))throw Error()}catch{show(t("invalidJson"));return}const button=$("save");button.disabled=true;try{const result=await api("/api/business/settings",{method:"PUT",body:JSON.stringify({settings,timezone:$("timezone").value})});$("settingsJson").value=JSON.stringify(result.settings,null,2);show(t("saved"),true)}catch(error){show(error.message||t("error"))}finally{button.disabled=false}});
+$("langEn").addEventListener("click",()=>setLang("en"));$("langZh").addEventListener("click",()=>setLang("zh"));
+$("logout").addEventListener("click",async()=>{try{await api("/api/logout",{method:"POST"})}catch{}rm(TOKEN);rm("chatnova_user");location.replace("login.html")});
+populateTimezones();setLang(lang);load();
+</script>
+</body>
+</html>

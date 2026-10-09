@@ -9,6 +9,8 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
+    <meta http-equiv="refresh" content="0; url=./inbox.html">
+    <script>window.location.replace("./inbox.html");</script>
 
     <title>WhatsApp Chat</title>
 
@@ -42,22 +44,18 @@
             </a>
 
             <a
-                href="chat.html"
+                href="inbox.html"
                 class="active"
             >
-                Chat
+                Messages
             </a>
 
-            <a href="#">
+            <a href="billing.html">
                 Billing
             </a>
 
-            <a href="#">
+            <a href="account.html">
                 Account
-            </a>
-
-            <a href="#">
-                Admin
             </a>
 
         </nav>
@@ -466,19 +464,22 @@ function handleKey(event) {
    LOGOUT
 ========================= */
 
-function logout() {
-
-    localStorage.removeItem(
-        "loggedIn"
-    );
-
-    localStorage.removeItem(
-        "userEmail"
-    );
-
-    window.location.href =
-        "index.html";
-
+async function logout() {
+    const token = localStorage.getItem("chatnova_token");
+    try {
+        await fetch("https://whatsapp-provider-api.b79gn827py.workers.dev/api/logout", {
+            method: "POST",
+            credentials: "include",
+            headers: token ? { Authorization: `Bearer ${token}` } : {}
+        });
+    } catch {
+        console.warn("Server logout could not be confirmed.");
+    } finally {
+        for (const key of ["chatnova_token", "chatnova_user", "loggedIn", "userEmail"]) {
+            localStorage.removeItem(key);
+        }
+        window.location.replace("login.html");
+    }
 }
 
 

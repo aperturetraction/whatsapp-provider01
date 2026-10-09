@@ -65,10 +65,10 @@ textarea.in{min-height:80px;resize:vertical}
   <div class="brand">Chat<span>Nova</span></div>
   <a href="./dashboard.html" data-i="dashboard">Dashboard</a>
   <a href="./whatsapp.html" data-i="whatsapp">WhatsApp</a>
-  <a href="#" onclick="return false" data-i="messages">Messages</a>
+  <a href="./inbox.html" data-i="messages">Messages</a>
   <a href="./contacts.html" class="on" data-i="contacts">Contacts</a>
-  <a href="#" onclick="return false" data-i="billing">Billing</a>
-  <a href="#" onclick="return false" data-i="settings">Settings</a>
+  <a href="./billing.html" data-i="billing">Billing</a>
+  <a href="./ai-settings.html" data-i="aiSettings">AI Settings</a>
 </aside>
 
 <main class="main">
@@ -117,7 +117,7 @@ const ls=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
 const lset=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
 const lrm=k=>{try{localStorage.removeItem(k)}catch(e){}};
 
-const T={en:{dashboard:"Dashboard",whatsapp:"WhatsApp",messages:"Messages",contacts:"Contacts",billing:"Billing",settings:"Settings",
+const T={en:{dashboard:"Dashboard",whatsapp:"WhatsApp",messages:"Messages",contacts:"Contacts",billing:"Billing",settings:"Settings",aiSettings:"AI Settings",
  importCsv:"Import CSV",addContact:"Add contact",loadMore:"Load more",name:"Name",phone:"Phone",email:"Email",tags:"Tags",notes:"Notes",
  phoneHelp:"Include the country code.",tagsHelp:"Separate tags with commas.",cancel:"Cancel",save:"Save contact",
  search:"Search name, phone, email or tag",edit:"Edit",del:"Delete",newTitle:"Add contact",editTitle:"Edit contact",
@@ -125,7 +125,7 @@ const T={en:{dashboard:"Dashboard",whatsapp:"WhatsApp",messages:"Messages",conta
  count:n=>n+" contacts",confirmDel:"Delete this contact?",saved:"Contact saved",deleted:"Contact deleted",
  imported:(a,b)=>"Imported "+a+", skipped "+b,saving:"Saving...",importing:"Importing...",unnamed:"No name",
  noPhoneCol:"No valid rows found. The CSV needs a phone column.",fail:"Something went wrong. Try again."},
- zh:{dashboard:"控制台",whatsapp:"WhatsApp",messages:"消息",contacts:"联系人",billing:"账单",settings:"设置",
+ zh:{dashboard:"控制台",whatsapp:"WhatsApp",messages:"消息",contacts:"联系人",billing:"账单",settings:"设置",aiSettings:"AI 设置",
  importCsv:"导入 CSV",addContact:"添加联系人",loadMore:"加载更多",name:"姓名",phone:"电话",email:"邮箱",tags:"标签",notes:"备注",
  phoneHelp:"请包含国家区号。",tagsHelp:"用逗号分隔多个标签。",cancel:"取消",save:"保存联系人",
  search:"搜索姓名、电话、邮箱或标签",edit:"编辑",del:"删除",newTitle:"添加联系人",editTitle:"编辑联系人",

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Settings · ChatNova</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .ai-card{max-width:760px;background:#11161c;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px}
+    .ai-form{display:grid;gap:16px}
+    .ai-form label{display:grid;gap:7px;font-weight:600}
+    .ai-form input,.ai-form select,.ai-form textarea{width:100%;box-sizing:border-box;padding:11px;border:1px solid rgba(255,255,255,.12);border-radius:9px;background:#0b0f14;color:#fff}
+    .ai-form textarea{min-height:150px;resize:vertical}
+    .ai-toggle{display:flex!important;align-items:center;gap:10px}
+    .ai-toggle input{width:auto}
+    .ai-note{color:#9ca3af;font-size:13px;line-height:1.5}
+    .ai-alert{display:none;padding:12px;border-radius:9px;background:#40181d;color:#fecaca}
+    .ai-alert.show{display:block}
+    .ai-success{background:#123c28;color:#bbf7d0}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo">ChatNova</div>
+    <nav class="menu">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="whatsapp.html">WhatsApp</a>
+      <a href="inbox.html">Messages</a>
+      <a href="contacts.html">Contacts</a>
+      <a href="billing.html">Billing</a>
+      <a href="ai-settings.html" class="active">AI Settings</a>
+      <a href="workflows.html">Workflows</a>
+      <a href="business-settings.html">Business Settings</a>
+      <a href="account.html">Account</a>
+    </nav>
+    <button id="logout" class="btn btn-dark">Logout</button>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div><h1>AI auto-reply</h1><p>Set up replies for incoming WhatsApp messages</p></div>
+      <span id="userEmail" class="user">Loading…</span>
+    </div>
+    <section class="section">
+      <div id="notice" class="ai-alert" role="status" aria-live="polite"></div>
+      <div class="ai-card">
+        <form id="settingsForm" class="ai-form">
+          <label class="ai-toggle"><input id="enabled" type="checkbox"> Enable AI replies</label>
+          <p id="providerStatus" class="ai-note"></p>
+          <label>Reply instructions
+            <textarea id="prompt" maxlength="8000" placeholder="Describe your business and how the assistant should respond."></textarea>
+          </label>
+          <label>AI model
+            <input id="model" maxlength="100" value="gpt-4o-mini" required>
+          </label>
+          <label>Response creativity (0–2)
+            <input id="temperature" type="number" min="0" max="2" step="0.1" value="0.3" required>
+          </label>
+          <label>Maximum reply tokens (32–2000)
+            <input id="maxTokens" type="number" min="32" max="2000" step="1" value="400" required>
+          </label>
+          <label>Delay before replying (seconds)
+            <input id="delay" type="number" min="0" max="300" step="1" value="0" required>
+          </label>
+          <label class="ai-toggle"><input id="humanTakeover" type="checkbox"> Pause AI replies while a human handles chats</label>
+          <p class="ai-note">The AI uses up to the 10 most recent text messages in that conversation. Replies are limited by the service’s configured usage limit. AI and WhatsApp provider credentials stay on the server.</p>
+          <button id="save" class="btn btn-green" type="submit">Save settings</button>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+const API="https://whatsapp-provider-api.b79gn827py.workers.dev";
+const tokenKey="chatnova_token";
+const $=id=>document.getElementById(id);
+function show(message,success=false){const n=$("notice");n.textContent=message;n.className="ai-alert show"+(success?" ai-success":"")}
+async function api(path,options={}){const token=localStorage.getItem(tokenKey);if(!token){location.replace("login.html");throw Error("Sign in required")}const response=await fetch(API+path,{...options,credentials:"include",headers:{Accept:"application/json",Authorization:`Bearer ${token}`,...(options.body?{"Content-Type":"application/json"}:{})}});const data=await response.json().catch(()=>({}));if(response.status===401){localStorage.removeItem(tokenKey);location.replace("login.html");throw Error("Session expired")}if(!response.ok||data.success===false)throw Error(data.message||`Request failed (${response.status})`);return data}
+function fill(settings){$("enabled").checked=!!settings.enabled;$("prompt").value=settings.prompt||"";$("model").value=settings.model||"gpt-4o-mini";$("temperature").value=settings.temperature??0.3;$("maxTokens").value=settings.maxTokens||400;$("delay").value=settings.autoReplyDelay||0;$("humanTakeover").checked=!!settings.humanTakeover}
+async function load(){try{const [me,ai]=await Promise.all([api("/api/me"),api("/api/ai/settings")]);$("userEmail").textContent=me.customer?.email||"";fill(ai.settings||{});$("providerStatus").textContent=ai.providerConfigured?"AI provider is configured.":"AI provider is not configured by ChatNova; you can save settings, but enabling AI is unavailable."; }catch(error){show(error.message)}}
+$("settingsForm").addEventListener("submit",async event=>{event.preventDefault();const button=$("save");button.disabled=true;try{const data=await api("/api/ai/settings",{method:"PUT",body:JSON.stringify({enabled:$("enabled").checked,prompt:$("prompt").value,model:$("model").value.trim(),temperature:Number($("temperature").value),maxTokens:Number($("maxTokens").value),autoReplyDelay:Number($("delay").value),humanTakeover:$("humanTakeover").checked})});fill(data.settings);$("providerStatus").textContent=data.providerConfigured?"AI provider is configured.":"AI provider is not configured by ChatNova; enabling AI is unavailable.";show("Settings saved.",true)}catch(error){show(error.message)}finally{button.disabled=false}});
+$("logout").addEventListener("click",async()=>{try{await api("/api/logout",{method:"POST"})}catch{}localStorage.removeItem(tokenKey);localStorage.removeItem("chatnova_user");location.replace("login.html")});
+load();
+</script>
+</body>
+</html>

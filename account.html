@@ -42,8 +42,8 @@
                 WhatsApp
             </a>
 
-            <a href="chat.html">
-                Chat
+            <a href="inbox.html">
+                Messages
             </a>
 
             <a href="billing.html">
@@ -55,10 +55,6 @@
                 class="active"
             >
                 Account
-            </a>
-
-            <a href="#">
-                Admin
             </a>
 
         </nav>
@@ -152,6 +148,7 @@
                         type="email"
                         id="email"
                         placeholder="you@example.com"
+                        readonly
                         style="
                             width:100%;
                             padding:13px;
@@ -344,19 +341,14 @@
                         Account
                     </p>
 
-                    <h3>
-                        Active
-                    </h3>
-
-                    <p>
-                        Your account is currently active.
-                    </p>
+                    <h3 id="accountStatus">Checking…</h3>
+                    <p id="accessStatus">Checking service access…</p>
 
                 </div>
 
 
-                <span class="status connected">
-                    ● Active
+                <span id="accountStatusBadge" class="status">
+                    Checking…
                 </span>
 
             </div>
@@ -410,234 +402,145 @@
 <script>
 
 
-/* =========================
-   LOAD ACCOUNT
-========================= */
+const API_BASE = "https://whatsapp-provider-api.b79gn827py.workers.dev";
+const TOKEN_KEY = "chatnova_token";
 
-const email =
-    localStorage.getItem("userEmail");
-
-
-if (email) {
-
-    document.getElementById(
-        "userEmail"
-    ).innerText = email;
-
-
-    document.getElementById(
-        "email"
-    ).value = email;
-
-}
-
-
-
-/* =========================
-   LOAD SAVED PROFILE
-========================= */
-
-const savedName =
-    localStorage.getItem(
-        "fullName"
-    );
-
-const savedPhone =
-    localStorage.getItem(
-        "phone"
-    );
-
-const savedCompany =
-    localStorage.getItem(
-        "company"
-    );
-
-
-if (savedName) {
-
-    document.getElementById(
-        "fullName"
-    ).value = savedName;
-
-}
-
-
-if (savedPhone) {
-
-    document.getElementById(
-        "phone"
-    ).value = savedPhone;
-
-}
-
-
-if (savedCompany) {
-
-    document.getElementById(
-        "company"
-    ).value = savedCompany;
-
-}
-
-
-
-/* =========================
-   SAVE PROFILE
-========================= */
-
-function saveProfile() {
-
-    const name =
-        document.getElementById(
-            "fullName"
-        ).value.trim();
-
-
-    const phone =
-        document.getElementById(
-            "phone"
-        ).value.trim();
-
-
-    const company =
-        document.getElementById(
-            "company"
-        ).value.trim();
-
-
-    localStorage.setItem(
-        "fullName",
-        name
-    );
-
-
-    localStorage.setItem(
-        "phone",
-        phone
-    );
-
-
-    localStorage.setItem(
-        "company",
-        company
-    );
-
-
-    alert(
-        "Profile saved successfully."
-    );
-
-}
-
-
-
-/* =========================
-   CHANGE PASSWORD
-========================= */
-
-function changePassword() {
-
-    const currentPassword =
-        document.getElementById(
-            "currentPassword"
-        ).value;
-
-
-    const newPassword =
-        document.getElementById(
-            "newPassword"
-        ).value;
-
-
-    const confirmPassword =
-        document.getElementById(
-            "confirmPassword"
-        ).value;
-
-
-    if (
-        !currentPassword ||
-        !newPassword ||
-        !confirmPassword
-    ) {
-
-        alert(
-            "Please complete all password fields."
-        );
-
-        return;
-
+async function accountApi(path, options = {}) {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) {
+        window.location.replace("login.html");
+        throw new Error("Please sign in again.");
     }
-
-
-    if (
-        newPassword !==
-        confirmPassword
-    ) {
-
-        alert(
-            "New passwords do not match."
-        );
-
-        return;
-
+    const response = await fetch(`${API_BASE}${path}`, {
+        ...options,
+        credentials: "include",
+        headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+            ...(options.body ? { "Content-Type": "application/json" } : {}),
+            ...options.headers
+        }
+    });
+    const result = await response.json().catch(() => ({}));
+    if (response.status === 401) {
+        localStorage.removeItem(TOKEN_KEY);
+        window.location.replace("login.html");
+        throw new Error("Your session has expired. Please sign in again.");
     }
-
-
-    if (
-        newPassword.length < 8
-    ) {
-
-        alert(
-            "Password must contain at least 8 characters."
-        );
-
-        return;
-
+    if (!response.ok || result.success === false) {
+        throw new Error(result.message || `Request failed (${response.status}).`);
     }
-
-
-    alert(
-        "Demo only.\n\n" +
-        "Password update will later be handled securely by Cloudflare Workers."
-    );
-
-
-    document.getElementById(
-        "currentPassword"
-    ).value = "";
-
-
-    document.getElementById(
-        "newPassword"
-    ).value = "";
-
-
-    document.getElementById(
-        "confirmPassword"
-    ).value = "";
-
+    return result;
 }
 
+async function loadAccount() {
+    try {
+        const [profileResult, meResult] = await Promise.all([
+            accountApi("/api/profile"),
+            accountApi("/api/me")
+        ]);
+        const profile = profileResult.profile;
+        document.getElementById("userEmail").textContent = profile.email || "Account";
+        document.getElementById("email").value = profile.email || "";
+        document.getElementById("fullName").value = profile.fullName || "";
+        document.getElementById("phone").value = profile.phone || "";
+        document.getElementById("company").value = profile.companyName || "";
 
+        const accountStatus = profile.status || "unknown";
+        document.getElementById("accountStatus").textContent = accountStatus;
+        document.getElementById("accountStatusBadge").textContent = accountStatus;
+        document.getElementById("accountStatusBadge").className =
+            `status ${accountStatus === "active" ? "connected" : ""}`;
+        document.getElementById("accessStatus").textContent =
+            `Service access: ${meResult.access?.status || "unknown"}`;
+    } catch (error) {
+        document.getElementById("accountStatus").textContent = "Unavailable";
+        document.getElementById("accountStatusBadge").textContent = "Unavailable";
+        document.getElementById("accessStatus").textContent =
+            "Unable to load account information.";
+        if (localStorage.getItem(TOKEN_KEY)) alert(error.message);
+    }
+}
+
+async function saveProfile() {
+    const button = document.querySelector('[onclick="saveProfile()"]');
+    button.disabled = true;
+    try {
+        const result = await accountApi("/api/profile", {
+            method: "PUT",
+            body: JSON.stringify({
+                fullName: document.getElementById("fullName").value.trim(),
+                phone: document.getElementById("phone").value.trim(),
+                companyName: document.getElementById("company").value.trim()
+            })
+        });
+        document.getElementById("userEmail").textContent =
+            result.profile.email || "Account";
+        alert("Profile saved.");
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        button.disabled = false;
+    }
+}
+
+async function changePassword() {
+    const currentPassword = document.getElementById("currentPassword").value;
+    const newPassword = document.getElementById("newPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    if (!currentPassword || !newPassword || !confirmPassword) {
+        alert("Please complete all password fields.");
+        return;
+    }
+    if (newPassword !== confirmPassword) {
+        alert("New passwords do not match.");
+        return;
+    }
+    if (newPassword.length < 8) {
+        alert("Password must contain at least 8 characters.");
+        return;
+    }
+    const button = document.querySelector('[onclick="changePassword()"]');
+    button.disabled = true;
+    try {
+        const result = await accountApi("/api/change-password", {
+            method: "POST",
+            body: JSON.stringify({ currentPassword, newPassword, confirmPassword })
+        });
+        for (const key of [TOKEN_KEY, "chatnova_user", "loggedIn", "userEmail"]) {
+            localStorage.removeItem(key);
+        }
+        alert(result.message || "Password changed. Please sign in again.");
+        window.location.replace("login.html");
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        button.disabled = false;
+    }
+}
+
+loadAccount();
 
 /* =========================
    LOGOUT
 ========================= */
 
-function logout() {
-
-    localStorage.removeItem(
-        "loggedIn"
-    );
-
-    localStorage.removeItem(
-        "userEmail"
-    );
-
-    window.location.href =
-        "index.html";
-
+async function logout() {
+    const token = localStorage.getItem("chatnova_token");
+    try {
+        await fetch("https://whatsapp-provider-api.b79gn827py.workers.dev/api/logout", {
+            method: "POST",
+            credentials: "include",
+            headers: token ? { Authorization: `Bearer ${token}` } : {}
+        });
+    } catch {
+        console.warn("Server logout could not be confirmed.");
+    } finally {
+        for (const key of ["chatnova_token", "chatnova_user", "loggedIn", "userEmail"]) {
+            localStorage.removeItem(key);
+        }
+        window.location.replace("login.html");
+    }
 }
 
 

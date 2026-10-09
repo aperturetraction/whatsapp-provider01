@@ -73,8 +73,8 @@ h1{font-size:18px;letter-spacing:-.4px}
     <a href="./whatsapp.html" data-i="whatsapp">WhatsApp</a>
     <a href="./inbox.html" class="on"><span data-i="messages">Messages</span><span class="badge" id="navUnread" style="display:none"></span></a>
     <a href="./contacts.html" data-i="contacts">Contacts</a>
-    <a href="#" onclick="return false" data-i="billing">Billing</a>
-    <a href="#" onclick="return false" data-i="settings">Settings</a>
+    <a href="./billing.html" data-i="billing">Billing</a>
+    <a href="./ai-settings.html" data-i="aiSettings">AI Settings</a>
   </aside>
 
   <section class="list">
@@ -101,11 +101,11 @@ const ls=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
 const lset=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
 const lrm=k=>{try{localStorage.removeItem(k)}catch(e){}};
 
-const T={en:{dashboard:"Dashboard",whatsapp:"WhatsApp",messages:"Messages",contacts:"Contacts",billing:"Billing",settings:"Settings",
+const T={en:{dashboard:"Dashboard",whatsapp:"WhatsApp",messages:"Messages",contacts:"Contacts",billing:"Billing",settings:"Settings",aiSettings:"AI Settings",
  search:"Search chats",pick:"Select a conversation to read and reply.",none:"No conversations yet. Messages appear here when customers write to your connected WhatsApp number.",
  noMatch:"No chats match your search.",send:"Send",type:"Type a message",earlier:"Load earlier messages",group:"Group chat",
  unnamed:"Unknown",fail:"Something went wrong. Try again.",sendFail:"Message was not sent.",noMsgs:"No messages yet.",today:"Today"},
- zh:{dashboard:"控制台",whatsapp:"WhatsApp",messages:"消息",contacts:"联系人",billing:"账单",settings:"设置",
+ zh:{dashboard:"控制台",whatsapp:"WhatsApp",messages:"消息",contacts:"联系人",billing:"账单",settings:"设置",aiSettings:"AI 设置",
  search:"搜索会话",pick:"选择一个会话以查看和回复。",none:"还没有会话。客户给您已连接的 WhatsApp 号码发消息后，会显示在这里。",
  noMatch:"没有符合搜索条件的会话。",send:"发送",type:"输入消息",earlier:"加载更早的消息",group:"群聊",
  unnamed:"未知",fail:"出了点问题，请重试。",sendFail:"消息未发送。",noMsgs:"还没有消息。",today:"今天"}};
