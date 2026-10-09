@@ -245,7 +245,7 @@ async function send(){
   const text=ta.value.trim();if(!text)return;
   S.sending=true;$("sendBtn").disabled=true;
   try{
-    await api("/api/greenapi/send-message",{method:"POST",body:JSON.stringify({instanceId:c.instanceId,chatId:c.chatId,message:text})});
+    await api("/api/messages/send",{method:"POST",body:JSON.stringify({conversationId:c.id,message:text})});
     ta.value="";ta.style.height="auto";
     S.busyMsgs=false;await loadMsgs("new");loadList();
   }catch(e){if(e)toast(e.message||t("sendFail"))}

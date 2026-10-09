@@ -306,7 +306,7 @@ body{
         </span>
 
         <button id="add" class="btn btn-green">
-          + Add WhatsApp
+          Contact Support to Connect
         </button>
 
       </div>
@@ -358,7 +358,7 @@ body{
 </div>
 
 
-<!-- ADD ACCOUNT MODAL -->
+<!-- SUPPORT SETUP MODAL -->
 
 <div id="addModal" class="modal">
 
@@ -371,105 +371,20 @@ body{
       ×
     </button>
 
-    <h2>Add WhatsApp Account</h2>
+    <h2>Connect WhatsApp</h2>
 
     <p class="muted">
-      Connect an existing GREEN-API instance.
+      WhatsApp connections are set up by ChatNova Support. Open an Internal Chat conversation to request setup.
     </p>
 
-    <div id="addNotice" class="notice"></div>
-
-    <form id="form">
-
-      <div class="field">
-
-        <label>
-          Account Name
-        </label>
-
-        <input
-          id="name"
-          maxlength="150"
-          required
-          placeholder="Sales WhatsApp"
-        >
-
-      </div>
-
-
-      <div class="field">
-
-        <label>
-          GREEN-API Instance ID
-        </label>
-
-        <input
-          id="instance"
-          maxlength="100"
-          required
-        >
-
-      </div>
-
-
-      <div class="field">
-
-        <label>
-          GREEN-API API Token
-        </label>
-
-        <input
-          id="token"
-          type="password"
-          maxlength="300"
-          autocomplete="new-password"
-          required
-        >
-
-      </div>
-
-
-      <div class="field">
-
-        <label>
-          GREEN-API URL
-        </label>
-
-        <input
-          id="url"
-          value="https://api.green-api.com"
-        >
-
-      </div>
-
-
-      <p class="note">
-        The API token is sent to ChatNova's secure Worker
-        and is not saved in browser storage.
-      </p>
-
-
-      <div class="row">
-
-        <button
-          type="button"
-          class="btn btn-dark"
-          data-close="addModal"
-        >
-          Cancel
-        </button>
-
-        <button
-          id="create"
-          class="btn btn-green"
-          type="submit"
-        >
-          Connect Account
-        </button>
-
-      </div>
-
-    </form>
+    <div class="row">
+      <button type="button" class="btn btn-dark" data-close="addModal">
+        Close
+      </button>
+      <a class="btn btn-green" href="./internal-chat.html" style="text-decoration:none">
+        Open Internal Chat
+      </a>
+    </div>
 
   </div>
 
@@ -760,6 +675,7 @@ function st(s){
     'not_authorized',
     'notauthorized',
     'notconnected',
+    'not_connected',
     'disconnected',
     'offline'
   ].includes(s)){
@@ -813,15 +729,15 @@ function render(){
         </h3>
 
         <p class="muted">
-          Connect your first GREEN-API account.
+          WhatsApp accounts are configured by ChatNova Support.
         </p>
 
         <button
           class="btn btn-green"
           style="margin-top:15px"
-          onclick="openAdd()"
+          onclick="location.href='./internal-chat.html'"
         >
-          + Add WhatsApp Account
+          Contact Support
         </button>
 
       </div>
@@ -853,19 +769,13 @@ function render(){
 
             <div>
 
-              <strong>
-                ${esc(
-                  a.instance_name ||
-                  a.instance_id
-                )}
-              </strong>
+              <strong>${esc(a.name || 'WhatsApp account')}</strong>
 
               <div
                 class="muted"
                 style="margin-top:5px"
               >
-                Instance:
-                ${esc(a.instance_id)}
+                Connection #${esc(a.id)}
               </div>
 
             </div>
@@ -905,9 +815,9 @@ function render(){
 
               <span>
                 ${
-                  a.created_at
+                  a.createdAt
                   ? new Date(
-                      a.created_at
+                      a.createdAt
                     ).toLocaleDateString()
                   : '—'
                 }
@@ -933,9 +843,7 @@ function render(){
                   border-radius:8px;
                   text-decoration:none
                 "
-                href="chat.html?instance=${encodeURIComponent(
-                  a.instance_id
-                )}"
+                href="inbox.html"
               >
                 Open Messages
               </a>
@@ -950,11 +858,7 @@ function render(){
                   padding:9px 12px;
                   border-radius:8px
                 "
-                onclick="openQR(
-                  '${encodeURIComponent(
-                    a.instance_id
-                  )}'
-                )"
+                onclick="openQR('${encodeURIComponent(a.id)}')"
               >
                 Connect
               </button>
@@ -968,11 +872,7 @@ function render(){
                 padding:9px 12px;
                 border-radius:8px
               "
-              onclick="refreshStatus(
-                '${encodeURIComponent(
-                  a.instance_id
-                )}'
-              )"
+              onclick="refreshStatus('${encodeURIComponent(a.id)}')"
             >
               Refresh
             </button>
@@ -984,11 +884,7 @@ function render(){
                 padding:9px 12px;
                 border-radius:8px
               "
-              onclick="removeAccount(
-                '${encodeURIComponent(
-                  a.instance_id
-                )}'
-              )"
+              onclick="removeAccount('${encodeURIComponent(a.id)}')"
             >
               Remove
             </button>
@@ -1014,13 +910,13 @@ async function load(){
 
     const d =
       await api(
-        '/api/greenapi/instances'
+        '/api/whatsapp/connections'
       );
 
 
     accounts =
-      Array.isArray(d?.instances)
-      ? d.instances
+      Array.isArray(d?.connections)
+      ? d.connections
       : [];
 
 
@@ -1068,16 +964,6 @@ async function me(){
 
 
 function openAdd(){
-
-  hide(
-    $('addNotice')
-  );
-
-  $('form').reset();
-
-  $('url').value =
-    'https://api.green-api.com';
-
   $('addModal')
     .classList
     .add('show');
@@ -1113,115 +999,6 @@ function close(id){
 }
 
 
-async function create(e){
-
-  e.preventDefault();
-
-
-  const btn =
-    $('create');
-
-
-  btn.disabled =
-    true;
-
-
-  btn.textContent =
-    'Connecting...';
-
-
-  hide(
-    $('addNotice')
-  );
-
-
-  try{
-
-    const d =
-      await api(
-        '/api/greenapi/instance',
-        {
-          method:'POST',
-
-          body:JSON.stringify({
-
-            instanceName:
-              $('name')
-                .value
-                .trim(),
-
-            instanceId:
-              $('instance')
-                .value
-                .trim(),
-
-            apiToken:
-              $('token')
-                .value
-                .trim(),
-
-            apiUrl:
-              $('url')
-                .value
-                .trim() ||
-              'https://api.green-api.com'
-
-          })
-
-        }
-      );
-
-
-    if(!d?.success){
-
-      throw Error(
-        d?.message ||
-        'Unable to create account'
-      );
-
-    }
-
-
-    close(
-      'addModal'
-    );
-
-
-    await load();
-
-
-    const id =
-      d?.instance?.instanceId ||
-      $('instance')
-        .value
-        .trim();
-
-
-    openQR(
-      encodeURIComponent(id)
-    );
-
-
-  }catch(e){
-
-    msg(
-      $('addNotice'),
-      e.message
-    );
-
-  }finally{
-
-    btn.disabled =
-      false;
-
-    btn.textContent =
-      'Connect Account';
-
-  }
-
-}
-
-
 async function openQR(
   encoded
 ){
@@ -1236,7 +1013,7 @@ async function openQR(
     accounts.find(
       a =>
         String(
-          a.instance_id
+          a.id
         ) ===
         String(active)
     );
@@ -1244,7 +1021,7 @@ async function openQR(
 
   $('qrTitle')
     .textContent =
-      account?.instance_name ||
+    account?.name ||
       'Connect WhatsApp';
 
 
@@ -1255,7 +1032,7 @@ async function openQR(
 
   $('qrInstance')
     .textContent =
-      active;
+      account?.name || `Connection #${active}`;
 
 
   $('qr').innerHTML = `
@@ -1316,16 +1093,13 @@ async function qr(){
 
     const d =
       await api(
-        '/api/greenapi/instance/' +
+        '/api/whatsapp/connections/' +
         encodeURIComponent(active) +
         '/qr'
       );
 
 
-    if(
-      d?.type ===
-      'alreadyLogged'
-    ){
+    if(d?.connected === true){
 
       connectedUI();
 
@@ -1405,16 +1179,15 @@ async function check(){
 
     const d =
       await api(
-        '/api/greenapi/instance/' +
+        '/api/whatsapp/connections/' +
         encodeURIComponent(active) +
         '/status'
       );
 
+    const status = d?.connection?.status;
 
     if(
-      String(
-        d?.status
-      ).toLowerCase() ===
+      String(status).toLowerCase() ===
       'connected'
     ){
 
@@ -1426,7 +1199,7 @@ async function check(){
 
       $('status')
         .textContent =
-        st(d?.status)[0];
+        st(status)[0];
 
     }
 
@@ -1485,7 +1258,7 @@ async function refreshStatus(id){
   try{
 
     await api(
-      '/api/greenapi/instance/' +
+      '/api/whatsapp/connections/' +
       decodeURIComponent(id) +
       '/status'
     );
@@ -1519,18 +1292,12 @@ async function removeAccount(id){
     decodeURIComponent(id);
 
 
-  const account =
-    accounts.find(
-      x =>
-        String(
-          x.instance_id
-        ) === id
-    );
+  const account = accounts.find(x => String(x.id) === id);
 
 
   if(
     !confirm(
-      `Remove "${account?.instance_name || id}" from ChatNova?`
+      `Remove "${account?.name || `Connection #${id}`}" from ChatNova?`
     )
   ){
 
@@ -1542,7 +1309,7 @@ async function removeAccount(id){
   try{
 
     await api(
-      '/api/greenapi/instance/' +
+      '/api/whatsapp/connections/' +
       encodeURIComponent(id),
       {
         method:'DELETE'
@@ -1578,10 +1345,6 @@ $('add').onclick =
 
 $('refresh').onclick =
   load;
-
-
-$('form').onsubmit =
-  create;
 
 
 $('qrRefresh').onclick =
